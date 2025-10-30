@@ -1,0 +1,254 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(0.98 0.005 240);
+  --foreground: oklch(0.15 0.01 240);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.01 240);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.01 240);
+  --primary: oklch(0.65 0.15 240);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.88 0.08 240);
+  --secondary-foreground: oklch(0.15 0.01 240);
+  --muted: oklch(0.92 0.02 240);
+  --muted-foreground: oklch(0.45 0.05 240);
+  --accent: oklch(0.75 0.12 240);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.85 0.05 240);
+  --input: oklch(0.92 0.03 240);
+  --ring: oklch(0.65 0.15 240);
+  --chart-1: oklch(0.65 0.15 240);
+  --chart-2: oklch(0.55 0.18 240);
+  --chart-3: oklch(0.75 0.12 240);
+  --chart-4: oklch(0.70 0.14 240);
+  --chart-5: oklch(0.60 0.16 240);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.96 0.01 240);
+  --sidebar-foreground: oklch(0.15 0.01 240);
+  --sidebar-primary: oklch(0.65 0.15 240);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.88 0.08 240);
+  --sidebar-accent-foreground: oklch(0.15 0.01 240);
+  --sidebar-border: oklch(0.85 0.05 240);
+  --sidebar-ring: oklch(0.65 0.15 240);
+}
+
+.dark {
+  --background: oklch(0.15 0.01 240);
+  --foreground: oklch(0.98 0.005 240);
+  --card: oklch(0.18 0.015 240);
+  --card-foreground: oklch(0.98 0.005 240);
+  --popover: oklch(0.18 0.015 240);
+  --popover-foreground: oklch(0.98 0.005 240);
+  --primary: oklch(0.70 0.16 240);
+  --primary-foreground: oklch(0.98 0.005 240);
+  --secondary: oklch(0.25 0.03 240);
+  --secondary-foreground: oklch(0.98 0.005 240);
+  --muted: oklch(0.25 0.03 240);
+  --muted-foreground: oklch(0.65 0.06 240);
+  --accent: oklch(0.60 0.14 240);
+  --accent-foreground: oklch(0.98 0.005 240);
+  --destructive: oklch(0.55 0.22 27.325);
+  --destructive-foreground: oklch(0.98 0.005 240);
+  --border: oklch(0.30 0.04 240);
+  --input: oklch(0.25 0.03 240);
+  --ring: oklch(0.70 0.16 240);
+  --chart-1: oklch(0.70 0.16 240);
+  --chart-2: oklch(0.60 0.18 240);
+  --chart-3: oklch(0.75 0.14 240);
+  --chart-4: oklch(0.65 0.15 240);
+  --chart-5: oklch(0.55 0.17 240);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.20 0.02 240);
+  --sidebar-foreground: oklch(0.98 0.005 240);
+  --sidebar-primary: oklch(0.70 0.16 240);
+  --sidebar-primary-foreground: oklch(0.98 0.005 240);
+  --sidebar-accent: oklch(0.25 0.03 240);
+  --sidebar-accent-foreground: oklch(0.98 0.005 240);
+  --sidebar-border: oklch(0.30 0.04 240);
+  --sidebar-ring: oklch(0.70 0.16 240);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Light Blue Theme Glass Effects - Clean, Minimal, Crisp */
+.liquid-glass {
+  background: rgba(173, 216, 255, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(173, 216, 255, 0.25);
+  box-shadow: 0 4px 16px rgba(100, 149, 237, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.liquid-glass-enhanced {
+  background: rgba(173, 216, 255, 0.2);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(173, 216, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(100, 149, 237, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.liquid-glass-header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(173, 216, 255, 0.3);
+  box-shadow: 0 2px 12px rgba(100, 149, 237, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Light Blue Glass Border Utilities - Clean and minimal */
+.glass-border {
+  border: 1px solid rgba(173, 216, 255, 0.25);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 4px 16px rgba(100, 149, 237, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.glass-border-enhanced {
+  border: 1px solid rgba(173, 216, 255, 0.35);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 24px rgba(100, 149, 237, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.glass-border-subtle {
+  border: 1px solid rgba(173, 216, 255, 0.15);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 2px 8px rgba(100, 149, 237, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Enhanced glass border hover effects with light blue glow */
+.glass-border:hover {
+  border-color: rgba(100, 149, 237, 0.4);
+  box-shadow: 0 4px 20px rgba(100, 149, 237, 0.25), 
+              0 0 20px rgba(173, 216, 255, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.glass-border-enhanced:hover {
+  border-color: rgba(100, 149, 237, 0.5);
+  box-shadow: 0 8px 28px rgba(100, 149, 237, 0.3), 
+              0 0 30px rgba(173, 216, 255, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.glass-border-subtle:hover {
+  border-color: rgba(100, 149, 237, 0.25);
+  box-shadow: 0 2px 12px rgba(100, 149, 237, 0.15), 
+              0 0 15px rgba(173, 216, 255, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Logo Marquee Animations - Seamless Infinite Loop */
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-33.333%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-scroll-right {
+  animation: scroll-right 45s linear infinite;
+}
+
+.animate-scroll-left {
+  animation: scroll-left 45s linear infinite;
+}
+
+/* Hide v0 preview badge (preview-only; not present in production) */
+a[aria-label="Built with v0"],
+a[title="Built with v0"],
+a[href*="v0.dev"].v0-badge,
+a[data-built-with-v0],
+#built-with-v0,
+.v0-built-with {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Extra-aggressive hide for any "Built with v0" or "made with v0" preview badge */
+[aria-label*="v0" i],
+[title*="v0" i],
+[id*="v0" i],
+[class*="v0" i],
+a[href*="v0.dev"],
+a[href*="v0.sh"],
+a[href*="v0.app"],
+a[href*="v0.dev"] *,
+.v0,
+.v0-badge,
+.v0-sticky,
+.v0-watermark,
+.v0-floating-badge,
+.v0-built-with,
+.built-with-v0,
+.built_with_v0,
+[data-built-with="v0"],
+[data-built-with*="v0" i] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}

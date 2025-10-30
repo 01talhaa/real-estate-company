@@ -1,0 +1,25 @@
+{
+  "name": "PixelPrimp - Software Development & Creative Studio",
+  "short_name": "PixelPrimp",
+  "description": "Complete software development and creative studio offering web/mobile development, 3D animation, video editing, photo editing, and graphic design",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/pqrix-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "business",
+    "productivity",
+    "technology"
+  ],
+  "lang": "en",
+  "dir": "ltr"
+}
