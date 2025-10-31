@@ -51,13 +51,13 @@ export default function ClientLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-white to-sky-50 p-4">
-      <Card className="w-full max-w-md border-sky-200 bg-white shadow-xl shadow-sky-200/30">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-muted via-white to-green-muted p-4">
+      <Card className="w-full max-w-md border-green-muted bg-white shadow-xl shadow-green-muted/30">
         <CardHeader className="space-y-2">
           <CardTitle className="text-3xl font-bold text-center text-black">
             Client Login
           </CardTitle>
-          <CardDescription className="text-center text-gray-600">
+          <CardDescription className="text-center text-black">
             Sign in to access your dashboard
           </CardDescription>
         </CardHeader>
@@ -72,7 +72,7 @@ export default function ClientLoginPage() {
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
 
@@ -85,14 +85,14 @@ export default function ClientLoginPage() {
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
 
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-sky-500 text-white hover:bg-sky-600"
+              className="w-full   "
             >
               {loading ? (
                 <>
@@ -104,15 +104,15 @@ export default function ClientLoginPage() {
               )}
             </Button>
 
-            <div className="text-center text-sm text-gray-600">
+            <div className="text-center text-sm text-black">
               Don't have an account?{" "}
-              <Link href="/client/register" className="text-sky-500 hover:text-sky-600 font-semibold">
+              <Link href="/client/register" className="text-green-dark hover:text-green-dark font-semibold">
                 Register here
               </Link>
             </div>
 
             <div className="text-center">
-              <Link href="/" className="text-sm text-gray-600 hover:text-sky-600">
+              <Link href="/" className="text-sm text-black hover:text-green-dark">
                 ← Back to Home
               </Link>
             </div>

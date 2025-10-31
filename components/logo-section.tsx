@@ -12,7 +12,7 @@ export function LogoSection() {
           </div>
 
           {/* Heading */}
-          <h2 className="mb-4 bg-gradient-to-r from-purple-400 via-purple-300 to-purple-500 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl md:text-6xl">
+          <h2 className="text-[#064E3B] mb-4 bg-gradient-to-r from-purple-400 via-purple-300 to-purple-500 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl md:text-6xl">
             Over 100+ company
           </h2>
 

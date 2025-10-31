@@ -74,7 +74,7 @@ const paymentStatusOptions = [
 
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-500/10 text-yellow-600 border-yellow-500/30",
-  approved: "bg-blue-500/10 text-blue-600 border-blue-500/30",
+  approved: "bg-green-light/10 text-green-dark border-green-light/30",
   paid: "bg-green-500/10 text-green-600 border-green-500/30",
   "in-progress": "bg-purple-500/10 text-purple-600 border-purple-500/30",
   completed: "bg-emerald-500/10 text-emerald-600 border-emerald-500/30",
@@ -219,7 +219,7 @@ export default function AdminInquiriesPage() {
     const client = inquiry.clientId
 
     return (
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -233,19 +233,19 @@ export default function AdminInquiriesPage() {
                   {inquiry.paymentStatus.toUpperCase()}
                 </Badge>
               </div>
-              <p className="text-sm font-mono text-gray-600">Invoice: {inquiry.invoiceNumber}</p>
+              <p className="text-sm font-mono text-black">Invoice: {inquiry.invoiceNumber}</p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-sky-600">{inquiry.totalAmount}</p>
+              <p className="text-2xl font-bold text-green-dark">{inquiry.totalAmount}</p>
               {inquiry.packageName && (
-                <p className="text-xs text-gray-600">{inquiry.packageName}</p>
+                <p className="text-xs text-black">{inquiry.packageName}</p>
               )}
             </div>
           </div>
         </CardHeader>
         <CardContent>
           {/* Client Info */}
-          <div className="mb-4 p-3 rounded-lg bg-gray-50 border border-gray-200">
+          <div className="mb-4 p-3 rounded-lg bg-white border border-gray-200">
             <div className="flex items-center gap-3 mb-2">
               {client?.avatar && (
                 <Image
@@ -258,28 +258,28 @@ export default function AdminInquiriesPage() {
               )}
               <div>
                 <p className="font-semibold text-black">{client?.name || 'Unknown Client'}</p>
-                <p className="text-xs text-gray-600">{client?.email}</p>
+                <p className="text-xs text-black">{client?.email}</p>
               </div>
             </div>
-            {client?.phone && <p className="text-xs text-gray-600">📱 {client.phone}</p>}
-            {client?.company && <p className="text-xs text-gray-600">🏢 {client.company}</p>}
+            {client?.phone && <p className="text-xs text-black">📱 {client.phone}</p>}
+            {client?.company && <p className="text-xs text-black">🏢 {client.company}</p>}
           </div>
 
           {/* Message */}
           <div className="mb-4">
-            <p className="text-sm text-gray-700 line-clamp-2">{inquiry.message}</p>
+            <p className="text-sm text-black line-clamp-2">{inquiry.message}</p>
           </div>
 
           {/* Admin Notes */}
           {inquiry.adminNotes && (
-            <div className="mb-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
+            <div className="mb-4 p-3 rounded-lg bg-green-muted border border-green-light">
               <p className="text-xs font-semibold text-blue-800 mb-1">Admin Notes:</p>
-              <p className="text-xs text-blue-700">{inquiry.adminNotes}</p>
+              <p className="text-xs text-green-dark">{inquiry.adminNotes}</p>
             </div>
           )}
 
           {/* Dates */}
-          <div className="text-xs text-gray-500 mb-4">
+          <div className="text-xs text-black mb-4">
             <p>Created: {format(new Date(inquiry.createdAt), 'PPp')}</p>
             <p>Updated: {format(new Date(inquiry.updatedAt), 'PPp')}</p>
           </div>
@@ -301,19 +301,19 @@ export default function AdminInquiriesPage() {
                 <div className="space-y-4">
                   <div>
                     <h4 className="font-semibold mb-2">Message</h4>
-                    <p className="text-sm text-gray-700">{inquiry.message}</p>
+                    <p className="text-sm text-black">{inquiry.message}</p>
                   </div>
                   {inquiry.statusHistory && inquiry.statusHistory.length > 0 && (
                     <div>
                       <h4 className="font-semibold mb-2">Status History</h4>
                       <div className="space-y-2">
                         {inquiry.statusHistory.map((history, idx) => (
-                          <div key={idx} className="text-sm p-2 rounded bg-gray-50">
+                          <div key={idx} className="text-sm p-2 rounded bg-white">
                             <p className="font-semibold">{history.status.toUpperCase().replace('-', ' ')}</p>
-                            <p className="text-xs text-gray-600">
+                            <p className="text-xs text-black">
                               by {history.changedBy} on {format(new Date(history.changedAt), 'PPp')}
                             </p>
-                            {history.note && <p className="text-xs text-gray-600 mt-1">{history.note}</p>}
+                            {history.note && <p className="text-xs text-black mt-1">{history.note}</p>}
                           </div>
                         ))}
                       </div>
@@ -345,8 +345,8 @@ export default function AdminInquiriesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-black">Service Inquiries</h1>
-          <p className="text-gray-600">Manage client inquiries and invoices</p>
+          <h1 className="text-[#064E3B] text-3xl font-bold text-black">Service Inquiries</h1>
+          <p className="text-black">Manage client inquiries and invoices</p>
         </div>
         <div className="flex items-center gap-3">
           <Select value={filterStatus} onValueChange={setFilterStatus}>
@@ -372,13 +372,13 @@ export default function AdminInquiriesPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-sky-500" />
+          <Loader2 className="h-8 w-8 animate-spin text-green-dark" />
         </div>
       ) : inquiries.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
             <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">No inquiries found</p>
+            <p className="text-black">No inquiries found</p>
           </CardContent>
         </Card>
       ) : (

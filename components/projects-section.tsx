@@ -44,19 +44,19 @@ export function ProjectsSection() {
 
   if (loading) {
     return (
-      <section id="projects" className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-white via-sky-50 to-white">
+      <section id="projects" className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-white via-green-muted to-white">
         <div className="mb-10 text-center">
-          <h2 className="mb-2 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Featured Projects</h2>
-          <p className="mx-auto max-w-2xl text-lg text-gray-700">Loading projects...</p>
+          <h2 className="text-[#064E3B] mb-2 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Featured Projects</h2>
+          <p className="mx-auto max-w-2xl text-lg text-black">Loading projects...</p>
         </div>
       </section>
     )
   }
   return (
-    <section id="projects" className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-white via-sky-50 to-white">
+    <section id="projects" className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-white via-green-muted to-white">
       <div className="mb-10 text-center">
-        <h2 className="mb-2 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Featured <span className="text-sky-500">Projects</span></h2>
-        <p className="mx-auto max-w-2xl text-lg text-gray-700">See how we've helped brands stand out with innovative design and creative solutions.</p>
+        <h2 className="text-[#064E3B] mb-2 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Featured <span className="text-green-dark">Projects</span></h2>
+        <p className="mx-auto max-w-2xl text-lg text-black">See how we've helped brands stand out with innovative design and creative solutions.</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -69,7 +69,7 @@ export function ProjectsSection() {
         <Button 
           asChild 
           size="lg"
-          className="rounded-full bg-sky-500 px-8 text-white hover:bg-sky-600 shadow-lg shadow-sky-400/30"
+          className="rounded-full  px-8   shadow-lg "
         >
           <Link href="/projects">
             View All Projects
@@ -87,11 +87,11 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <Link href={`/projects/${project.id}`}>
       <Card
-        className="group liquid-glass border border-sky-200 bg-white/80 backdrop-blur-xl overflow-hidden transition-all hover:border-sky-300 hover:bg-white/90 h-full flex flex-col shadow-lg shadow-sky-200/30"
+        className="group liquid-glass border border-green-muted bg-white/80 backdrop-blur-xl overflow-hidden transition-all hover:border-green-light hover:bg-white/90 h-full flex flex-col shadow-lg shadow-green-muted/30"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative aspect-video overflow-hidden bg-sky-100">
+        <div className="relative aspect-video overflow-hidden bg-green-muted">
           {project.video ? (
             <>
               <video
@@ -102,7 +102,7 @@ function ProjectCard({ project }: { project: Project }) {
                 muted
                 playsInline
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-green-dark/40 to-transparent" />
             </>
           ) : (
             <>
@@ -111,14 +111,14 @@ function ProjectCard({ project }: { project: Project }) {
                 alt={project.title}
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-green-dark/40 to-transparent" />
             </>
           )}
 
           {/* Play button overlay for video projects */}
           {project.video && (
             <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-sky-500/90 backdrop-blur-sm shadow-lg">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-dark/90 backdrop-blur-sm shadow-lg">
                 <Play className="h-7 w-7 text-white fill-white ml-1" />
               </div>
             </div>
@@ -126,23 +126,23 @@ function ProjectCard({ project }: { project: Project }) {
 
           {/* Category badge */}
           <div className="absolute top-3 left-3">
-            <span className="inline-flex items-center rounded-full bg-white/90 backdrop-blur-sm px-2.5 py-0.5 text-xs font-medium text-sky-600 border border-sky-300">
+            <span className="inline-flex items-center rounded-full bg-white/90 backdrop-blur-sm px-2.5 py-0.5 text-xs font-medium text-green-dark border border-green-light">
               {project.category}
             </span>
           </div>
         </div>
 
         <div className="p-4 flex-grow flex flex-col">
-          <div className="mb-1 text-sm text-gray-600">
+          <div className="mb-1 text-sm text-black">
             <span>{project.client}</span>
           </div>
-          <h3 className="mb-2 text-xl font-bold text-black group-hover:text-sky-500 transition-colors">
+          <h3 className="text-[#064E3B] mb-2 text-xl font-bold text-black group-hover:text-green-dark transition-colors">
             {project.title}
           </h3>
-          <p className="mb-3 text-gray-700 text-sm flex-grow line-clamp-2">{project.description}</p>
+          <p className="mb-3 text-black text-sm flex-grow line-clamp-2">{project.description}</p>
           <div className="flex flex-wrap gap-2 mt-auto">
             {project.tags.slice(0, 2).map((tag: string) => (
-              <span key={tag} className="rounded-full bg-sky-50 px-2.5 py-0.5 text-xs text-gray-700 border border-sky-200">
+              <span key={tag} className="rounded-full bg-green-muted px-2.5 py-0.5 text-xs text-black border border-green-muted">
                 {tag}
               </span>
             ))}

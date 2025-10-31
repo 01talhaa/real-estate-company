@@ -332,20 +332,20 @@ export default async function ProjectsPage() {
         <SiteHeader />
 
         {/* Hero Section */}
-        <section className="container mx-auto px-4 py-16 sm:py-24 bg-gradient-to-b from-white via-sky-50 to-white">
+        <section className="container mx-auto px-4 py-16 sm:py-24 bg-gradient-to-b from-white via-green-muted to-white">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-6 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl text-black">
+            <h1 className="text-[#064E3B] mb-6 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl text-black">
               <span className="block">Our Creative</span>
-              <span className="block text-sky-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.35)]">Portfolio</span>
+              <span className="block text-green-dark drop-shadow-[0_0_20px_rgba(59,130,246,0.35)]">Portfolio</span>
             </h1>
-            <p className="text-lg text-gray-700 sm:text-xl">
+            <p className="text-lg text-black sm:text-xl">
               Explore our latest work and see how we've helped brands create unforgettable experiences
             </p>
           </div>
         </section>
 
         {/* Filter Tabs */}
-        <section className="container mx-auto px-4 pb-8 bg-gradient-to-b from-sky-50 to-white">
+        <section className="container mx-auto px-4 pb-8 bg-gradient-to-b from-green-muted to-white">
           <div className="flex flex-wrap justify-center gap-3">
             {categories.map((category) => (
               <Button
@@ -353,8 +353,8 @@ export default async function ProjectsPage() {
                 variant={category === "All" ? "default" : "outline"}
                 className={
                   category === "All"
-                    ? "rounded-full bg-sky-500 text-white hover:bg-sky-600 shadow-lg shadow-sky-400/30"
-                    : "rounded-full border-sky-200 bg-white text-black hover:bg-sky-50"
+                    ? "rounded-full bg-green-dark text-white  shadow-lg "
+                    : "rounded-full border-green-muted bg-white text-black hover:bg-green-muted"
                 }
               >
                 {category}
@@ -364,12 +364,12 @@ export default async function ProjectsPage() {
         </section>
 
         {/* Projects Grid */}
-        <section className="container mx-auto px-4 pb-16 sm:pb-24 bg-gradient-to-b from-white to-sky-50">
+        <section className="container mx-auto px-4 pb-16 sm:pb-24 bg-gradient-to-b from-white to-green-muted">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {allProjects.map((project: Project) => (
               <Link key={project.id} href={`/projects/${project.id}`}>
-                <Card className="group liquid-glass border border-sky-200 bg-white/80 backdrop-blur-xl overflow-hidden transition-all hover:border-sky-300 hover:bg-white/90 h-full shadow-lg shadow-sky-200/30">
-                  <div className="relative aspect-video overflow-hidden bg-sky-100">
+                <Card className="group liquid-glass border border-green-muted bg-white/80 backdrop-blur-xl overflow-hidden transition-all hover:border-green-light hover:bg-white/90 h-full shadow-lg shadow-green-muted/30">
+                  <div className="relative aspect-video overflow-hidden bg-green-muted">
                     {project.video ? (
                       <>
                         <video
@@ -380,7 +380,7 @@ export default async function ProjectsPage() {
                           muted
                           playsInline
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-green-dark/40 to-transparent" />
                       </>
                     ) : (
                       <>
@@ -389,20 +389,20 @@ export default async function ProjectsPage() {
                           alt={project.title}
                           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-green-dark/40 to-transparent" />
                       </>
                     )}
 
                     {project.video && (
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-sky-500/90 backdrop-blur-sm shadow-lg">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-dark/90 backdrop-blur-sm shadow-lg">
                           <Play className="h-7 w-7 text-white fill-white ml-1" />
                         </div>
                       </div>
                     )}
 
                     <div className="absolute top-3 left-3">
-                      <span className="inline-flex items-center rounded-full bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-medium text-sky-600 border border-sky-300">
+                      <span className="inline-flex items-center rounded-full bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-medium text-green-dark border border-green-light">
                         {project.category}
                       </span>
                     </div>
@@ -415,15 +415,15 @@ export default async function ProjectsPage() {
                   </div>
 
                   <div className="p-5">
-                    <div className="mb-2 text-sm text-gray-600">{project.client}</div>
-                    <h3 className="mb-2 text-xl font-bold text-black group-hover:text-sky-500 transition-colors">
+                    <div className="mb-2 text-sm text-black">{project.client}</div>
+                    <h3 className="text-[#064E3B] mb-2 text-xl font-bold text-black group-hover:text-green-dark transition-colors">
                       {project.title}
                     </h3>
-                    <p className="mb-4 text-sm text-gray-700 line-clamp-2">{project.description}</p>
+                    <p className="mb-4 text-sm text-black line-clamp-2">{project.description}</p>
                     {project.tags && project.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {project.tags.slice(0, 3).map((tag: string) => (
-                          <span key={tag} className="rounded-full bg-sky-50 px-2.5 py-1 text-xs text-gray-700 border border-sky-200">
+                          <span key={tag} className="rounded-full bg-green-muted px-2.5 py-1 text-xs text-black border border-green-muted">
                             {tag}
                           </span>
                         ))}
@@ -439,7 +439,7 @@ export default async function ProjectsPage() {
         {/* CTA Section */}
         <section className="container mx-auto px-4 pb-16 sm:pb-24">
           <Card className="liquid-glass-enhanced border border-white/15 bg-white/10 backdrop-blur-xl text-center p-8 sm:p-12">
-            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Ready to Create Something Amazing?</h2>
+            <h2 className="text-[#064E3B] mb-4 text-3xl font-bold text-white sm:text-4xl">Ready to Create Something Amazing?</h2>
             <p className="mb-8 text-lg text-gray-300">Let's bring your vision to life with our creative expertise</p>
             <Button
               asChild

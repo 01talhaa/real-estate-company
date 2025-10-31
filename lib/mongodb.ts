@@ -1,11 +1,22 @@
-import { MongoClient, Db } from 'mongodb'
+import { MongoClient, Db, MongoClientOptions } from 'mongodb'
 
 if (!process.env.MONGO_URI) {
   throw new Error('Please add your Mongo URI to .env file')
 }
 
 const uri: string = process.env.MONGO_URI
-const options = {}
+
+// Optimized connection pool settings for better performance
+const options: MongoClientOptions = {
+  maxPoolSize: 10, // Maximum number of connections in the pool
+  minPoolSize: 2, // Minimum number of connections in the pool
+  maxIdleTimeMS: 60000, // Close connections after 1 minute of inactivity
+  serverSelectionTimeoutMS: 10000, // Timeout for server selection
+  socketTimeoutMS: 45000, // Socket timeout
+  connectTimeoutMS: 10000, // Connection timeout
+  retryWrites: true, // Automatically retry failed writes
+  retryReads: true, // Automatically retry failed reads
+}
 
 let client: MongoClient
 let clientPromise: Promise<MongoClient>
@@ -29,7 +40,7 @@ if (process.env.NODE_ENV === 'development') {
 
 export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db }> {
   const client = await clientPromise
-  const db = client.db('pqrix')
+  const db = client.db('sabit-real-estate')
   return { client, db }
 }
 

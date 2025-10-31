@@ -42,7 +42,7 @@ interface Inquiry {
 
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-500/10 text-yellow-500 border-yellow-500/30",
-  approved: "bg-blue-500/10 text-blue-500 border-blue-500/30",
+  approved: "bg-green-light/10 text-green-light border-green-light/30",
   paid: "bg-green-500/10 text-green-500 border-green-500/30",
   "in-progress": "bg-purple-500/10 text-purple-500 border-purple-500/30",
   completed: "bg-emerald-500/10 text-emerald-500 border-emerald-500/30",
@@ -89,7 +89,7 @@ export function InquiriesSection() {
     const doc = new jsPDF()
     
     // Set colors
-    const primaryColor: [number, number, number] = [14, 165, 233] // Sky-500
+    const primaryColor: [number, number, number] = [6, 78, 59] // green-dark (#064E3B)
     const darkColor: [number, number, number] = [0, 0, 0]
     const grayColor: [number, number, number] = [107, 114, 128]
     
@@ -241,7 +241,7 @@ export function InquiriesSection() {
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3">
-            <FileText className="h-6 w-6 text-sky-500" />
+            <FileText className="h-6 w-6 text-green-dark" />
             Invoice Details
           </DialogTitle>
           <DialogDescription>
@@ -251,10 +251,10 @@ export function InquiriesSection() {
 
         <div className="space-y-6">
           {/* Invoice Header */}
-          <div className="p-6 rounded-lg bg-gradient-to-br from-sky-50 to-blue-50 border border-sky-200">
+          <div className="p-6 rounded-lg bg-gradient-to-br from-green-muted to-green-muted border border-green-muted">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-sm font-medium text-gray-600">Invoice Number</p>
+                <p className="text-sm font-medium text-black">Invoice Number</p>
                 <p className="text-2xl font-bold text-black">{inquiry.invoiceNumber}</p>
               </div>
               <Badge className={statusColors[inquiry.status]}>
@@ -264,13 +264,13 @@ export function InquiriesSection() {
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-gray-600">Created Date</p>
+                <p className="text-black">Created Date</p>
                 <p className="font-semibold text-black">
                   {format(new Date(inquiry.createdAt), 'PPP')}
                 </p>
               </div>
               <div>
-                <p className="text-gray-600">Last Updated</p>
+                <p className="text-black">Last Updated</p>
                 <p className="font-semibold text-black">
                   {format(new Date(inquiry.updatedAt), 'PPP')}
                 </p>
@@ -280,24 +280,24 @@ export function InquiriesSection() {
 
           {/* Service Details */}
           <div>
-            <h3 className="font-semibold text-black mb-3">Service Details</h3>
+            <h3 className="text-[#064E3B] font-semibold text-black mb-3">Service Details</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600">Service:</span>
+                <span className="text-black">Service:</span>
                 <span className="font-semibold text-black">{inquiry.serviceName}</span>
               </div>
               {inquiry.packageName && (
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Package:</span>
+                  <span className="text-black">Package:</span>
                   <span className="font-semibold text-black">{inquiry.packageName}</span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span className="text-gray-600">Total Amount:</span>
-                <span className="font-bold text-sky-600 text-lg">{inquiry.totalAmount}</span>
+                <span className="text-black">Total Amount:</span>
+                <span className="font-bold text-green-dark text-lg">{inquiry.totalAmount}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Payment Status:</span>
+                <span className="text-black">Payment Status:</span>
                 <Badge variant={inquiry.paymentStatus === 'paid' ? 'default' : 'secondary'}>
                   {inquiry.paymentStatus.toUpperCase()}
                 </Badge>
@@ -307,8 +307,8 @@ export function InquiriesSection() {
 
           {/* Project Details */}
           <div>
-            <h3 className="font-semibold text-black mb-3">Your Message</h3>
-            <p className="text-sm text-gray-700 p-4 rounded-lg bg-gray-50 border border-gray-200">
+            <h3 className="text-[#064E3B] font-semibold text-black mb-3">Your Message</h3>
+            <p className="text-sm text-black p-4 rounded-lg bg-white border border-gray-200">
               {inquiry.message}
             </p>
           </div>
@@ -316,8 +316,8 @@ export function InquiriesSection() {
           {/* Admin Notes */}
           {inquiry.adminNotes && (
             <div>
-              <h3 className="font-semibold text-black mb-3">Admin Notes</h3>
-              <p className="text-sm text-gray-700 p-4 rounded-lg bg-blue-50 border border-blue-200">
+              <h3 className="text-[#064E3B] font-semibold text-black mb-3">Admin Notes</h3>
+              <p className="text-sm text-black p-4 rounded-lg bg-green-muted border border-green-light">
                 {inquiry.adminNotes}
               </p>
             </div>
@@ -326,24 +326,24 @@ export function InquiriesSection() {
           {/* Status History */}
           {inquiry.statusHistory && inquiry.statusHistory.length > 0 && (
             <div>
-              <h3 className="font-semibold text-black mb-3">Status History</h3>
+              <h3 className="text-[#064E3B] font-semibold text-black mb-3">Status History</h3>
               <div className="space-y-3">
                 {inquiry.statusHistory.map((history, idx) => (
                   <div key={idx} className="flex items-start gap-3 text-sm">
-                    <div className="h-8 w-8 rounded-full bg-sky-100 flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="h-4 w-4 text-sky-600" />
+                    <div className="h-8 w-8 rounded-full bg-green-muted flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="h-4 w-4 text-green-dark" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <p className="font-semibold text-black">
                           {history.status.toUpperCase().replace('-', ' ')}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-black">
                           {format(new Date(history.changedAt), 'PPp')}
                         </p>
                       </div>
-                      <p className="text-xs text-gray-600">by {history.changedBy}</p>
-                      {history.note && <p className="text-xs text-gray-600 mt-1">{history.note}</p>}
+                      <p className="text-xs text-black">by {history.changedBy}</p>
+                      {history.note && <p className="text-xs text-black mt-1">{history.note}</p>}
                     </div>
                   </div>
                 ))}
@@ -355,7 +355,7 @@ export function InquiriesSection() {
           <div className="pt-4 border-t border-gray-200">
             <Button 
               onClick={() => downloadInvoice(inquiry)}
-              className="w-full bg-sky-500 hover:bg-sky-600 text-white"
+              className="w-full bg-green-dark hover: "
             >
               <Download className="h-4 w-4 mr-2" />
               Download Invoice (PDF)
@@ -370,7 +370,7 @@ export function InquiriesSection() {
     return (
       <Card>
         <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-sky-500" />
+          <Loader2 className="h-8 w-8 animate-spin text-green-dark" />
         </CardContent>
       </Card>
     )
@@ -384,7 +384,7 @@ export function InquiriesSection() {
         </CardHeader>
         <CardContent className="text-center py-12">
           <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600 mb-4">No inquiries yet</p>
+          <p className="text-black mb-4">No inquiries yet</p>
           <Button asChild>
             <Link href="/services">Browse Services</Link>
           </Button>
@@ -409,23 +409,23 @@ export function InquiriesSection() {
             return (
               <div
                 key={inquiry._id}
-                className="p-4 rounded-lg border border-gray-200 hover:border-sky-300 transition-colors bg-white"
+                className="p-4 rounded-lg border border-gray-200 hover:border-green-light transition-colors bg-white"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-black">{inquiry.serviceName}</h3>
+                      <h3 className="text-[#064E3B] font-semibold text-black">{inquiry.serviceName}</h3>
                       <Badge className={statusColors[inquiry.status]}>
                         <StatusIcon className={`h-3 w-3 mr-1 ${inquiry.status === 'in-progress' ? 'animate-spin' : ''}`} />
                         {inquiry.status.toUpperCase().replace('-', ' ')}
                       </Badge>
                     </div>
                     {inquiry.packageName && (
-                      <p className="text-sm text-gray-600">{inquiry.packageName}</p>
+                      <p className="text-sm text-black">{inquiry.packageName}</p>
                     )}
                   </div>
                   <div className="text-right">
-                    <p className="text-lg font-bold text-sky-600">{inquiry.totalAmount}</p>
+                    <p className="text-lg font-bold text-green-dark">{inquiry.totalAmount}</p>
                     <Badge variant={inquiry.paymentStatus === 'paid' ? 'default' : 'secondary'} className="text-xs">
                       {inquiry.paymentStatus}
                     </Badge>
@@ -434,10 +434,10 @@ export function InquiriesSection() {
 
                 <div className="flex items-center justify-between text-sm">
                   <div className="space-y-1">
-                    <p className="text-gray-600">
+                    <p className="text-black">
                       Invoice: <span className="font-mono font-semibold text-black">{inquiry.invoiceNumber}</span>
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-black">
                       {format(new Date(inquiry.createdAt), 'PPP')}
                     </p>
                   </div>

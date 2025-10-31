@@ -12,14 +12,14 @@ export default function RevisionPolicyPage() {
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(163,230,53,0.10),transparent_55%)]" />
               <div className="relative space-y-12">
                 <header className="space-y-4">
-                  <h1 className="text-4xl font-bold tracking-tight text-lime-300">Revision Policy</h1>
+                  <h1 className="text-[#064E3B] text-4xl font-bold tracking-tight text-lime-300">Revision Policy</h1>
                   <p className="text-neutral-400 text-lg">
                     Our revision policy ensures transparency and fairness for all clients while maintaining the quality and efficiency of our work.
                   </p>
                 </header>
 
                 <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-white">1. Included Revisions</h2>
+                  <h2 className="text-[#064E3B] text-2xl font-semibold text-white">1. Included Revisions</h2>
                   <p className="text-neutral-300">
                     Each plan includes a set number of revisions as listed in its respective tier:
                   </p>
@@ -31,7 +31,7 @@ export default function RevisionPolicyPage() {
                 </section>
 
                 <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-white">2. Additional Revisions</h2>
+                  <h2 className="text-[#064E3B] text-2xl font-semibold text-white">2. Additional Revisions</h2>
                   <p className="text-neutral-300">
                     Any revisions beyond the included amount will be charged at the following hourly rates:
                   </p>
@@ -43,21 +43,21 @@ export default function RevisionPolicyPage() {
                 </section>
 
                 <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-white">3. Scope of Revisions</h2>
+                  <h2 className="text-[#064E3B] text-2xl font-semibold text-white">3. Scope of Revisions</h2>
                   <p className="text-neutral-300">
                     Revisions are meant to refine and adjust the agreed deliverables, not to expand the original scope of work. Significant changes or additions will require a new project agreement.
                   </p>
                 </section>
 
                 <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-white">4. Turnaround Time</h2>
+                  <h2 className="text-[#064E3B] text-2xl font-semibold text-white">4. Turnaround Time</h2>
                   <p className="text-neutral-300">
                     The turnaround time for revisions will depend on the complexity of the requested changes and current project workload.
                   </p>
                 </section>
 
                 <section className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-white">5. Contact Us</h2>
+                  <h2 className="text-[#064E3B] text-2xl font-semibold text-white">5. Contact Us</h2>
                   <p className="text-neutral-300">
                     For questions regarding our revision policy, please contact us at:
                   </p>

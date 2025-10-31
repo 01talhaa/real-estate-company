@@ -106,24 +106,24 @@ export function Pricing() {
   }, [])
 
   return (
-    <section id="pricing" className="text-black bg-gradient-to-b from-white via-sky-50 to-white" itemScope itemType="https://schema.org/PriceSpecification">
+    <section id="pricing" className="text-black bg-gradient-to-b from-white via-green-muted to-white" itemScope itemType="https://schema.org/PriceSpecification">
       <div className="container mx-auto px-4 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl text-center">
           <div
-            className="mx-auto mb-4 inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-sky-100 text-sky-600 border border-sky-200"
+            className="mx-auto mb-4 inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-green-muted text-green-dark border border-green-muted"
           >
             Our Pricing and Packages
           </div>
-          <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-black" itemProp="name">
+          <h2 className="text-[#064E3B] text-4xl font-extrabold tracking-tight sm:text-5xl text-black" itemProp="name">
             Our Service Packages.
           </h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-gray-600" itemProp="description">
+          <p className="mx-auto mt-2 max-w-xl text-sm text-black" itemProp="description">
             Transparent pricing. Professional asset management services tailored to your portfolio.
           </p>
           <div className="mt-6">
             <Button
               asChild
-              className="rounded-full px-5 bg-sky-500 text-white hover:bg-sky-600 shadow-lg shadow-sky-400/30"
+              className="rounded-full px-5    shadow-lg "
             >
               <Link href="https://wa.me/8801401658685?text=Hi!%20I'm%20interested%20in%20your%20services" target="_blank">
                 Contact now
@@ -140,7 +140,7 @@ export function Pricing() {
             itemType="https://schema.org/Offer"
           >
             <div
-              className="absolute right-4 top-11 rounded-full px-2 py-0.5 text-[10px] bg-sky-100 text-sky-600 border border-sky-200"
+              className="absolute right-4 top-11 rounded-full px-2 py-0.5 text-[10px] bg-green-muted text-green-dark border border-green-muted"
             >
               {PRICES[currency].save}
             </div>
@@ -153,7 +153,7 @@ export function Pricing() {
                 <div className="text-xl font-bold tracking-tight" itemProp="price">
                   {PRICES[currency].startup}
                 </div>
-                <span className="pb-0.5 text-[11px] text-gray-600">per month</span>
+                <span className="pb-0.5 text-[11px] text-black">per month</span>
                 <meta itemProp="priceCurrency" content={currency} />
               </div>
               <div className="flex gap-2">
@@ -161,13 +161,13 @@ export function Pricing() {
                   type="button"
                   onClick={() => setOpenPlan("Startup")}
                   onTouchStart={() => setOpenPlan("Startup")}
-                  className="flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors bg-white text-black border border-sky-300 hover:bg-sky-50"
+                  className="flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors bg-white text-black border border-green-light hover:bg-green-muted"
                 >
                   Learn More
                 </Button>
                 <Button
                   asChild
-                  className="flex-1 rounded-full px-4 py-2 text-sm font-medium text-white bg-sky-500 hover:bg-sky-600 shadow-lg shadow-sky-400/30 transition-[box-shadow,transform,filter] active:translate-y-[1px]"
+                  className="flex-1 rounded-full px-4 py-2 text-sm font-medium text-white bg-green-dark  shadow-lg  transition-[box-shadow,transform,filter] active:translate-y-[1px]"
                 >
                   <Link href="/checkout?plan=startup">Select</Link>
                 </Button>

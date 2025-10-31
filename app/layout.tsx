@@ -1,5 +1,6 @@
 import type React from "react"
 import "./globals.css"
+import "leaflet/dist/leaflet.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import Script from "next/script"
@@ -485,13 +486,13 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
-        <div className="fixed inset-0 z-0 bg-gradient-to-br from-white via-sky-50 to-white">
+        <div className="fixed inset-0 z-0 bg-white">
           <Plasma
-            color="#3b82f6"
+            color="#064E3B"
             speed={0.8}
             direction="forward"
             scale={1.5}
-            opacity={0.15}
+            opacity={0.10}
             mouseInteractive={true}
           />
         </div>

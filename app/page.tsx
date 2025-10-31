@@ -3,15 +3,17 @@ import { Hero } from "@/components/hero"
 import { Features } from "@/components/features"
 import { ServicesSection } from "@/components/services-section"
 import { LogoMarquee } from "@/components/logo-marquee"
-import { TechStackMarquee } from "@/components/tech-stack-marquee"
 import { Pricing } from "@/components/pricing"
 import { AppverseFooter } from "@/components/appverse-footer"
 import { ProjectsSection } from "@/components/projects-section"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import { FeaturedPropertiesSection } from "@/components/featured-properties-section"
+import { LatestInsightsSection } from "@/components/latest-insights-section"
+import { GalleriesSection } from "@/components/galleries-section"
 import Script from "next/script"
 
-// ✅ Force static generation for low TTFB
-export const dynamic = "force-static"
+// Force dynamic rendering to fetch latest data
+export const dynamic = "force-dynamic"
 
 export default function Page() {
   // Structured data for pricing
@@ -88,8 +90,10 @@ export default function Page() {
         <SiteHeader />
         <Hero />
         <Features />
+        <FeaturedPropertiesSection />
+        <GalleriesSection />
         <ServicesSection />
-        <TechStackMarquee />
+        <LatestInsightsSection />
         <ProjectsSection />
         {/* <LogoMarquee /> */}
         {/* <Pricing /> */}

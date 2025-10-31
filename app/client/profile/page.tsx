@@ -220,26 +220,26 @@ export default function ClientProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <Loader2 className="w-8 h-8 animate-spin text-sky-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-green-dark" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-sky-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-muted via-white to-green-muted">
       {/* Header */}
-      <header className="border-b border-sky-200 bg-white/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
+      <header className="border-b border-green-muted bg-white/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
             href="/client/dashboard"
-            className="text-2xl font-bold bg-gradient-to-r from-sky-500 to-sky-600 bg-clip-text text-transparent"
+            className="text-2xl font-bold bg-gradient-to-r from-green-dark to-green-dark bg-clip-text text-transparent"
           >
             My Profile
           </Link>
           <Button
             onClick={() => router.back()}
             variant="outline"
-            className="border-sky-200 bg-white text-black hover:bg-sky-50"
+            className="border-green-muted bg-white text-black hover:bg-green-muted"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -250,7 +250,7 @@ export default function ClientProfilePage() {
       <div className="container mx-auto px-4 py-8 max-w-2xl space-y-6">
         {/* Profile Information */}
         <form onSubmit={handleProfileUpdate}>
-          <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+          <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
             <CardHeader>
               <CardTitle className="text-black text-xl">Profile Information</CardTitle>
             </CardHeader>
@@ -258,7 +258,7 @@ export default function ClientProfilePage() {
               {/* Profile Image */}
               <div className="flex flex-col items-center gap-4">
                 {formData.avatar ? (
-                  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-sky-200">
+                  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-green-muted">
                     <Image
                       src={formData.avatar}
                       alt="Profile"
@@ -267,8 +267,8 @@ export default function ClientProfilePage() {
                     />
                   </div>
                 ) : (
-                  <div className="w-32 h-32 rounded-full bg-sky-100 flex items-center justify-center border-4 border-sky-200">
-                    <User className="w-16 h-16 text-sky-600" />
+                  <div className="w-32 h-32 rounded-full bg-green-muted flex items-center justify-center border-4 border-green-muted">
+                    <User className="w-16 h-16 text-green-dark" />
                   </div>
                 )}
                 <div className="w-full">
@@ -280,13 +280,13 @@ export default function ClientProfilePage() {
                       accept="image/*"
                       onChange={handleImageUpload}
                       disabled={uploading}
-                      className="bg-white border-sky-200 text-black"
+                      className="bg-white border-green-muted text-black"
                     />
                     <Button
                       type="button"
                       variant="outline"
                       disabled={uploading}
-                      className="bg-white border-sky-200 hover:bg-sky-50 shrink-0"
+                      className="bg-white border-green-muted hover:bg-green-muted shrink-0"
                     >
                       {uploading ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -295,7 +295,7 @@ export default function ClientProfilePage() {
                       )}
                     </Button>
                   </div>
-                  <p className="text-xs text-gray-600 mt-1">Max size: 5MB</p>
+                  <p className="text-xs text-black mt-1">Max size: 5MB</p>
                 </div>
               </div>
 
@@ -308,7 +308,7 @@ export default function ClientProfilePage() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Your name"
                   required
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
               </div>
 
@@ -322,7 +322,7 @@ export default function ClientProfilePage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="your@email.com"
                   required
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
               </div>
 
@@ -335,7 +335,7 @@ export default function ClientProfilePage() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="+1 234 567 8900"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
               </div>
 
@@ -347,14 +347,14 @@ export default function ClientProfilePage() {
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                   placeholder="Your company name"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
               </div>
 
               <Button
                 type="submit"
                 disabled={saving || uploading}
-                className="w-full bg-sky-500 text-white hover:bg-sky-600"
+                className="w-full   "
               >
                 {saving ? (
                   <>
@@ -371,7 +371,7 @@ export default function ClientProfilePage() {
 
         {/* Change Password */}
         <form onSubmit={handlePasswordChange}>
-          <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+          <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
             <CardHeader>
               <CardTitle className="text-black text-xl">Change Password</CardTitle>
             </CardHeader>
@@ -384,7 +384,7 @@ export default function ClientProfilePage() {
                   value={passwordData.currentPassword}
                   onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
                   placeholder="Enter current password"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
               </div>
 
@@ -396,9 +396,9 @@ export default function ClientProfilePage() {
                   value={passwordData.newPassword}
                   onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
                   placeholder="Enter new password"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
-                <p className="text-xs text-gray-600 mt-1">Minimum 6 characters</p>
+                <p className="text-xs text-black mt-1">Minimum 6 characters</p>
               </div>
 
               <div>
@@ -409,7 +409,7 @@ export default function ClientProfilePage() {
                   value={passwordData.confirmPassword}
                   onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
                   placeholder="Confirm new password"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
               </div>
 
@@ -417,7 +417,7 @@ export default function ClientProfilePage() {
                 type="submit"
                 disabled={saving || !passwordData.currentPassword || !passwordData.newPassword}
                 variant="outline"
-                className="w-full border-sky-200 bg-white text-black hover:bg-sky-50"
+                className="w-full border-green-muted bg-white text-black hover:bg-green-muted"
               >
                 {saving ? (
                   <>

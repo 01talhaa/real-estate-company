@@ -111,11 +111,11 @@ export default function AdminProjectsPage() {
       case "Completed":
         return "bg-green-500"
       case "In Progress":
-        return "bg-blue-500"
+        return "bg-green-light"
       case "On Hold":
         return "bg-yellow-500"
       default:
-        return "bg-gray-500"
+        return "bg-white0"
     }
   }
 
@@ -127,13 +127,13 @@ export default function AdminProjectsPage() {
     <div className="container mx-auto py-10">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-black">Projects Management</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-[#064E3B] text-3xl font-bold text-black">Projects Management</h1>
+          <p className="text-black mt-2">
             Manage all projects, create new ones, and edit existing projects
           </p>
         </div>
         <Link href="/admin/projects/new">
-          <Button size="lg" className="gap-2 bg-sky-500 hover:bg-sky-600 text-white shadow-md">
+          <Button size="lg" className="gap-2 bg-green-dark hover:  shadow-md">
             <Plus className="h-4 w-4" />
             New Project
           </Button>
@@ -147,20 +147,20 @@ export default function AdminProjectsPage() {
             placeholder="Search projects..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-white border-sky-200 text-black placeholder:text-gray-400 focus:ring-sky-500"
+            className="pl-10 bg-white border-green-muted text-black placeholder:text-gray-400 focus:ring-green-dark"
           />
         </div>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-green-dark border-t-transparent" />
         </div>
       ) : (
-        <div className="rounded-lg border border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+        <div className="rounded-lg border border-green-muted bg-white shadow-lg shadow-green-muted/30">
           <Table>
             <TableHeader>
-              <TableRow className="border-sky-200 hover:bg-sky-50">
+              <TableRow className="border-green-muted hover:bg-green-muted">
                 <TableHead className="w-20 text-black">Image</TableHead>
                 <TableHead className="text-black">Title</TableHead>
                 <TableHead className="text-black">Category</TableHead>
@@ -172,14 +172,14 @@ export default function AdminProjectsPage() {
             </TableHeader>
             <TableBody>
               {filteredProjects.length === 0 ? (
-                <TableRow className="border-sky-200">
-                  <TableCell colSpan={7} className="text-center py-10 text-gray-600">
+                <TableRow className="border-green-muted">
+                  <TableCell colSpan={7} className="text-center py-10 text-black">
                     No projects found
                   </TableCell>
                 </TableRow>
               ) : (
                 filteredProjects.map((project) => (
-                  <TableRow key={project._id} className="border-sky-200 hover:bg-sky-50">
+                  <TableRow key={project._id} className="border-green-muted hover:bg-green-muted">
                     <TableCell>
                       {project.images && project.images.length > 0 ? (
                         <div className="relative h-12 w-12 overflow-hidden rounded-md">
@@ -191,27 +191,27 @@ export default function AdminProjectsPage() {
                           />
                         </div>
                       ) : (
-                        <div className="h-12 w-12 rounded-md bg-sky-100" />
+                        <div className="h-12 w-12 rounded-md bg-green-muted" />
                       )}
                     </TableCell>
                     <TableCell className="font-medium text-black">{project.title}</TableCell>
-                    <TableCell className="text-gray-700">{project.category}</TableCell>
+                    <TableCell className="text-black">{project.category}</TableCell>
                     <TableCell>
                       <Badge className={getStatusColor(project.status)}>
                         {project.status}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-gray-700">{project.duration} weeks</TableCell>
-                    <TableCell className="text-gray-700">{project.budget}</TableCell>
+                    <TableCell className="text-black">{project.duration} weeks</TableCell>
+                    <TableCell className="text-black">{project.budget}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
                         <Link href={`/projects/${project.id}`} target="_blank">
-                          <Button variant="ghost" size="icon" title="View on website" className="text-sky-600 hover:text-sky-700 hover:bg-sky-100">
+                          <Button variant="ghost" size="icon" title="View on website" className="text-green-dark hover:text-green-dark hover:bg-green-muted">
                             <Eye className="h-4 w-4" />
                           </Button>
                         </Link>
                         <Link href={`/admin/projects/edit/${project._id}`}>
-                          <Button variant="ghost" size="icon" title="Edit project" className="text-sky-600 hover:text-sky-700 hover:bg-sky-100">
+                          <Button variant="ghost" size="icon" title="Edit project" className="text-green-dark hover:text-green-dark hover:bg-green-muted">
                             <Pencil className="h-4 w-4" />
                           </Button>
                         </Link>
@@ -235,16 +235,16 @@ export default function AdminProjectsPage() {
       )}
 
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent className="bg-white border-sky-200">
+        <AlertDialogContent className="bg-white border-green-muted">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-black">Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription className="text-gray-600">
+            <AlertDialogDescription className="text-black">
               This action cannot be undone. This will permanently delete the project
               and remove all associated images from Cloudinary.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deleting} className="border-sky-200 hover:bg-sky-50">Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={deleting} className="border-green-muted hover:bg-green-muted">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={deleting}

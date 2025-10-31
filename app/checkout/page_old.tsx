@@ -166,14 +166,14 @@ function CheckoutContent() {
 
         <section className="container mx-auto px-4 py-12 sm:py-16">
           <div className="max-w-5xl mx-auto">
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-white mb-8 text-center">
+            <h1 className="text-[#064E3B] text-4xl font-extrabold tracking-tight sm:text-5xl text-white mb-8 text-center">
               Checkout
             </h1>
 
             <div className="grid gap-8 lg:grid-cols-5">
               <div className="lg:col-span-2">
                 <Card className="liquid-glass border border-white/10 bg-white/5 backdrop-blur-xl p-6 sticky top-8">
-                  <h2 className="text-xl font-bold text-white mb-4">Order Summary</h2>
+                  <h2 className="text-[#064E3B] text-xl font-bold text-white mb-4">Order Summary</h2>
 
                   <div className="space-y-4">
                     <div>
@@ -214,7 +214,7 @@ function CheckoutContent() {
 
               <div className="lg:col-span-3">
                 <Card className="liquid-glass border border-white/10 bg-white/5 backdrop-blur-xl p-8">
-                  <h2 className="text-2xl font-bold text-white mb-6">Your Information</h2>
+                  <h2 className="text-[#064E3B] text-2xl font-bold text-white mb-6">Your Information</h2>
 
                   <form className="space-y-6">
                     <div>

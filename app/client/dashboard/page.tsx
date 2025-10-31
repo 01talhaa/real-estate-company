@@ -112,7 +112,7 @@ export default function ClientDashboard() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <Loader2 className="w-8 h-8 animate-spin text-sky-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-green-dark" />
       </div>
     )
   }
@@ -122,13 +122,13 @@ export default function ClientDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-sky-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-muted via-white to-green-muted">
       {/* Header */}
-      <header className="border-b border-sky-200 bg-white/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
+      <header className="border-b border-green-muted bg-white/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link
             href="/client/dashboard"
-            className="text-2xl font-bold bg-gradient-to-r from-sky-500 to-sky-600 bg-clip-text text-transparent"
+            className="text-2xl font-bold bg-gradient-to-r from-green-dark to-green-dark bg-clip-text text-transparent"
           >
             My Dashboard
           </Link>
@@ -136,7 +136,7 @@ export default function ClientDashboard() {
             <Link href="/client/profile">
               <Button
                 variant="outline"
-                className="border-sky-200 bg-white text-black hover:bg-sky-50"
+                className="border-green-muted bg-white text-black hover:bg-green-muted"
               >
                 <User className="w-4 h-4 mr-2" />
                 Profile
@@ -145,7 +145,7 @@ export default function ClientDashboard() {
             <Button
               onClick={handleLogout}
               variant="outline"
-              className="border-sky-200 bg-white text-black hover:bg-sky-50"
+              className="border-green-muted bg-white text-black hover:bg-green-muted"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
@@ -156,39 +156,39 @@ export default function ClientDashboard() {
 
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Welcome Section */}
-        <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+        <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
           <CardHeader>
             <div className="flex items-center gap-4">
               {client.avatar ? (
-                <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-sky-200">
+                <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-green-muted">
                   <Image src={client.avatar} alt={client.name} fill className="object-cover" />
                 </div>
               ) : (
-                <div className="w-16 h-16 rounded-full bg-sky-100 flex items-center justify-center border-2 border-sky-200">
-                  <User className="w-8 h-8 text-sky-600" />
+                <div className="w-16 h-16 rounded-full bg-green-muted flex items-center justify-center border-2 border-green-muted">
+                  <User className="w-8 h-8 text-green-dark" />
                 </div>
               )}
               <div>
                 <CardTitle className="text-2xl text-black">Welcome, {client.name}!</CardTitle>
-                <p className="text-gray-600 mt-1">{client.email}</p>
-                {client.company && <p className="text-sm text-gray-600">{client.company}</p>}
+                <p className="text-black mt-1">{client.email}</p>
+                {client.company && <p className="text-sm text-black">{client.company}</p>}
               </div>
             </div>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 p-4 bg-sky-50 rounded-lg border border-sky-200">
-                <FolderKanban className="w-8 h-8 text-sky-600" />
+              <div className="flex items-center gap-3 p-4 bg-green-muted rounded-lg border border-green-muted">
+                <FolderKanban className="w-8 h-8 text-green-dark" />
                 <div>
                   <p className="text-2xl font-bold text-black">{projects.length}</p>
-                  <p className="text-sm text-gray-600">Active Projects</p>
+                  <p className="text-sm text-black">Active Projects</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 p-4 bg-sky-50 rounded-lg border border-sky-200">
-                <Briefcase className="w-8 h-8 text-sky-600" />
+              <div className="flex items-center gap-3 p-4 bg-green-muted rounded-lg border border-green-muted">
+                <Briefcase className="w-8 h-8 text-green-dark" />
                 <div>
                   <p className="text-2xl font-bold text-black">{services.length}</p>
-                  <p className="text-sm text-gray-600">Booked Services</p>
+                  <p className="text-sm text-black">Booked Services</p>
                 </div>
               </div>
             </div>
@@ -202,15 +202,15 @@ export default function ClientDashboard() {
 
         {/* Projects Section */}
         <div>
-          <h2 className="text-2xl font-bold text-black mb-4 flex items-center gap-2">
-            <FolderKanban className="w-6 h-6 text-sky-600" />
+          <h2 className="text-[#064E3B] text-2xl font-bold text-black mb-4 flex items-center gap-2">
+            <FolderKanban className="w-6 h-6 text-green-dark" />
             Your Projects
           </h2>
           {projects.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {projects.map((project) => (
                 <Link key={project.id} href={`/projects/${project.id}`}>
-                  <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30 hover:shadow-xl hover:shadow-sky-200/40 transition-all cursor-pointer">
+                  <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30 hover:shadow-xl hover:shadow-green-muted/40 transition-all cursor-pointer">
                     {project.images?.[0] && (
                       <div className="relative h-48 overflow-hidden rounded-t-lg">
                         <Image
@@ -223,18 +223,18 @@ export default function ClientDashboard() {
                     )}
                     <CardHeader>
                       <CardTitle className="text-black">{project.title}</CardTitle>
-                      <p className="text-sm text-sky-600">{project.category}</p>
+                      <p className="text-sm text-green-dark">{project.category}</p>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-gray-600 line-clamp-2">{project.description}</p>
+                      <p className="text-sm text-black line-clamp-2">{project.description}</p>
                       <div className="mt-4">
                         <span
                           className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                             project.status === "Completed"
                               ? "bg-green-100 text-green-700"
                               : project.status === "In Progress"
-                                ? "bg-sky-100 text-sky-700"
-                                : "bg-gray-100 text-gray-700"
+                                ? "bg-green-muted text-green-dark"
+                                : "bg-gray-100 text-black"
                           }`}
                         >
                           {project.status}
@@ -246,12 +246,12 @@ export default function ClientDashboard() {
               ))}
             </div>
           ) : (
-            <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+            <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
               <CardContent className="py-12 text-center">
                 <FolderKanban className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-4">No projects yet</p>
+                <p className="text-black mb-4">No projects yet</p>
                 <Link href="/projects">
-                  <Button className="bg-sky-500 text-white hover:bg-sky-600">
+                  <Button className="  ">
                     Browse Projects
                   </Button>
                 </Link>
@@ -262,15 +262,15 @@ export default function ClientDashboard() {
 
         {/* Services Section */}
         <div>
-          <h2 className="text-2xl font-bold text-black mb-4 flex items-center gap-2">
-            <Briefcase className="w-6 h-6 text-sky-600" />
+          <h2 className="text-[#064E3B] text-2xl font-bold text-black mb-4 flex items-center gap-2">
+            <Briefcase className="w-6 h-6 text-green-dark" />
             Booked Services
           </h2>
           {services.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service) => (
                 <Link key={service.id} href={`/services/${service.id}`}>
-                  <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30 hover:shadow-xl hover:shadow-sky-200/40 transition-all cursor-pointer">
+                  <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30 hover:shadow-xl hover:shadow-green-muted/40 transition-all cursor-pointer">
                     <CardHeader>
                       <div className="flex items-center gap-3">
                         {service.icon && (
@@ -278,24 +278,24 @@ export default function ClientDashboard() {
                         )}
                         <div>
                           <CardTitle className="text-black">{service.title}</CardTitle>
-                          <p className="text-sm text-sky-600">{service.category}</p>
+                          <p className="text-sm text-green-dark">{service.category}</p>
                         </div>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-gray-600 line-clamp-2">{service.description}</p>
+                      <p className="text-sm text-black line-clamp-2">{service.description}</p>
                     </CardContent>
                   </Card>
                 </Link>
               ))}
             </div>
           ) : (
-            <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+            <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
               <CardContent className="py-12 text-center">
                 <Briefcase className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-4">No services booked yet</p>
+                <p className="text-black mb-4">No services booked yet</p>
                 <Link href="/services">
-                  <Button className="bg-sky-500 text-white hover:bg-sky-600">
+                  <Button className="  ">
                     Browse Services
                   </Button>
                 </Link>

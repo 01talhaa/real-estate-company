@@ -83,7 +83,7 @@ export default function ClientsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-sky-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-green-dark" />
       </div>
     )
   }
@@ -92,12 +92,12 @@ export default function ClientsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-black">Client Management</h1>
-          <p className="text-gray-600 mt-2">Manage client accounts and their projects</p>
+          <h1 className="text-[#064E3B] text-3xl font-bold text-black">Client Management</h1>
+          <p className="text-black mt-2">Manage client accounts and their projects</p>
         </div>
         <Button
           onClick={() => router.push("/admin/clients/new")}
-          className="bg-sky-500 text-white hover:bg-sky-600"
+          className="  "
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Client
@@ -106,12 +106,12 @@ export default function ClientsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {clients.map((client) => (
-          <Card key={client._id} className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+          <Card key={client._id} className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   {client.avatar ? (
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-sky-200">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-green-muted">
                       <Image
                         src={client.avatar}
                         alt={client.name}
@@ -120,35 +120,35 @@ export default function ClientsPage() {
                       />
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center border-2 border-sky-200">
-                      <span className="text-sky-600 font-semibold text-lg">
+                    <div className="w-12 h-12 rounded-full bg-green-muted flex items-center justify-center border-2 border-green-muted">
+                      <span className="text-green-dark font-semibold text-lg">
                         {client.name.charAt(0).toUpperCase()}
                       </span>
                     </div>
                   )}
                   <div>
                     <CardTitle className="text-black text-lg">{client.name}</CardTitle>
-                    <p className="text-sm text-gray-600">{client.email}</p>
+                    <p className="text-sm text-black">{client.email}</p>
                   </div>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-3">
               {client.company && (
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-black">
                   <span className="font-semibold text-black">Company:</span> {client.company}
                 </p>
               )}
               {client.phone && (
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-black">
                   <span className="font-semibold text-black">Phone:</span> {client.phone}
                 </p>
               )}
-              <div className="flex gap-2 text-sm text-gray-600">
+              <div className="flex gap-2 text-sm text-black">
                 <span className="font-semibold text-black">Projects:</span>
                 <span>{client.projects?.length || 0}</span>
               </div>
-              <div className="flex gap-2 text-sm text-gray-600">
+              <div className="flex gap-2 text-sm text-black">
                 <span className="font-semibold text-black">Services:</span>
                 <span>{client.services?.length || 0}</span>
               </div>
@@ -157,7 +157,7 @@ export default function ClientsPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => router.push(`/admin/clients/${client._id}`)}
-                  className="flex-1 border-sky-200 bg-white text-black hover:bg-sky-50"
+                  className="flex-1 border-green-muted bg-white text-black hover:bg-green-muted"
                 >
                   <Pencil className="w-4 h-4 mr-2" />
                   Edit
@@ -178,12 +178,12 @@ export default function ClientsPage() {
       </div>
 
       {clients.length === 0 && (
-        <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+        <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
           <CardContent className="py-12 text-center">
-            <p className="text-gray-600 mb-4">No clients found</p>
+            <p className="text-black mb-4">No clients found</p>
             <Button
               onClick={() => router.push("/admin/clients/new")}
-              className="bg-sky-500 text-white hover:bg-sky-600"
+              className="  "
             >
               <Plus className="w-4 h-4 mr-2" />
               Add First Client

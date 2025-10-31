@@ -13,55 +13,58 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+  			'green-dark': '#064E3B',
+  			'green-light': '#10B981',
+  			'green-muted': '#D1FAE5',
+  			background: '#FFFFFF',
+  			foreground: '#111827',
   			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
+  				DEFAULT: '#FFFFFF',
+  				foreground: '#111827'
   			},
   			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
+  				DEFAULT: '#FFFFFF',
+  				foreground: '#111827'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				DEFAULT: '#064E3B',
+  				foreground: '#FFFFFF'
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
+  				DEFAULT: '#D1FAE5',
+  				foreground: '#111827'
   			},
   			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
+  				DEFAULT: '#D1FAE5',
+  				foreground: '#111827'
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				DEFAULT: '#10B981',
+  				foreground: '#FFFFFF'
   			},
   			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
+  				DEFAULT: '#EF4444',
+  				foreground: '#FFFFFF'
   			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
+  			border: '#D1FAE5',
+  			input: '#E5E7EB',
+  			ring: '#064E3B',
   			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
+  				'1': 'var(--chart-1)',
+  				'2': 'var(--chart-2)',
+  				'3': 'var(--chart-3)',
+  				'4': 'var(--chart-4)',
+  				'5': 'var(--chart-5)'
   			},
   			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
-  				foreground: 'hsl(var(--sidebar-foreground))',
-  				primary: 'hsl(var(--sidebar-primary))',
-  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-  				accent: 'hsl(var(--sidebar-accent))',
-  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-  				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
+  				DEFAULT: 'var(--sidebar-background)',
+  				foreground: 'var(--sidebar-foreground)',
+  				primary: 'var(--sidebar-primary)',
+  				'primary-foreground': 'var(--sidebar-primary-foreground)',
+  				accent: 'var(--sidebar-accent)',
+  				'accent-foreground': 'var(--sidebar-accent-foreground)',
+  				border: 'var(--sidebar-border)',
+  				ring: 'var(--sidebar-ring)'
   			}
   		},
   		borderRadius: {

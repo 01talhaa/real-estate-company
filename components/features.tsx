@@ -34,21 +34,21 @@ export function Features() {
   }, [])
 
   return (
-    <section id="features" className="container mx-auto px-4 py-16 sm:py-20 bg-gradient-to-b from-white via-sky-50 to-white">
-      <h2 className="mb-8 text-center text-4xl font-extrabold tracking-tight text-black sm:text-5xl">
+    <section id="features" className="container mx-auto px-4 py-16 sm:py-20 bg-gradient-to-b from-white via-green-muted to-white">
+      <h2 className="text-[#064E3B] mb-8 text-center text-4xl font-extrabold tracking-tight text-black sm:text-5xl">
         {content.title}
       </h2>
 
       <div className="grid gap-6 md:grid-cols-2">
         {/* Adaptability Card - Hidden on mobile */}
-        <Card className="hidden md:block liquid-glass border border-sky-200 bg-white/80 backdrop-blur-xl shadow-lg shadow-sky-200/30">
+        <Card className="hidden md:block liquid-glass border border-green-muted bg-white/80 backdrop-blur-xl shadow-lg shadow-green-muted/30">
           <CardHeader>
-            <p className="text-[11px] tracking-widest text-sky-600">STRATEGIC APPROACH</p>
+            <p className="text-[11px] tracking-widest text-green-dark">STRATEGIC APPROACH</p>
             <CardTitle className="mt-1 text-xl text-black">Maximize returns through data-driven insights</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-sky-200">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-green-muted">
                 <Image
                   src="/images/intuitive-1.png"
                   alt="Close-up smartphone camera module on textured leather back"
@@ -73,19 +73,19 @@ export function Features() {
         </Card>
 
         {/* Client Love Card - Always visible */}
-        <Card className="liquid-glass border border-sky-200 bg-white/80 backdrop-blur-xl shadow-lg shadow-sky-200/30">
+        <Card className="liquid-glass border border-green-muted bg-white/80 backdrop-blur-xl shadow-lg shadow-green-muted/30">
           <CardHeader>
-            <p className="text-[11px] tracking-widest text-sky-600">CLIENT SUCCESS</p>
+            <p className="text-[11px] tracking-widest text-green-dark">CLIENT SUCCESS</p>
             <CardTitle className="mt-1 text-xl text-black">
               Their asset management expertise transformed our portfolio performance — returns exceeded our expectations significantly.
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="mb-6 flex items-end gap-4">
-              <div className="text-5xl font-bold text-sky-500">4.9</div>
+              <div className="text-5xl font-bold text-green-dark">4.9</div>
               <div className="flex items-center gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-sky-400 text-sky-400" />
+                  <Star key={i} className="h-5 w-5 fill-green-light text-green-light" />
                 ))}
               </div>
             </div>

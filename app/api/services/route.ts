@@ -2,26 +2,34 @@ import { NextResponse } from 'next/server'
 import { connectToDatabase } from '@/lib/mongodb'
 import { SERVICES_COLLECTION, ServiceDocument } from '@/lib/models/Service'
 import { ObjectId } from 'mongodb'
+import { withCache, CacheTTL, apiCache } from '@/lib/cache'
 
 // GET all services
 export async function GET() {
   try {
-    const { db } = await connectToDatabase()
-    const services = await db
-      .collection(SERVICES_COLLECTION)
-      .find({})
-      .sort({ createdAt: -1 })
-      .toArray()
+    // Cache services with 30 minute TTL (services don't change often)
+    const services = await withCache(
+      'services:all',
+      async () => {
+        const { db } = await connectToDatabase()
+        const services = await db
+          .collection(SERVICES_COLLECTION)
+          .find({})
+          .sort({ order: 1, createdAt: -1 })
+          .toArray()
 
-    // Convert ObjectId to string
-    const servicesWithStringId = services.map(service => ({
-      ...service,
-      _id: service._id.toString(),
-    }))
+        // Convert ObjectId to string
+        return services.map(service => ({
+          ...service,
+          _id: service._id.toString(),
+        }))
+      },
+      CacheTTL.LONG
+    )
 
     return NextResponse.json({ 
       success: true, 
-      data: servicesWithStringId 
+      data: services 
     })
   } catch (error) {
     console.error('Error fetching services:', error)
@@ -48,6 +56,9 @@ export async function POST(request: Request) {
     const result = await db
       .collection(SERVICES_COLLECTION)
       .insertOne(serviceDoc)
+
+    // Invalidate cache when new service is created
+    apiCache.delete('services:all')
 
     return NextResponse.json({
       success: true,

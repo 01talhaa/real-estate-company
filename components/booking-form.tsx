@@ -190,7 +190,7 @@ export function BookingForm({ serviceId, serviceName, packages }: BookingFormPro
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
             disabled={isLoggedIn}
-            className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-gray-500 disabled:opacity-60"
+            className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-black disabled:opacity-60"
             placeholder="John Doe"
           />
         </div>
@@ -206,7 +206,7 @@ export function BookingForm({ serviceId, serviceName, packages }: BookingFormPro
             value={formData.email}
             onChange={(e) => handleChange("email", e.target.value)}
             disabled={isLoggedIn}
-            className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-gray-500 disabled:opacity-60"
+            className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-black disabled:opacity-60"
             placeholder="john@example.com"
           />
         </div>
@@ -221,7 +221,7 @@ export function BookingForm({ serviceId, serviceName, packages }: BookingFormPro
             value={formData.phone}
             onChange={(e) => handleChange("phone", e.target.value)}
             disabled={isLoggedIn}
-            className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-gray-500 disabled:opacity-60"
+            className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-black disabled:opacity-60"
             placeholder="+1 (555) 000-0000"
           />
         </div>
@@ -235,7 +235,7 @@ export function BookingForm({ serviceId, serviceName, packages }: BookingFormPro
             value={formData.company}
             onChange={(e) => handleChange("company", e.target.value)}
             disabled={isLoggedIn}
-            className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-gray-500 disabled:opacity-60"
+            className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-black disabled:opacity-60"
             placeholder="Your Company"
           />
         </div>
@@ -268,7 +268,7 @@ export function BookingForm({ serviceId, serviceName, packages }: BookingFormPro
           required
           value={formData.message}
           onChange={(e) => handleChange("message", e.target.value)}
-          className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-gray-500 min-h-[120px]"
+          className="liquid-glass border-white/20 bg-white/5 text-white placeholder:text-black min-h-[120px]"
           placeholder="Tell us about your project, timeline, and any specific requirements..."
         />
       </div>

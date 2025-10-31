@@ -3,6 +3,7 @@ import { connectToDatabase } from '@/lib/mongodb'
 import { PROJECTS_COLLECTION } from '@/lib/models/Project'
 import { ObjectId } from 'mongodb'
 import { deleteFromCloudinary, extractPublicId } from '@/lib/cloudinary'
+import { withCache, CacheTTL, apiCache } from '@/lib/cache'
 
 // GET /api/projects/[id] - Get a single project
 export async function GET(
@@ -11,19 +12,29 @@ export async function GET(
 ) {
   try {
     const { id } = await params
-    const { db } = await connectToDatabase()
     
-    // Try to find by custom id field first, then fall back to _id
-    let project = await db
-      .collection(PROJECTS_COLLECTION)
-      .findOne({ id })
+    // Cache individual project details with 10 minute TTL
+    const project = await withCache(
+      `project:${id}`,
+      async () => {
+        const { db } = await connectToDatabase()
+        
+        // Try to find by custom id field first, then fall back to _id
+        let project = await db
+          .collection(PROJECTS_COLLECTION)
+          .findOne({ id })
 
-    // If not found by id field, try _id (for MongoDB ObjectId)
-    if (!project && ObjectId.isValid(id)) {
-      project = await db
-        .collection(PROJECTS_COLLECTION)
-        .findOne({ _id: new ObjectId(id) })
-    }
+        // If not found by id field, try _id (for MongoDB ObjectId)
+        if (!project && ObjectId.isValid(id)) {
+          project = await db
+            .collection(PROJECTS_COLLECTION)
+            .findOne({ _id: new ObjectId(id) })
+        }
+
+        return project
+      },
+      CacheTTL.LONG // 30 minutes cache for individual projects
+    )
 
     if (!project) {
       return NextResponse.json(
@@ -75,6 +86,10 @@ export async function PUT(
         { status: 404 }
       )
     }
+
+    // Invalidate cache for this project and listings
+    apiCache.delete(`project:${id}`)
+    apiCache.clear() // Clear all listings cache
 
     return NextResponse.json({ success: true, data: result })
   } catch (error) {

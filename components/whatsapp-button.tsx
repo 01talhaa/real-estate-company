@@ -28,7 +28,7 @@ export function WhatsAppButton() {
           <div className="fixed bottom-24 right-4 sm:right-8 z-[9999]" onClick={(e) => e.stopPropagation()}>
             <Card className="liquid-glass border border-white/10 bg-black/80 backdrop-blur-xl p-4 w-64">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-white font-semibold">Chat with us</h3>
+                <h3 className="text-[#064E3B] text-white font-semibold">Chat with us</h3>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-gray-400 hover:text-white transition-colors"

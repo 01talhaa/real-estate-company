@@ -45,11 +45,11 @@ export default function AboutPage() {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-sky-50 to-white text-black py-20 px-6 md:px-12 lg:px-20 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          About <span className="text-sky-600">Sabit Asset Management</span> <span className="text-gray-800">LTD</span>
+      <section className="relative bg-gradient-to-b from-green-muted to-white text-black py-20 px-6 md:px-12 lg:px-20 text-center">
+        <h1 className="text-[#064E3B] text-4xl md:text-6xl font-bold mb-6">
+          About <span className="text-green-dark">Sabit Asset Management</span> <span className="text-black">LTD</span>
         </h1>
-        <p className="text-lg md:text-xl max-w-2xl mx-auto text-gray-700">
+        <p className="text-lg md:text-xl max-w-2xl mx-auto text-black">
           Your trusted partner in strategic real estate asset management and portfolio optimization.
         </p>
       </section>
@@ -85,26 +85,26 @@ export default function AboutPage() {
           ].map((feature, index) => (
             <div
               key={index}
-              className="bg-sky-50 border border-sky-200 p-6 rounded-2xl shadow-lg shadow-sky-200/30 hover:scale-105 hover:shadow-xl hover:shadow-sky-300/40 transform transition-all duration-300"
+              className="bg-green-muted border border-green-muted p-6 rounded-2xl shadow-lg shadow-green-muted/30 hover:scale-105 hover:shadow-xl hover: transform transition-all duration-300"
             >
-              <h3 className="text-xl font-semibold mb-3 text-sky-600">{feature.title}</h3>
-              <p className="text-gray-700">{feature.desc}</p>
+              <h3 className="text-[#064E3B] text-xl font-semibold mb-3 text-green-dark">{feature.title}</h3>
+              <p className="text-black">{feature.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-sky-50 to-white text-center text-black px-6">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <section className="py-20 bg-gradient-to-b from-green-muted to-white text-center text-black px-6">
+        <h2 className="text-[#064E3B] text-3xl md:text-4xl font-bold mb-6">
           Ready to Elevate Your Brand?
         </h2>
-        <p className="text-lg text-gray-700 mb-8">
+        <p className="text-lg text-black mb-8">
           Let Pqrix International bring your products to life.
         </p>
         <a
           href="/contact"
-          className="bg-sky-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-sky-600 shadow-lg shadow-sky-300/40 transition-all inline-block"
+          className="  px-6 py-3 rounded-full font-semibold  shadow-lg  transition-all inline-block"
         >
           Get in Touch
         </a>

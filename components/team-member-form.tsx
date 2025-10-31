@@ -222,7 +222,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Basic Info */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <CardTitle className="text-black">Basic Information</CardTitle>
         </CardHeader>
@@ -234,7 +234,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 id="name"
                 value={formData.name}
                 onChange={(e) => handleNameChange(e.target.value)}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
                 required
               />
             </div>
@@ -243,7 +243,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
               <Input
                 id="id"
                 value={formData.id}
-                className="bg-white border-sky-200 text-gray-500"
+                className="bg-white border-green-muted text-black"
                 disabled
               />
             </div>
@@ -256,7 +256,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 id="role"
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
                 placeholder="e.g., Creative Director"
                 required
               />
@@ -267,7 +267,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 id="department"
                 value={formData.department}
                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
                 placeholder="e.g., Leadership"
                 required
               />
@@ -280,7 +280,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
               id="bio"
               value={formData.bio}
               onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-              className="bg-white border-sky-200 text-black"
+              className="bg-white border-green-muted text-black"
               rows={2}
               required
             />
@@ -292,7 +292,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
               id="fullBio"
               value={formData.fullBio}
               onChange={(e) => setFormData({ ...formData, fullBio: e.target.value })}
-              className="bg-white border-sky-200 text-black"
+              className="bg-white border-green-muted text-black"
               rows={4}
             />
           </div>
@@ -305,7 +305,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                   id="image"
                   value={formData.image}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                   placeholder="Image URL"
                 />
               </div>
@@ -321,7 +321,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                   type="button"
                   onClick={() => document.getElementById('image-upload')?.click()}
                   disabled={uploading}
-                  className="bg-white border-sky-200 hover:bg-sky-50"
+                  className="bg-white border-green-muted hover:bg-green-muted"
                 >
                   {uploading ? (
                     <>
@@ -352,7 +352,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
                 required
               />
             </div>
@@ -362,7 +362,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 id="linkedin"
                 value={formData.linkedin}
                 onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
             <div className="space-y-2">
@@ -371,7 +371,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 id="twitter"
                 value={formData.twitter}
                 onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
           </div>
@@ -379,11 +379,11 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
       </Card>
 
       {/* Expertise */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Expertise</CardTitle>
-            <Button type="button" onClick={addExpertise} size="sm" className="bg-sky-500 text-white hover:bg-sky-600">
+            <Button type="button" onClick={addExpertise} size="sm" className="  ">
               <Plus className="w-4 h-4 mr-2" />
               Add Skill
             </Button>
@@ -396,7 +396,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 value={skill}
                 onChange={(e) => updateExpertise(index, e.target.value)}
                 placeholder="e.g., Creative Strategy & Direction"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
               <Button
                 type="button"
@@ -412,11 +412,11 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
       </Card>
 
       {/* Experience */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Experience</CardTitle>
-            <Button type="button" onClick={addExperience} size="sm" className="bg-sky-500 text-white hover:bg-sky-600">
+            <Button type="button" onClick={addExperience} size="sm" className="  ">
               <Plus className="w-4 h-4 mr-2" />
               Add Experience
             </Button>
@@ -424,7 +424,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
         </CardHeader>
         <CardContent className="space-y-4">
           {formData.experience?.map((exp, index) => (
-            <Card key={index} className="border-sky-200 bg-sky-50 p-4">
+            <Card key={index} className="border-green-muted bg-green-muted p-4">
               <div className="space-y-3">
                 <div className="flex justify-between items-start">
                   <h4 className="text-black font-semibold">Experience #{index + 1}</h4>
@@ -442,26 +442,26 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                     value={exp.title}
                     onChange={(e) => updateExperience(index, 'title', e.target.value)}
                     placeholder="Job Title"
-                    className="bg-white border-sky-200 text-black"
+                    className="bg-white border-green-muted text-black"
                   />
                   <Input
                     value={exp.company}
                     onChange={(e) => updateExperience(index, 'company', e.target.value)}
                     placeholder="Company"
-                    className="bg-white border-sky-200 text-black"
+                    className="bg-white border-green-muted text-black"
                   />
                 </div>
                 <Input
                   value={exp.period}
                   onChange={(e) => updateExperience(index, 'period', e.target.value)}
                   placeholder="Period (e.g., 2020 - Present)"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
                 <Textarea
                   value={exp.description}
                   onChange={(e) => updateExperience(index, 'description', e.target.value)}
                   placeholder="Description"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                   rows={2}
                 />
               </div>
@@ -471,11 +471,11 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
       </Card>
 
       {/* Education */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Education</CardTitle>
-            <Button type="button" onClick={addEducation} size="sm" className="bg-sky-500 text-white hover:bg-sky-600">
+            <Button type="button" onClick={addEducation} size="sm" className="  ">
               <Plus className="w-4 h-4 mr-2" />
               Add Education
             </Button>
@@ -483,7 +483,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
         </CardHeader>
         <CardContent className="space-y-3">
           {formData.education?.map((edu, index) => (
-            <Card key={index} className="border-sky-200 bg-sky-50 p-4">
+            <Card key={index} className="border-green-muted bg-green-muted p-4">
               <div className="space-y-3">
                 <div className="flex justify-between items-start">
                   <h4 className="text-black font-semibold">Education #{index + 1}</h4>
@@ -500,19 +500,19 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                   value={edu.degree}
                   onChange={(e) => updateEducation(index, 'degree', e.target.value)}
                   placeholder="Degree (e.g., MFA in Digital Media)"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
                 <Input
                   value={edu.school}
                   onChange={(e) => updateEducation(index, 'school', e.target.value)}
                   placeholder="School"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
                 <Input
                   value={edu.year}
                   onChange={(e) => updateEducation(index, 'year', e.target.value)}
                   placeholder="Year"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
               </div>
             </Card>
@@ -521,11 +521,11 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
       </Card>
 
       {/* Awards */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Awards & Recognition</CardTitle>
-            <Button type="button" onClick={addAward} size="sm" className="bg-sky-500 text-white hover:bg-sky-600">
+            <Button type="button" onClick={addAward} size="sm" className="  ">
               <Plus className="w-4 h-4 mr-2" />
               Add Award
             </Button>
@@ -538,7 +538,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 value={award}
                 onChange={(e) => updateAward(index, e.target.value)}
                 placeholder="Award title"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
               <Button
                 type="button"
@@ -554,11 +554,11 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
       </Card>
 
       {/* Projects */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Project IDs</CardTitle>
-            <Button type="button" onClick={addProject} size="sm" className="bg-sky-500 text-white hover:bg-sky-600">
+            <Button type="button" onClick={addProject} size="sm" className="  ">
               <Plus className="w-4 h-4 mr-2" />
               Add Project
             </Button>
@@ -571,7 +571,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
                 value={project}
                 onChange={(e) => updateProject(index, e.target.value)}
                 placeholder="Project ID (e.g., luxury-watch-campaign)"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
               <Button
                 type="button"
@@ -591,7 +591,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
         <Button
           type="submit"
           disabled={loading}
-          className="bg-sky-500 text-white hover:bg-sky-600"
+          className="  "
         >
           {loading ? (
             <>
@@ -606,7 +606,7 @@ export function TeamMemberForm({ initialData, isEdit = false }: TeamMemberFormPr
           type="button"
           variant="outline"
           onClick={() => router.back()}
-          className="border-sky-200 bg-white text-black hover:bg-sky-50"
+          className="border-green-muted bg-white text-black hover:bg-green-muted"
         >
           Cancel
         </Button>

@@ -48,7 +48,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
       icon: stat.icon || "Award"
     })) || [{ icon: "Award", label: "", value: "" }],
     pricing: initialData?.pricing || "",
-    color: initialData?.color || "from-blue-500/20 to-cyan-500/20",
+    color: initialData?.color || "from-green-light/20 to-cyan-500/20",
     image: initialData?.image || "",
   })
 
@@ -256,7 +256,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Basic Information */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <CardTitle className="text-black">Basic Information</CardTitle>
         </CardHeader>
@@ -269,7 +269,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                 value={formData.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
                 required
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
             <div className="space-y-2">
@@ -280,7 +280,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                 onChange={(e) => setFormData({ ...formData, id: e.target.value })}
                 required
                 disabled={isEdit}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
                 placeholder="auto-generated-from-title"
               />
               <p className="text-xs text-gray-400">
@@ -296,7 +296,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
               value={formData.tagline}
               onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
               required
-              className="bg-white border-sky-200 text-black"
+              className="bg-white border-green-muted text-black"
               placeholder="Short catchy tagline"
             />
           </div>
@@ -308,7 +308,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               required
-              className="bg-white border-sky-200 text-black"
+              className="bg-white border-green-muted text-black"
               rows={3}
             />
           </div>
@@ -319,7 +319,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
               id="longDescription"
               value={formData.longDescription}
               onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
-              className="bg-white border-sky-200 text-black"
+              className="bg-white border-green-muted text-black"
               rows={4}
             />
           </div>
@@ -331,10 +331,10 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                 id="icon"
                 value={formData.icon || "Code"}
                 onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
                 placeholder="Code"
               />
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-black">
                 Enter any Lucide icon name (e.g., Code, Zap, Globe, Smartphone, Database, Users, Award, Clock, Calendar, MapPin, ShoppingCart, Heart, Star, TrendingUp, CheckCircle, etc.)
               </p>
             </div>
@@ -344,25 +344,25 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                 id="pricing"
                 value={formData.pricing}
                 onChange={(e) => setFormData({ ...formData, pricing: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
                 placeholder="Starting ৳ 8,500"
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="color" className="text-black">Color Gradient</Label>
               <Select
-                value={formData.color || "from-blue-500/20 to-cyan-500/20"}
+                value={formData.color || "from-green-light/20 to-cyan-500/20"}
                 onValueChange={(value) => setFormData({ ...formData, color: value })}
               >
-                <SelectTrigger className="bg-white border-sky-200 text-black">
+                <SelectTrigger className="bg-white border-green-muted text-black">
                   <SelectValue placeholder="Select gradient" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-sky-200">
-                  <SelectItem value="from-blue-500/20 to-cyan-500/20" className="text-black">Blue to Cyan</SelectItem>
+                <SelectContent className="bg-white border-green-muted">
+                  <SelectItem value="from-green-light/20 to-cyan-500/20" className="text-black">Blue to Cyan</SelectItem>
                   <SelectItem value="from-purple-500/20 to-violet-500/20" className="text-black">Purple to Violet</SelectItem>
                   <SelectItem value="from-pink-500/20 to-rose-500/20" className="text-black">Pink to Rose</SelectItem>
                   <SelectItem value="from-lime-500/20 to-green-500/20" className="text-black">Lime to Green</SelectItem>
-                  <SelectItem value="from-indigo-500/20 to-sky-500/20" className="text-black">Indigo to Sky</SelectItem>
+                  <SelectItem value="from-indigo-500/20 to-green-dark/20" className="text-black">Indigo to Sky</SelectItem>
                   <SelectItem value="from-orange-500/20 to-amber-500/20" className="text-black">Orange to Amber</SelectItem>
                 </SelectContent>
               </Select>
@@ -377,7 +377,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                   id="image"
                   value={formData.image}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                   placeholder="Image URL or upload below"
                 />
               </div>
@@ -395,7 +395,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                   variant="outline"
                   onClick={() => document.getElementById('image-upload')?.click()}
                   disabled={uploading}
-                  className="bg-white border-sky-200 hover:bg-sky-50"
+                  className="bg-white border-green-muted hover:bg-green-muted"
                 >
                   {uploading ? (
                     <>
@@ -416,7 +416,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                 <img
                   src={formData.image}
                   alt="Preview"
-                  className="h-32 w-auto rounded-lg border border-sky-200"
+                  className="h-32 w-auto rounded-lg border border-green-muted"
                 />
               </div>
             )}
@@ -425,11 +425,11 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
       </Card>
 
       {/* Features */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Features</CardTitle>
-            <Button type="button" size="sm" onClick={addFeature} className="bg-sky-500 hover:bg-sky-600 text-white">
+            <Button type="button" size="sm" onClick={addFeature} className="bg-green-dark hover: ">
               <Plus className="w-4 h-4 mr-2" />
               Add Feature
             </Button>
@@ -442,7 +442,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                 value={feature}
                 onChange={(e) => updateFeature(index, e.target.value)}
                 placeholder="Feature description"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
               <Button 
                 type="button" 
@@ -458,11 +458,11 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
       </Card>
 
       {/* Process Steps */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Process Steps</CardTitle>
-            <Button type="button" size="sm" onClick={addProcessStep} className="bg-sky-500 hover:bg-sky-600 text-white">
+            <Button type="button" size="sm" onClick={addProcessStep} className="bg-green-dark hover: ">
               <Plus className="w-4 h-4 mr-2" />
               Add Step
             </Button>
@@ -470,7 +470,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           {formData.process?.map((step, index) => (
-            <div key={index} className="p-4 border border-sky-200 rounded-lg space-y-3 bg-sky-50">
+            <div key={index} className="p-4 border border-green-muted rounded-lg space-y-3 bg-green-muted">
               <div className="flex items-center justify-between">
                 <span className="text-black font-medium">Step {index + 1}</span>
                 <Button 
@@ -486,13 +486,13 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                 value={step.step}
                 onChange={(e) => updateProcessStep(index, 'step', e.target.value)}
                 placeholder="Step name"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
               <Textarea
                 value={step.description}
                 onChange={(e) => updateProcessStep(index, 'description', e.target.value)}
                 placeholder="Step description"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
           ))}
@@ -500,11 +500,11 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
       </Card>
 
       {/* Packages */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Pricing Packages</CardTitle>
-            <Button type="button" size="sm" onClick={addPackage} className="bg-sky-500 hover:bg-sky-600 text-white">
+            <Button type="button" size="sm" onClick={addPackage} className="bg-green-dark hover: ">
               <Plus className="w-4 h-4 mr-2" />
               Add Package
             </Button>
@@ -512,7 +512,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
         </CardHeader>
         <CardContent className="space-y-6">
           {formData.packages?.map((pkg, packageIndex) => (
-            <div key={packageIndex} className="p-4 border border-sky-200 rounded-lg space-y-4 bg-sky-50">
+            <div key={packageIndex} className="p-4 border border-green-muted rounded-lg space-y-4 bg-green-muted">
               <div className="flex items-center justify-between">
                 <span className="text-black font-medium">Package {packageIndex + 1}</span>
                 <Button 
@@ -530,25 +530,25 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                   value={pkg.name}
                   onChange={(e) => updatePackage(packageIndex, 'name', e.target.value)}
                   placeholder="Package name"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
                 <Input
                   value={pkg.price}
                   onChange={(e) => updatePackage(packageIndex, 'price', e.target.value)}
                   placeholder="৳ 0"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
                 <Input
                   value={pkg.duration}
                   onChange={(e) => updatePackage(packageIndex, 'duration', e.target.value)}
                   placeholder="4 Weeks"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
                 <Input
                   value={pkg.revisions}
                   onChange={(e) => updatePackage(packageIndex, 'revisions', e.target.value)}
                   placeholder="2 revisions"
-                  className="bg-white border-sky-200 text-black"
+                  className="bg-white border-green-muted text-black"
                 />
               </div>
 
@@ -570,7 +570,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                     size="sm" 
                     variant="outline"
                     onClick={() => addPackageFeature(packageIndex)}
-                    className="border-sky-200 hover:bg-white"
+                    className="border-green-muted hover:bg-white"
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Add Feature
@@ -582,7 +582,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                       value={feature}
                       onChange={(e) => updatePackageFeature(packageIndex, featureIndex, e.target.value)}
                       placeholder="Feature"
-                      className="bg-white border-sky-200 text-black"
+                      className="bg-white border-green-muted text-black"
                     />
                     <Button 
                       type="button" 
@@ -601,11 +601,11 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
       </Card>
 
       {/* Stats */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-black">Stats</CardTitle>
-            <Button type="button" size="sm" onClick={addStat} className="bg-sky-500 hover:bg-sky-600 text-white">
+            <Button type="button" size="sm" onClick={addStat} className="bg-green-dark hover: ">
               <Plus className="w-4 h-4 mr-2" />
               Add Stat
             </Button>
@@ -618,19 +618,19 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
                 value={stat.icon || "Award"}
                 onChange={(e) => updateStat(index, 'icon', e.target.value)}
                 placeholder="Icon name"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
               <Input
                 value={stat.label || ""}
                 onChange={(e) => updateStat(index, 'label', e.target.value)}
                 placeholder="Label"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
               <Input
                 value={stat.value || ""}
                 onChange={(e) => updateStat(index, 'value', e.target.value)}
                 placeholder="Value"
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
               <Button 
                 type="button" 
@@ -647,7 +647,7 @@ export function ServiceForm({ initialData, isEdit = false }: ServiceFormProps) {
 
       {/* Submit Button */}
       <div className="flex justify-end">
-        <Button type="submit" disabled={loading} size="lg" className="bg-sky-500 hover:bg-sky-600 text-white shadow-md">
+        <Button type="submit" disabled={loading} size="lg" className="bg-green-dark hover:  shadow-md">
           {loading ? "Saving..." : isEdit ? "Update Service" : "Create Service"}
         </Button>
       </div>

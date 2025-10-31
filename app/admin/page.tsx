@@ -61,21 +61,21 @@ export default function AdminDashboard() {
       value: services.length,
       icon: Briefcase,
       href: "/admin/services",
-      color: "text-sky-500",
+      color: "text-green-dark",
     },
     {
       title: "Total Projects",
       value: projects.length,
       icon: FolderKanban,
       href: "/admin/projects",
-      color: "text-sky-600",
+      color: "text-green-dark",
     },
     {
       title: "Team Members",
       value: teamMembers.length,
       icon: Users,
       href: "/admin/team",
-      color: "text-sky-400",
+      color: "text-green-light",
     },
     {
       title: "Total Orders",
@@ -120,21 +120,21 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-black">
+        <h1 className="text-[#064E3B] text-3xl font-bold text-black">
           Dashboard Overview
         </h1>
-        <p className="text-gray-600 mt-2">Manage your agency content and data</p>
+        <p className="text-black mt-2">Manage your agency content and data</p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
           <Link key={stat.title} href={stat.href}>
-            <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30 hover:shadow-xl hover:shadow-sky-300/40 transition-all cursor-pointer">
+            <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30 hover:shadow-xl hover: transition-all cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm">{stat.title}</p>
+                    <p className="text-black text-sm">{stat.title}</p>
                     <p className="text-3xl font-bold text-black mt-2">
                       {loading ? '...' : stat.value}
                     </p>
@@ -148,24 +148,24 @@ export default function AdminDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <CardTitle className="text-black">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Button asChild className="h-auto py-6 flex-col gap-2 bg-sky-500 text-white hover:bg-sky-600 shadow-md hover:shadow-lg hover:shadow-sky-300/40">
+          <Button asChild className="h-auto py-6 flex-col gap-2    shadow-md hover:shadow-lg hover:">
             <Link href="/admin/services/new">
               <Briefcase className="w-6 h-6" />
               <span>Add New Service</span>
             </Link>
           </Button>
-          <Button asChild className="h-auto py-6 flex-col gap-2 bg-sky-500 text-white hover:bg-sky-600 shadow-md hover:shadow-lg hover:shadow-sky-300/40">
+          <Button asChild className="h-auto py-6 flex-col gap-2    shadow-md hover:shadow-lg hover:">
             <Link href="/admin/projects/new">
               <FolderKanban className="w-6 h-6" />
               <span>Add New Project</span>
             </Link>
           </Button>
-          <Button asChild className="h-auto py-6 flex-col gap-2 bg-sky-500 text-white hover:bg-sky-600 shadow-md hover:shadow-lg hover:shadow-sky-300/40">
+          <Button asChild className="h-auto py-6 flex-col gap-2    shadow-md hover:shadow-lg hover:">
             <Link href="/admin/team/new">
               <Users className="w-6 h-6" />
               <span>Add Team Member</span>
@@ -175,45 +175,45 @@ export default function AdminDashboard() {
       </Card>
 
       {/* Recent Activity */}
-      <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+      <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
         <CardHeader>
           <CardTitle className="text-black">Recent Activity</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {!loading && services.length > 0 && (
-              <div className="flex items-center gap-4 p-4 rounded-lg bg-sky-50 border border-sky-200">
-                <Briefcase className="w-5 h-5 text-sky-500" />
+              <div className="flex items-center gap-4 p-4 rounded-lg bg-green-muted border border-green-muted">
+                <Briefcase className="w-5 h-5 text-green-dark" />
                 <div>
                   <p className="text-black font-medium">{services.length} Services Available</p>
-                  <p className="text-gray-600 text-sm">Latest: {services[0]?.title || 'N/A'}</p>
+                  <p className="text-black text-sm">Latest: {services[0]?.title || 'N/A'}</p>
                 </div>
               </div>
             )}
             {!loading && projects.length > 0 && (
-              <div className="flex items-center gap-4 p-4 rounded-lg bg-sky-50 border border-sky-200">
-                <FolderKanban className="w-5 h-5 text-sky-500" />
+              <div className="flex items-center gap-4 p-4 rounded-lg bg-green-muted border border-green-muted">
+                <FolderKanban className="w-5 h-5 text-green-dark" />
                 <div>
                   <p className="text-black font-medium">{projects.length} Projects Completed</p>
-                  <p className="text-gray-600 text-sm">Latest: {projects[0]?.title || 'N/A'}</p>
+                  <p className="text-black text-sm">Latest: {projects[0]?.title || 'N/A'}</p>
                 </div>
               </div>
             )}
             {!loading && teamMembers.length > 0 && (
-              <div className="flex items-center gap-4 p-4 rounded-lg bg-sky-50 border border-sky-200">
-                <Users className="w-5 h-5 text-sky-500" />
+              <div className="flex items-center gap-4 p-4 rounded-lg bg-green-muted border border-green-muted">
+                <Users className="w-5 h-5 text-green-dark" />
                 <div>
                   <p className="text-black font-medium">{teamMembers.length} Team Members</p>
-                  <p className="text-gray-600 text-sm">Latest: {teamMembers[0]?.name || 'N/A'}</p>
+                  <p className="text-black text-sm">Latest: {teamMembers[0]?.name || 'N/A'}</p>
                 </div>
               </div>
             )}
             {!loading && services.length === 0 && projects.length === 0 && teamMembers.length === 0 && (
-              <div className="flex items-center gap-4 p-4 rounded-lg bg-sky-50 border border-sky-200">
-                <TrendingUp className="w-5 h-5 text-sky-500" />
+              <div className="flex items-center gap-4 p-4 rounded-lg bg-green-muted border border-green-muted">
+                <TrendingUp className="w-5 h-5 text-green-dark" />
                 <div>
                   <p className="text-black font-medium">System initialized</p>
-                  <p className="text-gray-600 text-sm">Admin panel is ready to use</p>
+                  <p className="text-black text-sm">Admin panel is ready to use</p>
                 </div>
               </div>
             )}
@@ -224,7 +224,7 @@ export default function AdminDashboard() {
       {/* Analytics Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Content Distribution Pie Chart */}
-        <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+        <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
           <CardHeader>
             <CardTitle className="text-black">Content Distribution</CardTitle>
           </CardHeader>
@@ -259,7 +259,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Project Status Bar Chart */}
-        <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+        <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
           <CardHeader>
             <CardTitle className="text-black">Project Status</CardTitle>
           </CardHeader>
@@ -291,7 +291,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Growth Trend Line Chart */}
-        <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30 lg:col-span-2">
+        <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30 lg:col-span-2">
           <CardHeader>
             <CardTitle className="text-black">Growth Trend</CardTitle>
           </CardHeader>

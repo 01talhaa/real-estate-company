@@ -42,19 +42,19 @@ export function ServicesSection() {
 
   if (loading) {
     return (
-      <section id="services" className="container mx-auto px-4 py-16 sm:py-20 bg-gradient-to-b from-white via-sky-50 to-white">
+      <section id="services" className="container mx-auto px-4 py-16 sm:py-20 bg-gradient-to-b from-white via-green-muted to-white">
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Our <span className="text-sky-500">Services</span></h2>
-          <p className="mx-auto max-w-2xl text-lg text-gray-700">Loading services...</p>
+          <h2 className="text-[#064E3B] mb-4 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Our <span className="text-green-dark">Services</span></h2>
+          <p className="mx-auto max-w-2xl text-lg text-black">Loading services...</p>
         </div>
       </section>
     )
   }
   return (
-    <section id="services" className="container mx-auto px-4 py-16 sm:py-20 bg-gradient-to-b from-white via-sky-50 to-white">
+    <section id="services" className="container mx-auto px-4 py-16 sm:py-20 bg-gradient-to-b from-white via-green-muted to-white">
       <div className="mb-12 text-center">
-        <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Our <span className="text-sky-500">Services</span></h2>
-        <p className="mx-auto max-w-2xl text-lg text-gray-700">
+        <h2 className="text-[#064E3B] mb-4 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Our <span className="text-green-dark">Services</span></h2>
+        <p className="mx-auto max-w-2xl text-lg text-black">
           From concept to completion, we deliver premium creative solutions that drive results
         </p>
       </div>
@@ -65,7 +65,7 @@ export function ServicesSection() {
           return (
           <Card
             key={service.id}
-            className="group liquid-glass border border-sky-200 bg-white/80 backdrop-blur-xl transition-all hover:border-sky-300 hover:bg-white/90 shadow-lg shadow-sky-200/30"
+            className="group liquid-glass border border-green-muted bg-white/80 backdrop-blur-xl transition-all hover:border-green-light hover:bg-white/90 shadow-lg shadow-green-muted/30"
           >
             <CardHeader>
               <div
@@ -76,11 +76,11 @@ export function ServicesSection() {
               <CardTitle className="text-xl text-black">{service.title}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-gray-700">{service.description}</p>
+              <p className="text-sm text-black">{service.description}</p>
               <ul className="space-y-2">
                 {service.features.slice(0, 3).map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-xs text-gray-600">
-                    <Check className="h-3 w-3 text-sky-500 flex-shrink-0" />
+                  <li key={idx} className="flex items-center gap-2 text-xs text-black">
+                    <Check className="h-3 w-3 text-green-dark flex-shrink-0" />
                     {feature}
                   </li>
                 ))}
@@ -88,7 +88,7 @@ export function ServicesSection() {
               <Button
                 asChild
                 variant="ghost"
-                className="group/btn w-full justify-between text-sky-500 hover:bg-sky-50 hover:text-sky-600"
+                className="group/btn w-full justify-between text-green-dark hover:bg-green-muted hover:text-green-dark"
               >
                 <Link href={`/services/${service.id}`}>
                   Learn More
@@ -104,7 +104,7 @@ export function ServicesSection() {
         <Button
           asChild
           size="lg"
-          className="rounded-full bg-sky-500 px-8 text-white hover:bg-sky-600 shadow-lg shadow-sky-400/30"
+          className="rounded-full  px-8   shadow-lg "
         >
           <Link href="/services">
             View All Services

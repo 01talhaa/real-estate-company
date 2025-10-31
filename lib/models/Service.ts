@@ -40,3 +40,12 @@ export interface ServiceDocument {
 }
 
 export const SERVICES_COLLECTION = 'services'
+
+// Database indexes for optimal query performance
+export const SERVICE_INDEXES = [
+  { key: { id: 1 }, unique: true },
+  { key: { order: 1 } },
+  { key: { createdAt: -1 } },
+  // Text index for search
+  { key: { title: 'text', tagline: 'text', description: 'text' } },
+]

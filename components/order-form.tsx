@@ -239,7 +239,7 @@ export function OrderForm({ isOpen, onClose, selectedPackage }: OrderFormProps) 
               <Package className="h-4 w-4 text-[#C6FF3A]" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-white">Order Configuration</h2>
+              <h2 className="text-[#064E3B] text-lg font-semibold text-white">Order Configuration</h2>
               <p className="text-sm text-neutral-400">Step {currentStep} of 4</p>
             </div>
           </div>
@@ -288,7 +288,7 @@ export function OrderForm({ isOpen, onClose, selectedPackage }: OrderFormProps) 
           {currentStep === 1 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h3 className="text-xl font-semibold text-white mb-2">Confirm Your Package</h3>
+                <h3 className="text-[#064E3B] text-xl font-semibold text-white mb-2">Confirm Your Package</h3>
                 <p className="text-neutral-400">Let's make sure we have the right package for you</p>
               </div>
 
@@ -377,7 +377,7 @@ export function OrderForm({ isOpen, onClose, selectedPackage }: OrderFormProps) 
           {currentStep === 2 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h3 className="text-xl font-semibold text-white mb-2">Choose 3D Modeling Complexity</h3>
+                <h3 className="text-[#064E3B] text-xl font-semibold text-white mb-2">Choose 3D Modeling Complexity</h3>
                 <p className="text-neutral-400">Select the complexity level that matches your product</p>
               </div>
 
@@ -434,7 +434,7 @@ export function OrderForm({ isOpen, onClose, selectedPackage }: OrderFormProps) 
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h3 className="text-xl font-semibold text-white mb-2">Need 3D Renders?</h3>
+                <h3 className="text-[#064E3B] text-xl font-semibold text-white mb-2">Need 3D Renders?</h3>
                 <p className="text-neutral-400">High-quality still images of your 3D model</p>
               </div>
 
@@ -525,7 +525,7 @@ export function OrderForm({ isOpen, onClose, selectedPackage }: OrderFormProps) 
           {currentStep === 4 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h3 className="text-xl font-semibold text-white mb-2">Order Summary</h3>
+                <h3 className="text-[#064E3B] text-xl font-semibold text-white mb-2">Order Summary</h3>
                 <p className="text-neutral-400">Review your selections before confirming</p>
               </div>
 

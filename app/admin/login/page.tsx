@@ -40,12 +40,12 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-white to-sky-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-muted via-white to-green-muted p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-sky-200">
+        <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-green-muted">
           <div className="mb-8 text-center">
-            <h1 className="text-4xl font-bold text-sky-600 mb-2">Pqrix Admin</h1>
-            <p className="text-gray-600">Sign in to your account</p>
+            <h1 className="text-[#064E3B] text-4xl font-bold text-green-dark mb-2">Pqrix Admin</h1>
+            <p className="text-black">Sign in to your account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
                 Email Address
               </label>
               <input
@@ -67,12 +67,12 @@ export default function AdminLoginPage() {
                 placeholder="abstalha@gmail.com"
                 required
                 autoComplete="email"
-                className="w-full px-4 py-3 bg-white border border-sky-200 rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-white border border-green-muted rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-dark focus:border-transparent transition"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-black mb-2">
                 Password
               </label>
               <input
@@ -83,14 +83,14 @@ export default function AdminLoginPage() {
                 placeholder="Enter your password"
                 required
                 autoComplete="current-password"
-                className="w-full px-4 py-3 bg-white border border-sky-200 rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-white border border-green-muted rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-dark focus:border-transparent transition"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:shadow-sky-300/40"
+              className="w-full py-3 px-4 bg-gradient-to-r from-green-dark to-green-dark hover:from-green-dark hover:to-green-dark disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:"
             >
               {loading ? (
                 <span className="flex items-center justify-center">
@@ -107,7 +107,7 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="mt-6 pt-6 border-t border-gray-700 text-center">
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-black">
               Test Credentials:<br />
               <span className="text-gray-400">abstalha@gmail.com / 123456</span>
             </p>

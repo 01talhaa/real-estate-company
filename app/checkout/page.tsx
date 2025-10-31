@@ -204,8 +204,8 @@ function CheckoutContent() {
       <main className="min-h-[100dvh] bg-white text-black">
         <SiteHeader />
 
-        <div className="container mx-auto px-4 pt-8 bg-gradient-to-b from-white to-sky-50">
-          <Button asChild variant="ghost" className="text-gray-700 hover:text-black hover:bg-sky-50">
+        <div className="container mx-auto px-4 pt-8 bg-gradient-to-b from-white to-green-muted">
+          <Button asChild variant="ghost" className="text-black hover:text-black hover:bg-green-muted">
             <Link href={`/services/${serviceId}`}>
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Service
@@ -213,9 +213,9 @@ function CheckoutContent() {
           </Button>
         </div>
 
-        <section className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-sky-50 to-white">
+        <section className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-green-muted to-white">
           <div className="max-w-5xl mx-auto">
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-black mb-8 text-center">
+            <h1 className="text-[#064E3B] text-4xl font-extrabold tracking-tight sm:text-5xl text-black mb-8 text-center">
               Complete Your Order
             </h1>
 
@@ -245,26 +245,26 @@ function CheckoutContent() {
 
             <div className="grid gap-8 lg:grid-cols-5">
               <div className="lg:col-span-2">
-                <Card className="border border-sky-200 bg-white shadow-lg shadow-sky-200/30 p-6 sticky top-8">
-                  <h2 className="text-xl font-bold text-black mb-4">Order Summary</h2>
+                <Card className="border border-green-muted bg-white shadow-lg shadow-green-muted/30 p-6 sticky top-8">
+                  <h2 className="text-[#064E3B] text-xl font-bold text-black mb-4">Order Summary</h2>
 
                   <div className="space-y-4">
                     <div>
-                      <p className="text-sm text-gray-600">Service</p>
+                      <p className="text-sm text-black">Service</p>
                       <p className="text-lg font-semibold text-black">{service.title}</p>
                     </div>
 
                     <div>
-                      <p className="text-sm text-gray-600">Package</p>
-                      <p className="text-lg font-semibold text-sky-600">{selectedPackage.name}</p>
+                      <p className="text-sm text-black">Package</p>
+                      <p className="text-lg font-semibold text-green-dark">{selectedPackage.name}</p>
                     </div>
 
                     <div className="pt-4 border-t border-gray-200">
-                      <p className="text-sm text-gray-600 mb-2">Package Includes:</p>
+                      <p className="text-sm text-black mb-2">Package Includes:</p>
                       <ul className="space-y-2">
                         {selectedPackage.features.map((feature: string, idx: number) => (
-                          <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                            <Check className="h-4 w-4 text-sky-500 mt-0.5 flex-shrink-0" />
+                          <li key={idx} className="flex items-start gap-2 text-sm text-black">
+                            <Check className="h-4 w-4 text-green-dark mt-0.5 flex-shrink-0" />
                             <span>{feature}</span>
                           </li>
                         ))}
@@ -273,12 +273,12 @@ function CheckoutContent() {
 
                     <div className="pt-4 border-t border-gray-200">
                       <div className="flex justify-between items-center">
-                        <span className="text-lg text-gray-700">Duration</span>
+                        <span className="text-lg text-black">Duration</span>
                         <span className="text-lg font-semibold text-black">{selectedPackage.duration}</span>
                       </div>
                       <div className="flex justify-between items-center mt-2">
                         <span className="text-xl font-bold text-black">Total</span>
-                        <span className="text-2xl font-extrabold text-sky-600">{selectedPackage.price}</span>
+                        <span className="text-2xl font-extrabold text-green-dark">{selectedPackage.price}</span>
                       </div>
                     </div>
                   </div>
@@ -286,8 +286,8 @@ function CheckoutContent() {
               </div>
 
               <div className="lg:col-span-3">
-                <Card className="border border-sky-200 bg-white shadow-lg shadow-sky-200/30 p-8">
-                  <h2 className="text-2xl font-bold text-black mb-6">Your Information</h2>
+                <Card className="border border-green-muted bg-white shadow-lg shadow-green-muted/30 p-8">
+                  <h2 className="text-[#064E3B] text-2xl font-bold text-black mb-6">Your Information</h2>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
@@ -301,7 +301,7 @@ function CheckoutContent() {
                         onChange={handleInputChange}
                         required
                         disabled={isLoggedIn}
-                        className="border-sky-200 focus:border-sky-500 disabled:opacity-60"
+                        className="border-green-muted focus:border-green-dark disabled:opacity-60"
                         placeholder="John Doe"
                       />
                     </div>
@@ -318,7 +318,7 @@ function CheckoutContent() {
                         onChange={handleInputChange}
                         required
                         disabled={isLoggedIn}
-                        className="border-sky-200 focus:border-sky-500 disabled:opacity-60"
+                        className="border-green-muted focus:border-green-dark disabled:opacity-60"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -334,7 +334,7 @@ function CheckoutContent() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         disabled={isLoggedIn}
-                        className="border-sky-200 focus:border-sky-500 disabled:opacity-60"
+                        className="border-green-muted focus:border-green-dark disabled:opacity-60"
                         placeholder="+1 (555) 000-0000"
                       />
                     </div>
@@ -349,7 +349,7 @@ function CheckoutContent() {
                         value={formData.company}
                         onChange={handleInputChange}
                         disabled={isLoggedIn}
-                        className="border-sky-200 focus:border-sky-500 disabled:opacity-60"
+                        className="border-green-muted focus:border-green-dark disabled:opacity-60"
                         placeholder="Your Company"
                       />
                     </div>
@@ -364,7 +364,7 @@ function CheckoutContent() {
                         value={formData.message}
                         onChange={handleInputChange}
                         required
-                        className="border-sky-200 focus:border-sky-500 min-h-[150px]"
+                        className="border-green-muted focus:border-green-dark min-h-[150px]"
                         placeholder="Tell us about your project requirements, timeline, and any specific needs..."
                       />
                     </div>
@@ -372,7 +372,7 @@ function CheckoutContent() {
                     <Button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full bg-sky-500 text-white hover:bg-sky-600 py-6 text-lg font-semibold rounded-full shadow-lg shadow-sky-400/30"
+                      className="w-full    py-6 text-lg font-semibold rounded-full shadow-lg "
                     >
                       {isLoading ? (
                         <>
@@ -387,7 +387,7 @@ function CheckoutContent() {
                       )}
                     </Button>
 
-                    <p className="text-center text-sm text-gray-600">
+                    <p className="text-center text-sm text-black">
                       {isLoggedIn 
                         ? "Your inquiry will be saved with an invoice number and tracked in your dashboard"
                         : "Login or register to get invoice tracking and real-time status updates"}
@@ -409,7 +409,7 @@ export default function CheckoutPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-sky-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-green-dark" />
       </div>
     }>
       <CheckoutContent />

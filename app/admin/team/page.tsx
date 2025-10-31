@@ -62,10 +62,10 @@ export default function AdminTeamPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-black">Team Management</h1>
-          <p className="text-gray-600 mt-2">Manage all your team members</p>
+          <h1 className="text-[#064E3B] text-3xl font-bold text-black">Team Management</h1>
+          <p className="text-black mt-2">Manage all your team members</p>
         </div>
-        <Button asChild className="bg-sky-500 text-white hover:bg-sky-600 shadow-md">
+        <Button asChild className="   shadow-md">
           <Link href="/admin/team/new">
             <Plus className="w-4 h-4 mr-2" />
             Add Team Member
@@ -76,22 +76,22 @@ export default function AdminTeamPage() {
       {loading ? (
         <div className="text-black text-center py-12">Loading team members...</div>
       ) : teamMembers.length === 0 ? (
-        <Card className="border-sky-200 bg-white shadow-lg shadow-sky-200/30">
+        <Card className="border-green-muted bg-white shadow-lg shadow-green-muted/30">
           <CardContent className="py-12">
-            <p className="text-gray-600 text-center">No team members found. Create your first team member!</p>
+            <p className="text-black text-center">No team members found. Create your first team member!</p>
           </CardContent>
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {teamMembers.map((member) => (
-            <Card key={member.id} className="border-sky-200 bg-white shadow-lg shadow-sky-200/30 hover:shadow-xl hover:shadow-sky-300/40 transition-shadow">
+            <Card key={member.id} className="border-green-muted bg-white shadow-lg shadow-green-muted/30 hover:shadow-xl hover: transition-shadow">
               <CardHeader className="pb-3">
                 <CardTitle className="text-black text-lg line-clamp-1">{member.name}</CardTitle>
                 {member.role && (
-                  <p className="text-sky-600 text-xs mt-1">{member.role}</p>
+                  <p className="text-green-dark text-xs mt-1">{member.role}</p>
                 )}
                 {member.department && (
-                  <p className="text-gray-500 text-xs">{member.department}</p>
+                  <p className="text-black text-xs">{member.department}</p>
                 )}
               </CardHeader>
               <CardContent className="space-y-4">
@@ -104,15 +104,15 @@ export default function AdminTeamPage() {
                     />
                   </div>
                 )}
-                <p className="text-gray-600 text-sm line-clamp-2">{member.bio}</p>
+                <p className="text-black text-sm line-clamp-2">{member.bio}</p>
                 <div className="flex gap-2">
-                  <Button asChild size="sm" variant="outline" className="flex-1 bg-white border-sky-200 hover:bg-sky-50 text-sky-600">
+                  <Button asChild size="sm" variant="outline" className="flex-1 bg-white border-green-muted hover:bg-green-muted text-green-dark">
                     <Link href={`/team/${member.id}`} target="_blank">
                       <Eye className="w-4 h-4 mr-2" />
                       View
                     </Link>
                   </Button>
-                  <Button asChild size="sm" className="flex-1 bg-sky-500 text-white hover:bg-sky-600">
+                  <Button asChild size="sm" className="flex-1   ">
                     <Link href={`/admin/team/${member.id}`}>
                       <Edit className="w-4 h-4 mr-2" />
                       Edit
@@ -129,15 +129,15 @@ export default function AdminTeamPage() {
       )}
 
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent className="bg-white border-sky-200">
+        <AlertDialogContent className="bg-white border-green-muted">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-black">Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription className="text-gray-600">
+            <AlertDialogDescription className="text-black">
               This action cannot be undone. This will permanently delete the team member.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border-sky-200 hover:bg-sky-50">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="border-green-muted hover:bg-green-muted">Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700 text-white">
               Delete
             </AlertDialogAction>

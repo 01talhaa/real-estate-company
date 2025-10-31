@@ -60,13 +60,13 @@ export default function ClientRegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-white to-sky-50 p-4">
-      <Card className="w-full max-w-md border-sky-200 bg-white shadow-xl shadow-sky-200/30">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-muted via-white to-green-muted p-4">
+      <Card className="w-full max-w-md border-green-muted bg-white shadow-xl shadow-green-muted/30">
         <CardHeader className="space-y-2">
           <CardTitle className="text-3xl font-bold text-center text-black">
             Create Account
           </CardTitle>
-          <CardDescription className="text-center text-gray-600">
+          <CardDescription className="text-center text-black">
             Register to access your client dashboard
           </CardDescription>
         </CardHeader>
@@ -81,7 +81,7 @@ export default function ClientRegisterPage() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
 
@@ -94,7 +94,7 @@ export default function ClientRegisterPage() {
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
 
@@ -108,9 +108,9 @@ export default function ClientRegisterPage() {
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
                 minLength={6}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
-              <p className="text-xs text-gray-600">Minimum 6 characters</p>
+              <p className="text-xs text-black">Minimum 6 characters</p>
             </div>
 
             <div className="space-y-2">
@@ -121,7 +121,7 @@ export default function ClientRegisterPage() {
                 placeholder="+1 234 567 8900"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
 
@@ -133,14 +133,14 @@ export default function ClientRegisterPage() {
                 placeholder="Your Company"
                 value={formData.company}
                 onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                className="bg-white border-sky-200 text-black"
+                className="bg-white border-green-muted text-black"
               />
             </div>
 
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-sky-500 text-white hover:bg-sky-600"
+              className="w-full   "
             >
               {loading ? (
                 <>
@@ -152,15 +152,15 @@ export default function ClientRegisterPage() {
               )}
             </Button>
 
-            <div className="text-center text-sm text-gray-600">
+            <div className="text-center text-sm text-black">
               Already have an account?{" "}
-              <Link href="/client/login" className="text-sky-500 hover:text-sky-600 font-semibold">
+              <Link href="/client/login" className="text-green-dark hover:text-green-dark font-semibold">
                 Login here
               </Link>
             </div>
 
             <div className="text-center">
-              <Link href="/" className="text-sm text-gray-600 hover:text-sky-600">
+              <Link href="/" className="text-sm text-black hover:text-green-dark">
                 ← Back to Home
               </Link>
             </div>

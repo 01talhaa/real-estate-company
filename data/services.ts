@@ -51,7 +51,7 @@ export const servicesData: Record<string, Service> = {
       "Comprehensive Financial Reporting"
     ],
     pricing: "Starting $2,500/month",
-    color: "from-sky-500 to-blue-600",
+    color: "from-green-dark to-green-dark",
     image: "/commercial-property-management.jpg"
   }
 }

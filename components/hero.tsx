@@ -34,41 +34,41 @@ export function Hero() {
     <section className="relative isolate overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
       {/* Background Pattern */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-[50%] top-0 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-br from-sky-100/40 to-blue-100/40 blur-3xl" />
+        <div className="absolute left-[50%] top-0 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-br from-green-muted/40 to-green-muted/40 blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 py-16 sm:py-24">
         {/* Main Hero Content */}
         <div className="text-center max-w-5xl mx-auto mb-16">
           <div className="mb-6 flex items-center justify-center gap-3">
-            <div className="flex items-center justify-center h-12 w-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl shadow-lg">
+            <div className="flex items-center justify-center h-12 w-12 bg-[#064E3B] rounded-xl shadow-lg">
               <span className="text-white font-bold text-xl">SAML</span>
             </div>
             <div className="text-left">
-              <p className="text-xs uppercase tracking-wider text-sky-600 font-semibold">Sabit Asset Management</p>
-              <p className="text-xs text-gray-500">International Real Estate Advisory</p>
+              <p className="text-xs uppercase tracking-wider text-[#064E3B] font-semibold">Sabit Asset Management</p>
+              <p className="text-xs text-black">International Real Estate Advisory</p>
             </div>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-slate-900 mb-6">
+          <h1 className="text-[#064E3B] text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-black mb-6">
             <span className="block">Maximizing Real Estate</span>
-            <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-green-dark to-green-dark bg-clip-text text-transparent">
               Investment Performance
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto mb-8">
+          <p className="text-lg sm:text-xl text-black max-w-3xl mx-auto mb-8">
             Professional asset management services for commercial and residential real estate portfolios. 
             Strategic advisory, portfolio optimization, and data-driven investment decisions.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:from-sky-600 hover:to-blue-700 shadow-xl shadow-sky-500/30 px-8">
+            <Button asChild size="lg" className="rounded-full shadow-xl px-8">
               <a href="https://wa.me/8801401658685?text=Hi!%20I'm%20interested%20in%20your%20asset%20management%20services" target="_blank" rel="noopener noreferrer">
                 Schedule Consultation
               </a>
             </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-full border-2 border-slate-300 hover:border-sky-500 hover:bg-sky-50">
+            <Button asChild size="lg" variant="outline" className="rounded-full">
               <a href="#services">
                 Explore Services
               </a>
@@ -78,40 +78,40 @@ export function Hero() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-          <Card className="p-6 text-center border-sky-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
-            <Building2 className="h-8 w-8 mx-auto mb-3 text-sky-600" />
-            <div className="text-3xl font-bold text-slate-900">${counters.aum}M+</div>
-            <p className="text-sm text-slate-600 mt-1">Assets Under Management</p>
+          <Card className="p-6 text-center border-[#D1FAE5] bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+            <Building2 className="h-8 w-8 mx-auto mb-3 text-[#064E3B]" />
+            <div className="text-3xl font-bold text-black">${counters.aum}M+</div>
+            <p className="text-sm text-black mt-1">Assets Under Management</p>
           </Card>
 
-          <Card className="p-6 text-center border-sky-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
-            <TrendingUp className="h-8 w-8 mx-auto mb-3 text-green-600" />
-            <div className="text-3xl font-bold text-slate-900">{counters.properties}+</div>
-            <p className="text-sm text-slate-600 mt-1">Properties Managed</p>
+          <Card className="p-6 text-center border-[#D1FAE5] bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+            <TrendingUp className="h-8 w-8 mx-auto mb-3 text-[#064E3B]" />
+            <div className="text-3xl font-bold text-black">{counters.properties}+</div>
+            <p className="text-sm text-black mt-1">Properties Managed</p>
           </Card>
 
-          <Card className="p-6 text-center border-sky-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
-            <Shield className="h-8 w-8 mx-auto mb-3 text-blue-600" />
-            <div className="text-3xl font-bold text-slate-900">{counters.roi}%</div>
-            <p className="text-sm text-slate-600 mt-1">Average Annual ROI</p>
+          <Card className="p-6 text-center border-[#D1FAE5] bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+            <Shield className="h-8 w-8 mx-auto mb-3 text-[#064E3B]" />
+            <div className="text-3xl font-bold text-black">{counters.roi}%</div>
+            <p className="text-sm text-black mt-1">Average Annual ROI</p>
           </Card>
 
-          <Card className="p-6 text-center border-sky-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
-            <Users className="h-8 w-8 mx-auto mb-3 text-purple-600" />
-            <div className="text-3xl font-bold text-slate-900">{counters.clients}+</div>
-            <p className="text-sm text-slate-600 mt-1">Satisfied Clients</p>
+          <Card className="p-6 text-center border-[#D1FAE5] bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+            <Users className="h-8 w-8 mx-auto mb-3 text-[#064E3B]" />
+            <div className="text-3xl font-bold text-black">{counters.clients}+</div>
+            <p className="text-sm text-black mt-1">Satisfied Clients</p>
           </Card>
         </div>
 
         {/* Property Types Showcase */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
           {propertyTypes.map((type, i) => (
-            <div key={i} className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 p-6 hover:shadow-lg transition-all">
-              <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div key={i} className="group relative overflow-hidden rounded-xl bg-white border-2 border-[#D1FAE5] p-6 hover:shadow-lg hover:border-[#064E3B] transition-all">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#D1FAE5]/50 to-[#D1FAE5]/20 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative">
                 <div className="text-3xl mb-2">{type.icon}</div>
-                <h3 className="font-semibold text-slate-900 mb-1">{type.title}</h3>
-                <p className="text-xs text-slate-600">{type.desc}</p>
+                <h3 className="text-[#064E3B] font-semibold text-[#064E3B] mb-1">{type.title}</h3>
+                <p className="text-xs text-black">{type.desc}</p>
               </div>
             </div>
           ))}
@@ -158,8 +158,8 @@ function PhoneCard({
   videoSrc?: string
 }) {
   return (
-    <div className="relative rounded-[28px] glass-border bg-white/90 p-2 shadow-lg shadow-sky-200/50">
-      <div className="relative aspect-[9/19] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-sky-100 to-sky-200">
+    <div className="relative rounded-[28px] glass-border bg-white/90 p-2 shadow-lg shadow-green-muted/50">
+      <div className="relative aspect-[9/19] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-green-muted to-green-muted">
         <LazyVideo
           src={
             videoSrc ??
@@ -174,11 +174,11 @@ function PhoneCard({
         />
 
         <div className="relative z-10 p-3">
-          <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-sky-300/40" />
+          <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-green-light/40" />
           <div className="space-y-1 px-1">
             <div className="text-3xl font-bold leading-snug text-white drop-shadow-lg">{title}</div>
             <p className="text-xs text-white/90 drop-shadow">{sub}</p>
-            <div className="mt-3 inline-flex items-center rounded-full bg-sky-500/90 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white">
+            <div className="mt-3 inline-flex items-center rounded-full /90 px-2 py-0.5 text-[10px] uppercase tracking-wider ">
               {tone === "calm" ? "pqrix app" : tone}
             </div>
           </div>

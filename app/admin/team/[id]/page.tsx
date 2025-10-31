@@ -40,8 +40,8 @@ export default function EditTeamMemberPage({ params }: { params: Promise<{ id: s
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-black">Edit Team Member</h1>
-        <p className="text-gray-600 mt-2">Update team member information</p>
+        <h1 className="text-[#064E3B] text-3xl font-bold text-black">Edit Team Member</h1>
+        <p className="text-black mt-2">Update team member information</p>
       </div>
       <TeamMemberForm initialData={teamMember} isEdit={true} />
     </div>

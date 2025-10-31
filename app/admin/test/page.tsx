@@ -318,7 +318,7 @@ export default function TestPage() {
       case "error":
         return <XCircle className="h-5 w-5 text-red-500" />
       case "running":
-        return <Loader2 className="h-5 w-5 text-blue-500 animate-spin" />
+        return <Loader2 className="h-5 w-5 text-green-light animate-spin" />
       default:
         return <div className="h-5 w-5 rounded-full border-2 border-muted" />
     }
@@ -327,7 +327,7 @@ export default function TestPage() {
   return (
     <div className="container mx-auto py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">System Tests</h1>
+        <h1 className="text-[#064E3B] text-3xl font-bold">System Tests</h1>
         <p className="text-muted-foreground mt-2">
           Test MongoDB, Cloudinary, and CRUD operations
         </p>
@@ -416,7 +416,7 @@ export default function TestPage() {
         </Card>
 
         {testProjectId && (
-          <Card className="border-blue-500">
+          <Card className="border-green-light">
             <CardContent className="pt-6">
               <div className="text-sm">
                 <strong>Test Project ID:</strong> {testProjectId}
