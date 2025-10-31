@@ -98,7 +98,7 @@ export function InquiriesSection() {
     // Header - Company Name
     doc.setFontSize(24)
     doc.setTextColor(...primaryColor)
-    doc.text('PIXELPRIMP', 105, yPos, { align: 'center' })
+    doc.text('SABIT ASSET MANAGEMENT LTD', 105, yPos, { align: 'center' })
     
     yPos += 10
     doc.setFontSize(16)
@@ -227,8 +227,8 @@ export function InquiriesSection() {
     doc.line(20, 280, 190, 280)
     doc.setFontSize(9)
     doc.setTextColor(...grayColor)
-    doc.text('Thank you for choosing PixelPrimp!', 105, 286, { align: 'center' })
-    doc.text('Visit us at: www.pixelprimp.com | WhatsApp: +880 1401-658685', 105, 291, { align: 'center' })
+    doc.text('Thank you for choosing Sabit Asset Management LTD!', 105, 286, { align: 'center' })
+    doc.text('Visit us at: www.sabitasset.com | WhatsApp: +880 1401-658685', 105, 291, { align: 'center' })
     
     // Save the PDF
     doc.save(`${inquiry.invoiceNumber}.pdf`)

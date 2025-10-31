@@ -22,7 +22,7 @@ interface AuthState {
 
 // Mock users for demo - includes admin credentials
 const mockUsers = [
-  { id: "1", email: "admin@pqrix.com", password: "admin123", name: "Admin User", role: "admin" as UserRole },
+  { id: "1", email: "admin@sabitasset.com", password: "admin123", name: "Admin User", role: "admin" as UserRole },
   { id: "2", email: "abstalha@gmail.com", password: "123456", name: "Talha Admin", role: "admin" as UserRole },
   { id: "3", email: "client@example.com", password: "client123", name: "John Doe", role: "client" as UserRole },
 ]

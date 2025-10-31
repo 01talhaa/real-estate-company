@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!member) return {}
 
   return {
-    title: `${(member as any).name} - ${(member as any).role} | Pqrix Team`,
+    title: `${(member as any).name} - ${(member as any).role} | Sabit Asset Management Team`,
     description: (member as any).bio,
   }
 }

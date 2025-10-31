@@ -1,51 +1,148 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
-import LazyVideo from "./lazy-video"
+import { Card } from "@/components/ui/card"
+import { Building2, TrendingUp, Shield, Users } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export function Hero() {
-  const buttonNew = (
-    <Button asChild className="rounded-full bg-sky-400 px-6 text-white hover:bg-sky-500 shadow-lg shadow-sky-400/30">
-      <a href="https://wa.me/8801401658685?text=Hi!%20I'm%20interested%20in%20your%20services" target="_blank" rel="noopener noreferrer">
-        Chat With Us
-      </a>
-    </Button>
-  )
+  const [counters, setCounters] = useState({ aum: 0, properties: 0, roi: 0, clients: 0 })
+
+  useEffect(() => {
+    const animateCounter = (target: number, key: keyof typeof counters, duration: number = 2000) => {
+      const start = 0
+      const increment = target / (duration / 16)
+      let current = start
+
+      const timer = setInterval(() => {
+        current += increment
+        if (current >= target) {
+          current = target
+          clearInterval(timer)
+        }
+        setCounters(prev => ({ ...prev, [key]: Math.floor(current) }))
+      }, 16)
+    }
+
+    animateCounter(250, 'aum')
+    animateCounter(180, 'properties')
+    animateCounter(18, 'roi')
+    animateCounter(450, 'clients')
+  }, [])
 
   return (
-    <section className="relative isolate overflow-hidden bg-gradient-to-b from-white via-sky-50 to-white">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center justify-center py-14 sm:py-20">
-          <div className="mb-5 flex items-center gap-2">
-            <Image src="/icons/pqrix-white.svg" alt="PixelPrimp logo" width={32} height={32} className="h-8 w-8" />
-            <p className="text-sm uppercase tracking-[0.25em]">
-              <span className="text-sky-500/80">Pixel</span>
-              <span className="text-black/80">Primp</span>
-            </p>
+    <section className="relative isolate overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-[50%] top-0 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-br from-sky-100/40 to-blue-100/40 blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 py-16 sm:py-24">
+        {/* Main Hero Content */}
+        <div className="text-center max-w-5xl mx-auto mb-16">
+          <div className="mb-6 flex items-center justify-center gap-3">
+            <div className="flex items-center justify-center h-12 w-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl shadow-lg">
+              <span className="text-white font-bold text-xl">SAML</span>
+            </div>
+            <div className="text-left">
+              <p className="text-xs uppercase tracking-wider text-sky-600 font-semibold">Sabit Asset Management</p>
+              <p className="text-xs text-gray-500">International Real Estate Advisory</p>
+            </div>
           </div>
-          <h1 className="mt-3 text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-black">
-            <span className="block">SOFTWARE &</span>
-            <span className="block text-sky-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.35)]">CREATIVE STUDIO</span>
-            <span className="block">FOR DIGITAL EXCELLENCE</span>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-slate-900 mb-6">
+            <span className="block">Maximizing Real Estate</span>
+            <span className="block bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+              Investment Performance
+            </span>
           </h1>
-          <div className="mt-6">{buttonNew}</div>
 
-          {/* Phone grid mimic */}
-          <div className="mt-10 grid w-full gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-            {phoneData.map((p, i) => {
-              const visibility = i <= 2 ? "block" : i === 3 ? "hidden md:block" : i === 4 ? "hidden xl:block" : "hidden"
+          <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto mb-8">
+            Professional asset management services for commercial and residential real estate portfolios. 
+            Strategic advisory, portfolio optimization, and data-driven investment decisions.
+          </p>
 
-              return (
-                <div key={i} className={visibility}>
-                  <PhoneCard title={p.title} sub={p.sub} tone={p.tone} gradient={p.gradient} videoSrc={p.videoSrc} />
-                </div>
-              )
-            })}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:from-sky-600 hover:to-blue-700 shadow-xl shadow-sky-500/30 px-8">
+              <a href="https://wa.me/8801401658685?text=Hi!%20I'm%20interested%20in%20your%20asset%20management%20services" target="_blank" rel="noopener noreferrer">
+                Schedule Consultation
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="rounded-full border-2 border-slate-300 hover:border-sky-500 hover:bg-sky-50">
+              <a href="#services">
+                Explore Services
+              </a>
+            </Button>
           </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          <Card className="p-6 text-center border-sky-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+            <Building2 className="h-8 w-8 mx-auto mb-3 text-sky-600" />
+            <div className="text-3xl font-bold text-slate-900">${counters.aum}M+</div>
+            <p className="text-sm text-slate-600 mt-1">Assets Under Management</p>
+          </Card>
+
+          <Card className="p-6 text-center border-sky-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+            <TrendingUp className="h-8 w-8 mx-auto mb-3 text-green-600" />
+            <div className="text-3xl font-bold text-slate-900">{counters.properties}+</div>
+            <p className="text-sm text-slate-600 mt-1">Properties Managed</p>
+          </Card>
+
+          <Card className="p-6 text-center border-sky-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+            <Shield className="h-8 w-8 mx-auto mb-3 text-blue-600" />
+            <div className="text-3xl font-bold text-slate-900">{counters.roi}%</div>
+            <p className="text-sm text-slate-600 mt-1">Average Annual ROI</p>
+          </Card>
+
+          <Card className="p-6 text-center border-sky-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+            <Users className="h-8 w-8 mx-auto mb-3 text-purple-600" />
+            <div className="text-3xl font-bold text-slate-900">{counters.clients}+</div>
+            <p className="text-sm text-slate-600 mt-1">Satisfied Clients</p>
+          </Card>
+        </div>
+
+        {/* Property Types Showcase */}
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          {propertyTypes.map((type, i) => (
+            <div key={i} className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 p-6 hover:shadow-lg transition-all">
+              <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="text-3xl mb-2">{type.icon}</div>
+                <h3 className="font-semibold text-slate-900 mb-1">{type.title}</h3>
+                <p className="text-xs text-slate-600">{type.desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   )
 }
+
+const propertyTypes = [
+  {
+    icon: "🏢",
+    title: "Commercial",
+    desc: "Office buildings & retail spaces"
+  },
+  {
+    icon: "🏘️",
+    title: "Residential",
+    desc: "Apartments & housing complexes"
+  },
+  {
+    icon: "🏭",
+    title: "Industrial",
+    desc: "Warehouses & logistics facilities"
+  },
+  {
+    icon: "🏨",
+    title: "Hospitality",
+    desc: "Hotels & serviced apartments"
+  }
+]
 
 function PhoneCard({
   title = "8°",

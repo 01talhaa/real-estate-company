@@ -62,31 +62,31 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     : `${s.description} Expert ${s.title} services in Bangladesh starting from ${s.pricing || 'competitive rates'}. Get a detailed quote with comprehensive SOW and technical specifications.`
 
   return {
-    title: `${s.title} Services Bangladesh | ${s.tagline} | Pqrix`,
+    title: `${s.title} Services | ${s.tagline} | Sabit Asset Management`,
     description,
     keywords: allKeywords,
     openGraph: {
-      title: `${s.title} Services in Bangladesh | Pqrix`,
+      title: `${s.title} Services | Sabit Asset Management`,
       description: `${s.description} Starting from ${s.pricing || 'competitive rates'}. Expert team, fixed-price quotes, local payment integration (bKash/Nagad).`,
       type: "website",
-      url: `https://pqrix.com/services/${s.id}`,
+      url: `https://sabitasset.com/services/${s.id}`,
       images: [
         {
-          url: s.image || "/icons/pqrix-logo.png",
+          url: s.image || "/icons/saml-logo.png",
           width: 1200,
           height: 630,
-          alt: `${s.title} Services by Pqrix Bangladesh`,
+          alt: `${s.title} Services by Sabit Asset Management`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${s.title} Services Bangladesh | Pqrix`,
-      description: `${s.tagline}. Starting ${s.pricing || 'competitive rates'}. bKash/Nagad accepted.`,
-      images: [s.image || "/icons/pqrix-logo.png"],
+      title: `${s.title} Services | Sabit Asset Management`,
+      description: s.tagline,
+      images: [s.image || "/icons/saml-logo.png"],
     },
     alternates: {
-      canonical: `https://pqrix.com/services/${s.id}`,
+      canonical: `https://sabitasset.com/services/${s.id}`,
     },
     robots: {
       index: true,
@@ -297,8 +297,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             "description": service.longDescription || service.description,
             "provider": {
               "@type": "Organization",
-              "name": "Pqrix",
-              "url": "https://pqrix.com"
+              "name": "Sabit Asset Management LTD",
+              "url": "https://sabitasset.com"
             },
             "areaServed": {
               "@type": "Place",
@@ -324,7 +324,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               "price": pkg.price,
               "priceCurrency": "USD",
               "availability": "https://schema.org/InStock",
-              "url": `https://pqrix.com/services/${service.id}`,
+              "url": `https://sabitasset.com/services/${service.id}`,
               "seller": {
                 "@type": "Organization",
                 "name": "Pqrix"

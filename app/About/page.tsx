@@ -5,34 +5,32 @@ export default function AboutPage() {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "PixelPrimp Studio",
-    url: "https://pixelprimp.com",
-    logo: "https://pixelprimp.com/logo.png",
+    name: "Sabit Asset Management LTD",
+    url: "https://sabitasset.com",
+    logo: "https://sabitasset.com/logo.png",
     description:
-      "PixelPrimp is a complete software development and creative studio offering web/mobile development, 3D animation, video editing, photo editing, and graphic design services worldwide.",
+      "Sabit Asset Management LTD is a professional real estate asset management firm offering comprehensive property portfolio management, investment advisory, property valuation, and strategic asset optimization services.",
     sameAs: [
-      "https://www.instagram.com/pixelprimp",
-      "https://www.linkedin.com/company/pixelprimp",
+      "https://www.instagram.com/sabitasset",
+      "https://www.linkedin.com/company/sabitasset",
     ],
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Miami",
-      addressRegion: "FL",
-      addressCountry: "US",
+      addressLocality: "Dhaka",
+      addressRegion: "Dhaka",
+      addressCountry: "BD",
     },
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: "+1-555-555-5555",
+        telephone: "+880-1401-658685",
         contactType: "customer service",
       },
     ],
     areaServed: [
-      { "@type": "Place", name: "Miami" },
-      { "@type": "Place", name: "Los Angeles" },
-      { "@type": "Place", name: "New York" },
-      { "@type": "Place", name: "Canada" },
-      { "@type": "Place", name: "United Kingdom" },
+      { "@type": "Place", name: "Bangladesh" },
+      { "@type": "Place", name: "South Asia" },
+      { "@type": "Place", name: "Asia Pacific" },
     ],
   };
 
@@ -49,10 +47,10 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-sky-50 to-white text-black py-20 px-6 md:px-12 lg:px-20 text-center">
         <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          About <span className="text-sky-500">Pixel</span><span className="text-black">Primp</span> Studio
+          About <span className="text-sky-600">Sabit Asset Management</span> <span className="text-gray-800">LTD</span>
         </h1>
         <p className="text-lg md:text-xl max-w-2xl mx-auto text-gray-700">
-          Your complete software development and creative production partner for digital excellence.
+          Your trusted partner in strategic real estate asset management and portfolio optimization.
         </p>
       </section>
 
@@ -61,28 +59,28 @@ export default function AboutPage() {
         <div className="grid gap-12 md:grid-cols-3">
           {[
             {
-              title: "Software Development",
-              desc: "Custom web, mobile, and desktop applications built with cutting-edge technology.",
+              title: "Portfolio Management",
+              desc: "Comprehensive property portfolio management services to maximize asset value and performance.",
             },
             {
-              title: "Video Production",
-              desc: "Professional video editing, motion graphics, and 3D animation services.",
+              title: "Investment Advisory",
+              desc: "Strategic real estate investment guidance and market analysis for optimal returns.",
             },
             {
-              title: "Creative Design",
-              desc: "Photo editing, graphic design, and visual content creation for brands.",
+              title: "Property Valuation",
+              desc: "Professional property appraisal and valuation services using industry-leading methodologies.",
             },
             {
-              title: "Global Reach",
-              desc: "Serving clients worldwide with world-class software and creative solutions.",
+              title: "Asset Optimization",
+              desc: "Strategic planning and implementation to enhance property value and operational efficiency.",
             },
             {
-              title: "Collaborative Workflow",
-              desc: "Work directly with our creative team for maximum efficiency.",
+              title: "Market Intelligence",
+              desc: "In-depth market research and analysis to inform investment decisions.",
             },
             {
-              title: "SEO & Marketing Focus",
-              desc: "Optimized content to enhance your visibility on search engines.",
+              title: "Client-Focused Service",
+              desc: "Personalized asset management strategies tailored to your investment goals.",
             },
           ].map((feature, index) => (
             <div

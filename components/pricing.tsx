@@ -115,10 +115,10 @@ export function Pricing() {
             Our Pricing and Packages
           </div>
           <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-black" itemProp="name">
-            Our Pricing.
+            Our Service Packages.
           </h2>
           <p className="mx-auto mt-2 max-w-xl text-sm text-gray-600" itemProp="description">
-            No hidden fees. Just world-class animation that fits your budget.
+            Transparent pricing. Professional asset management services tailored to your portfolio.
           </p>
           <div className="mt-6">
             <Button
@@ -147,13 +147,13 @@ export function Pricing() {
 
             <CardHeader className="space-y-3 pb-4">
               <div className="text-sm font-semibold text-black" itemProp="name">
-                Startup
+                Essential
               </div>
               <div className="flex items-end gap-2 text-black">
                 <div className="text-xl font-bold tracking-tight" itemProp="price">
                   {PRICES[currency].startup}
                 </div>
-                <span className="pb-0.5 text-[11px] text-gray-600">per video</span>
+                <span className="pb-0.5 text-[11px] text-gray-600">per month</span>
                 <meta itemProp="priceCurrency" content={currency} />
               </div>
               <div className="flex gap-2">
@@ -163,7 +163,7 @@ export function Pricing() {
                   onTouchStart={() => setOpenPlan("Startup")}
                   className="flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors bg-white text-black border border-sky-300 hover:bg-sky-50"
                 >
-                  View Example
+                  Learn More
                 </Button>
                 <Button
                   asChild
@@ -177,12 +177,12 @@ export function Pricing() {
             <CardContent className="pt-0">
               <ul className="grid gap-2" itemProp="description">
                 {[
-                  "10–15s Reel/Teaser (1 SKU)",
-                  "Simple background + lighting",
-                  "1 revision",
-                  "Delivered in 10 days",
-                  "Social reel/ad-ready visuals",
-                  "3D Modelling - Included",
+                  "Property Portfolio Analysis",
+                  "Basic Performance Reporting",
+                  "1 Property Valuation/Month",
+                  "Monthly Market Updates",
+                  "Email Support",
+                  "Quarterly Strategy Review",
                 ].map((f, i) => (
                   <FeatureItem key={i} text={f} />
                 ))}
@@ -199,13 +199,13 @@ export function Pricing() {
           >
             <CardHeader className="space-y-3 pb-4">
               <div className="text-sm font-semibold text-neutral-200" itemProp="name">
-                Pro
+                Professional
               </div>
               <div className="flex items-end gap-2 text-neutral-100">
                 <div className="text-xl font-bold tracking-tight" itemProp="price">
                   {PRICES[currency].pro}
                 </div>
-                <span className="pb-0.5 text-[11px] text-neutral-400">per video</span>
+                <span className="pb-0.5 text-[11px] text-neutral-400">per month</span>
                 <meta itemProp="priceCurrency" content={currency} />
               </div>
 
@@ -221,7 +221,7 @@ export function Pricing() {
                     border: "1px solid #333",
                   }}
                 >
-                  View Example
+                  Learn More
                 </Button>
                 <Button
                   asChild
@@ -236,12 +236,12 @@ export function Pricing() {
             <CardContent className="pt-0">
               <ul className="grid gap-2" itemProp="description">
                 {[
-                  "20–25s Animation (1 SKU)",
-                  "Fixed Shot-list (no surprises)",
-                  "Creative background + pro graphics",
-                  "2 structured revisions",
-                  "Delivered in 3 weeks",
-                  "3D Modelling - Included",
+                  "Comprehensive Portfolio Management",
+                  "Detailed Performance Analytics",
+                  "3 Property Valuations/Month",
+                  "Investment Advisory Sessions",
+                  "Priority Support",
+                  "Monthly Strategy Reviews",
                 ].map((f, i) => (
                   <FeatureItem key={i} text={f} />
                 ))}
@@ -258,13 +258,13 @@ export function Pricing() {
           >
             <CardHeader className="relative space-y-3 pb-4">
               <div className="text-sm font-semibold text-neutral-200" itemProp="name">
-                Premium
+                Enterprise
               </div>
               <div className="flex items-end gap-2 text-white">
                 <div className="text-xl font-bold tracking-tight" itemProp="price">
                   {PRICES[currency].premium}
                 </div>
-                <span className="pb-0.5 text-[11px] text-neutral-400">per video</span>
+                <span className="pb-0.5 text-[11px] text-neutral-400">per month</span>
                 <meta itemProp="priceCurrency" content={currency} />
               </div>
               <div className="flex gap-2">
@@ -279,7 +279,7 @@ export function Pricing() {
                     border: "1px solid #333",
                   }}
                 >
-                  View Example
+                  Learn More
                 </Button>
                 <Button
                   asChild
@@ -294,12 +294,12 @@ export function Pricing() {
             <CardContent className="relative pt-0">
               <ul className="grid gap-2" itemProp="description">
                 {[
-                  "30–40s Animation (up to 5 SKUs)",
-                  "Advanced storyboard + shot design",
-                  "Delivered in 4 week",
-                  "Lighting, Camera Animation, Depth effects",
-                  "Up to 3 structured revisions",
-                  "3D Modelling - Included",
+                  "Full Portfolio Management Suite",
+                  "Unlimited Property Valuations",
+                  "Dedicated Account Manager",
+                  "Custom Investment Strategies",
+                  "24/7 Priority Support",
+                  "Weekly Performance Reports",
                 ].map((f, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4" style={{ color: ACCENT }} />

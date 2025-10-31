@@ -1,7 +1,7 @@
 {
-  "name": "PixelPrimp - Software Development & Creative Studio",
-  "short_name": "PixelPrimp",
-  "description": "Complete software development and creative studio offering web/mobile development, 3D animation, video editing, photo editing, and graphic design",
+  "name": "Sabit Asset Management LTD - Real Estate Asset Management",
+  "short_name": "Sabit Asset",
+  "description": "Professional real estate asset management services including property portfolio management, investment advisory, property valuation, and strategic asset optimization",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -17,8 +17,8 @@
   ],
   "categories": [
     "business",
-    "productivity",
-    "technology"
+    "finance",
+    "real estate"
   ],
   "lang": "en",
   "dir": "ltr"

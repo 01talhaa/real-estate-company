@@ -14,8 +14,8 @@ interface FooterContent {
 }
 
 const defaultContent: FooterContent = {
-  tagline: "Experience software development and creative excellence like never before. We craft innovative solutions for brands and businesses.",
-  copyright: "© 2025 — PixelPrimp",
+  tagline: "Strategic real estate asset management services focused on maximizing property value and investment returns. Your trusted partner in property portfolio management.",
+  copyright: "© 2025 — Sabit Asset Management LTD",
 }
 
 export function AppverseFooter() {
@@ -58,13 +58,12 @@ export function AppverseFooter() {
           <div className="relative grid items-center gap-8 md:grid-cols-2">
             {/* Left copy */}
             <div>
-              <p className="mb-2 text-[11px] tracking-widest text-sky-600">STREAMLINE YOUR WORKFLOW</p>
+              <p className="mb-2 text-[11px] tracking-widest text-sky-600">STREAMLINE YOUR PORTFOLIO</p>
               <h3 className="text-2xl font-bold leading-tight text-black sm:text-3xl">
-                Review &amp; approve projects from anywhere
+                Manage &amp; monitor your assets from anywhere
               </h3>
               <p className="mt-2 max-w-prose text-sm text-gray-700">
-                Track progress, leave feedback, and approve deliverables from anywhere. Using our collaboration &amp;
-                project management tools
+                Track property performance, review financials, and manage your real estate portfolio from anywhere. Using our comprehensive asset management platform
               </p>
             </div>
 
@@ -80,7 +79,7 @@ export function AppverseFooter() {
                     loop={true}
                     muted={true}
                     playsInline={true}
-                    aria-label="PixelPrimp app preview - approvals made easy"
+                    aria-label="Sabit Asset Management app preview - property management made easy"
                   />
                   {/* On-screen content */}
                   <div className="relative p-3">
@@ -106,11 +105,13 @@ export function AppverseFooter() {
           <div className="grid gap-8 md:grid-cols-[1.2fr_1fr_1fr]">
             {/* Brand */}
             <div className="space-y-3">
-              <div className="flex items-center gap-1.5">
-                <Image src="/icons/pqrix-white.svg" alt="PixelPrimp logo" width={24} height={24} className="h-6 w-6" />
-                <span className="text-xl font-semibold">
-                  <span className="text-sky-500">Pixel</span>
-                  <span className="text-black">Primp</span>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center h-8 w-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-md">
+                  <span className="text-white font-bold text-sm">SAML</span>
+                </div>
+                <span className="text-lg font-semibold">
+                  <span className="text-sky-600">Sabit Asset</span>
+                  <span className="text-gray-800"> Management</span>
                 </span>
               </div>
               <p className="max-w-sm text-sm text-gray-600">{content.tagline}</p>
@@ -136,11 +137,11 @@ export function AppverseFooter() {
                   <li className="flex items-center gap-2">
                     <Twitter className="h-4 w-4 text-sky-500" />
                     <a
-                      href="https://twitter.com/pixelprimp"
+                      href="https://twitter.com/sabitasset"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-sky-500 transition-colors"
-                      aria-label="Follow PixelPrimp on Twitter"
+                      aria-label="Follow Sabit Asset Management on Twitter"
                     >
                       X/Twitter
                     </a>
@@ -148,11 +149,11 @@ export function AppverseFooter() {
                   <li className="flex items-center gap-2">
                     <Youtube className="h-4 w-4 text-sky-500" />
                     <a
-                      href="https://www.youtube.com/@pixelprimp"
+                      href="https://www.youtube.com/@sabitasset"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-sky-500 transition-colors"
-                      aria-label="Subscribe to PixelPrimp on YouTube"
+                      aria-label="Subscribe to Sabit Asset Management on YouTube"
                     >
                       YouTube
                     </a>
@@ -160,11 +161,11 @@ export function AppverseFooter() {
                   <li className="flex items-center gap-2">
                     <Instagram className="h-4 w-4 text-sky-500" />
                     <a
-                      href="https://instagram.com/pixelprimp"
+                      href="https://instagram.com/sabitasset"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-sky-500 transition-colors"
-                      aria-label="Follow PixelPrimp on Instagram"
+                      aria-label="Follow Sabit Asset Management on Instagram"
                     >
                       Instagram
                     </a>
@@ -172,11 +173,11 @@ export function AppverseFooter() {
                   <li className="flex items-center gap-2">
                     <MessageCircle className="h-4 w-4 text-sky-500" />
                     <a
-                      href="https://threads.com/pixelprimp"
+                      href="https://threads.com/sabitasset"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-sky-500 transition-colors"
-                      aria-label="Follow PixelPrimp on Threads"
+                      aria-label="Follow Sabit Asset Management on Threads"
                     >
                       Threads
                     </a>

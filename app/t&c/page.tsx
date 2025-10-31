@@ -4,8 +4,8 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Terms and Conditions — Pqrix",
-  description: "Terms and conditions for Pqrix 3D animation services.",
+  title: "Terms and Conditions — Sabit Asset Management",
+  description: "Terms and conditions for Sabit Asset Management real estate services.",
   robots: {
     index: false,
     follow: false,
@@ -26,7 +26,7 @@ export default function TermsPage() {
                 <header className="space-y-4">
                   <h1 className="text-4xl font-bold tracking-tight text-sky-600">Terms and Conditions</h1>
                   <p className="text-gray-600 text-lg">
-                    Welcome to Pqrix. By accessing our website, you agree to these terms and conditions. Please read
+                    Welcome to Sabit Asset Management LTD. By accessing our website, you agree to these terms and conditions. Please read
                     them carefully.
                   </p>
                 </header>
@@ -34,17 +34,17 @@ export default function TermsPage() {
                 <section className="space-y-3">
                   <h2 className="text-2xl font-semibold text-black">1. Introduction</h2>
                   <p className="text-gray-700">
-                    These Terms and Conditions govern your use of the Pqrix website and services. By using our
-                    website, you accept these Terms in full.
+                    These Terms and Conditions govern your use of the Sabit Asset Management LTD website and services. By using our
+                    website, you accept these terms in full.
                   </p>
                 </section>
 
                 <section className="space-y-3">
                   <h2 className="text-2xl font-semibold text-black">2. Intellectual Property Rights</h2>
                   <p className="text-gray-700">
-                    Unless otherwise stated, Pqrix owns all the project files. This includes all electronic files,
-                    drawings, source files, and any materials provided to the client, which remain the sole property of
-                    Pqrix International, even if shared.
+                    Unless otherwise stated, Sabit Asset Management LTD owns all intellectual property rights. This includes all reports,
+                    analysis, valuations, and any materials provided to the client, which remain the sole property of
+                    Sabit Asset Management LTD, even if shared.
                   </p>
                   <ul className="list-disc list-inside space-y-2 text-gray-600">
                     <li>You must not republish material from this site.</li>
@@ -69,10 +69,10 @@ export default function TermsPage() {
                     4. Limitation of Liability & Subjectivity of Content
                   </h2>
                   <p className="text-gray-700">
-                    Pqrix will not be liable for any direct, indirect, or consequential loss or damage arising under
-                    these Terms or in connection with our website or services. The perceived quality, style, or
-                    suitability of content created by us remains subjective and cannot be used as grounds to increase
-                    scope of work. Revisions are strictly governed by our{" "}
+                    Sabit Asset Management LTD will not be liable for any direct, indirect, or consequential loss or damage arising under
+                    these Terms or in connection with our website or services. The perceived quality, methodology, or
+                    suitability of analysis provided by us remains subjective and cannot be used as grounds to increase
+                    scope of work. Service modifications are strictly governed by our{" "}
                     <Link href="/revisions" className="text-sky-600 underline hover:text-sky-700">
                       revision policy
                     </Link>
@@ -93,8 +93,8 @@ export default function TermsPage() {
                   <p className="text-gray-700">If you have any questions about these Terms, please contact us at:</p>
                   <p className="text-gray-700">
                     Email:{" "}
-                    <a href="mailto:hello@pqrix.com" className="text-sky-600 underline hover:text-sky-700">
-                      hello@pqrix.com
+                    <a href="mailto:hello@sabitasset.com" className="text-sky-600 underline hover:text-sky-700">
+                      hello@sabitasset.com
                     </a>
                   </p>
                 </section>

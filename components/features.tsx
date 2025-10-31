@@ -11,8 +11,8 @@ interface FeaturesContent {
 }
 
 const defaultContent: FeaturesContent = {
-  title: "What makes us the best creative studio for you.",
-  subtitle: "Discover our unique approach to software development and creative production",
+  title: "What makes us the best asset management partner for you.",
+  subtitle: "Discover our strategic approach to real estate asset management and portfolio optimization",
 }
 
 export function Features() {
@@ -43,8 +43,8 @@ export function Features() {
         {/* Adaptability Card - Hidden on mobile */}
         <Card className="hidden md:block liquid-glass border border-sky-200 bg-white/80 backdrop-blur-xl shadow-lg shadow-sky-200/30">
           <CardHeader>
-            <p className="text-[11px] tracking-widest text-sky-600">ADAPTABILITY</p>
-            <CardTitle className="mt-1 text-xl text-black">Make the experience truly intuitive</CardTitle>
+            <p className="text-[11px] tracking-widest text-sky-600">STRATEGIC APPROACH</p>
+            <CardTitle className="mt-1 text-xl text-black">Maximize returns through data-driven insights</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
@@ -75,9 +75,9 @@ export function Features() {
         {/* Client Love Card - Always visible */}
         <Card className="liquid-glass border border-sky-200 bg-white/80 backdrop-blur-xl shadow-lg shadow-sky-200/30">
           <CardHeader>
-            <p className="text-[11px] tracking-widest text-sky-600">CLIENT LOVE</p>
+            <p className="text-[11px] tracking-widest text-sky-600">CLIENT SUCCESS</p>
             <CardTitle className="mt-1 text-xl text-black">
-              Their work didn't just look good, it moved the needle — our audience felt the difference instantly.
+              Their asset management expertise transformed our portfolio performance — returns exceeded our expectations significantly.
             </CardTitle>
           </CardHeader>
           <CardContent>

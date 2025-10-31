@@ -92,11 +92,13 @@ export function SiteHeader() {
       <div className="container mx-auto max-w-4xl">
         <div className="flex h-14 items-center justify-between px-6 liquid-glass-header rounded-full shadow-md shadow-sky-200/30">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-1.5">
-            <Image src="/icons/pqrix-white.svg" alt="PixelPrimp logo" width={20} height={20} className="h-5 w-5" />
-            <span className="font-semibold tracking-wide">
-              <span className="text-sky-500">Pixel</span>
-              <span className="text-black">Primp</span>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="flex items-center justify-center h-8 w-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-md">
+              <span className="text-white font-bold text-sm">SAML</span>
+            </div>
+            <span className="font-semibold tracking-wide text-sm">
+              <span className="text-sky-600">Sabit Asset</span>
+              <span className="text-gray-800"> Management</span>
             </span>
           </Link>
 
@@ -173,11 +175,13 @@ export function SiteHeader() {
               </SheetTrigger>
               <SheetContent side="right" className="liquid-glass border-sky-200 p-0 w-64 flex flex-col bg-white/95">
                 {/* Brand Header */}
-                <div className="flex items-center gap-1.5 px-4 py-4 border-b border-sky-200">
-                  <Image src="/icons/pqrix-white.svg" alt="PixelPrimp logo" width={24} height={24} className="h-6 w-6" />
-                  <span className="font-semibold tracking-wide text-lg">
-                    <span className="text-sky-500">Pixel</span>
-                    <span className="text-black">Primp</span>
+                <div className="flex items-center gap-2 px-4 py-4 border-b border-sky-200">
+                  <div className="flex items-center justify-center h-8 w-8 bg-gradient-to-br from-sky-500 to-blue-600 rounded-md">
+                    <span className="text-white font-bold text-sm">SAML</span>
+                  </div>
+                  <span className="font-semibold tracking-wide text-sm">
+                    <span className="text-sky-600">Sabit Asset</span>
+                    <span className="text-gray-800"> Management</span>
                   </span>
                 </div>
 

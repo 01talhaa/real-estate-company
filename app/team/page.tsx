@@ -10,9 +10,9 @@ export const dynamic = 'force-static'
 export const revalidate = 60
 
 export const metadata = {
-  title: "Our Team | Pqrix - Meet the Creative Minds",
+  title: "Our Team | Sabit Asset Management - Meet Our Experts",
   description:
-    "Meet the talented team behind Pqrix. Our creative professionals bring years of experience in 3D animation, design, and creative direction.",
+    "Meet the talented team behind Sabit Asset Management LTD. Our professionals bring years of experience in real estate asset management, investment advisory, and portfolio optimization.",
 }
 
 async function getTeamMembers() {
@@ -169,7 +169,7 @@ export default async function TeamPage() {
               size="lg"
               className="rounded-full bg-lime-400 px-8 text-base font-semibold text-black hover:bg-lime-300"
             >
-              <Link href="mailto:careers@pqrix.com">View Open Positions</Link>
+              <Link href="mailto:careers@sabitasset.com">View Open Positions</Link>
             </Button>
           </Card>
         </section>
