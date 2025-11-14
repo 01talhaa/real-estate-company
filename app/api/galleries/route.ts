@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { connectToDatabase } from '@/lib/mongodb'
+import { withCache, CacheTTL, apiCache } from '@/lib/cache'
 
 const GALLERIES_COLLECTION = 'galleries'
 
 // GET /api/galleries - Get all galleries with filters
 export async function GET(request: NextRequest) {
   try {
-    const { db } = await connectToDatabase()
     const { searchParams } = new URL(request.url)
     
     // Get query parameters
@@ -18,45 +18,63 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '20')
     const skip = (page - 1) * limit
 
-    // Build filter
-    const filter: any = { isActive: true }
-    
-    if (category) {
-      filter.category = category
-    }
-    
-    if (propertyId) {
-      filter.propertyId = propertyId
-    }
-    
-    if (featured === 'true') {
-      filter.isFeatured = true
-    }
+    // Build cache key
+    const cacheKey = `galleries:${category || 'all'}:${propertyId || 'all'}:${featured || 'all'}:${isPublic || 'all'}:${page}:${limit}`
 
-    if (isPublic === 'true') {
-      filter.isPublic = true
-    }
+    const result = await withCache(
+      cacheKey,
+      async () => {
+        const { db } = await connectToDatabase()
 
-    // Get galleries with pagination
-    const galleries = await db.collection(GALLERIES_COLLECTION)
-      .find(filter)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .toArray()
+        // Build filter
+        const filter: any = { isActive: true }
+        
+        if (category) {
+          filter.category = category
+        }
+        
+        if (propertyId) {
+          filter.propertyId = propertyId
+        }
+        
+        if (featured === 'true') {
+          filter.isFeatured = true
+        }
 
-    // Get total count
-    const total = await db.collection(GALLERIES_COLLECTION).countDocuments(filter)
+        if (isPublic === 'true') {
+          filter.isPublic = true
+        }
+
+        // Get galleries with pagination
+        const galleries = await db.collection(GALLERIES_COLLECTION)
+          .find(filter)
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .toArray()
+
+        // Get total count
+        const total = await db.collection(GALLERIES_COLLECTION).countDocuments(filter)
+
+        return {
+          galleries,
+          pagination: {
+            page,
+            limit,
+            total,
+            pages: Math.ceil(total / limit)
+          }
+        }
+      },
+      CacheTTL.MEDIUM
+    )
+
+    const { galleries, pagination } = result
 
     return NextResponse.json({
       success: true,
       data: galleries,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
-      }
+      pagination
     })
   } catch (error) {
     console.error('Error fetching galleries:', error)
@@ -89,6 +107,9 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await db.collection(GALLERIES_COLLECTION).insertOne(gallery)
+
+    // Clear cache for instant updates
+    apiCache.clear()
 
     return NextResponse.json({
       success: true,

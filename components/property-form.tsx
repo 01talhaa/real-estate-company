@@ -21,7 +21,7 @@ import { ArrowLeft, Save, MapPin, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import ImageUpload from '@/components/image-upload'
 import MultipleImageUpload from '@/components/multiple-image-upload'
-import { MapboxMap } from '@/components/mapbox-map'
+import { GoogleMap } from '@/components/google-map'
 
 interface PropertyFormProps {
   propertyId?: string
@@ -530,11 +530,12 @@ export default function PropertyForm({ propertyId }: PropertyFormProps) {
                       Updating map location...
                     </div>
                   )}
-                  <MapboxMap
+                  <GoogleMap
                     lat={formData.location.coordinates.lat}
                     lng={formData.location.coordinates.lng}
                     draggable={true}
                     showHint={showMapHint}
+                    address={`${formData.location.address}, ${formData.location.city}, ${formData.location.state}`}
                     onLocationChange={(lat: number, lng: number) => {
                       updateField('location.coordinates', { lat, lng })
                       setShowMapHint(false) // Hide hint after manual adjustment

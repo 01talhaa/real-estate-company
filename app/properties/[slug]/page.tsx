@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
-import { MapboxMap } from '@/components/mapbox-map'
+import { GoogleMap } from '@/components/google-map'
 
 export default function PropertyDetailPage() {
   const params = useParams()
@@ -357,9 +357,10 @@ export default function PropertyDetailPage() {
                       <CardTitle>Location</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <MapboxMap
+                      <GoogleMap
                         lat={property.location.coordinates.lat}
                         lng={property.location.coordinates.lng}
+                        address={`${property.location.address}, ${property.location.city}, ${property.location.state}, ${property.location.country}`}
                         draggable={false}
                         height="450px"
                         zoom={16}

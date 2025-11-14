@@ -89,3 +89,14 @@ ClientSchema.methods.comparePassword = async function (candidatePassword: string
 }
 
 export default mongoose.models.Client || mongoose.model('Client', ClientSchema)
+
+// Collection name and indexes for MongoDB optimization
+export const CLIENTS_COLLECTION = 'clients'
+
+export const CLIENT_INDEXES = [
+  { key: { email: 1 }, unique: true },
+  { key: { createdAt: -1 } },
+  { key: { company: 1 } },
+  // Text index for search
+  { key: { name: 'text', email: 'text', company: 'text' } },
+]

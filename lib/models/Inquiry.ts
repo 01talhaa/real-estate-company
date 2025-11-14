@@ -98,3 +98,19 @@ InquirySchema.pre('save', async function (next) {
 })
 
 export default mongoose.models.Inquiry || mongoose.model<IInquiry>('Inquiry', InquirySchema)
+
+// Collection name and indexes for MongoDB optimization
+export const INQUIRIES_COLLECTION = 'inquiries'
+
+export const INQUIRY_INDEXES = [
+  { key: { clientId: 1 } },
+  { key: { serviceId: 1 } },
+  { key: { status: 1 } },
+  { key: { paymentStatus: 1 } },
+  { key: { invoiceNumber: 1 }, unique: true },
+  { key: { createdAt: -1 } },
+  // Compound indexes for common queries
+  { key: { clientId: 1, status: 1, createdAt: -1 } },
+  { key: { status: 1, paymentStatus: 1 } },
+  { key: { serviceId: 1, status: 1 } },
+]

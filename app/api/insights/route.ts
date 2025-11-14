@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { connectToDatabase } from '@/lib/mongodb'
+import { withCache, CacheTTL, apiCache } from '@/lib/cache'
 
 const INSIGHTS_COLLECTION = 'insights'
 
 // GET /api/insights - Get all insights with filters
 export async function GET(request: NextRequest) {
   try {
-    const { db } = await connectToDatabase()
     const { searchParams } = new URL(request.url)
     
     // Get query parameters
@@ -18,45 +18,63 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10')
     const skip = (page - 1) * limit
 
-    // Build filter
-    const filter: any = { isActive: true }
-    
-    if (status) {
-      filter.status = status
-    }
-    
-    if (category) {
-      filter.category = category
-    }
-    
-    if (tag) {
-      filter.tags = tag
-    }
-    
-    if (featured === 'true') {
-      filter.isFeatured = true
-    }
+    // Build cache key
+    const cacheKey = `insights:${category || 'all'}:${tag || 'all'}:${featured || 'all'}:${status}:${page}:${limit}`
 
-    // Get insights with pagination
-    const insights = await db.collection(INSIGHTS_COLLECTION)
-      .find(filter)
-      .sort({ publishedAt: -1, createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .toArray()
+    const result = await withCache(
+      cacheKey,
+      async () => {
+        const { db } = await connectToDatabase()
 
-    // Get total count
-    const total = await db.collection(INSIGHTS_COLLECTION).countDocuments(filter)
+        // Build filter
+        const filter: any = { isActive: true }
+        
+        if (status) {
+          filter.status = status
+        }
+        
+        if (category) {
+          filter.category = category
+        }
+        
+        if (tag) {
+          filter.tags = tag
+        }
+        
+        if (featured === 'true') {
+          filter.isFeatured = true
+        }
+
+        // Get insights with pagination
+        const insights = await db.collection(INSIGHTS_COLLECTION)
+          .find(filter)
+          .sort({ publishedAt: -1, createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .toArray()
+
+        // Get total count
+        const total = await db.collection(INSIGHTS_COLLECTION).countDocuments(filter)
+
+        return {
+          insights,
+          pagination: {
+            page,
+            limit,
+            total,
+            pages: Math.ceil(total / limit)
+          }
+        }
+      },
+      CacheTTL.MEDIUM
+    )
+
+    const { insights, pagination } = result
 
     return NextResponse.json({
       success: true,
       data: insights,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
-      }
+      pagination
     })
   } catch (error) {
     console.error('Error fetching insights:', error)
@@ -91,6 +109,9 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await db.collection(INSIGHTS_COLLECTION).insertOne(insight)
+
+    // Clear cache for instant updates
+    apiCache.clear()
 
     return NextResponse.json({
       success: true,

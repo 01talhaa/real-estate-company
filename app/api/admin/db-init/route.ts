@@ -39,6 +39,9 @@ export async function GET() {
     const { GALLERIES_COLLECTION } = await import('@/lib/models/Gallery')
     const { SERVICES_COLLECTION } = await import('@/lib/models/Service')
     const { TEAM_COLLECTION } = await import('@/lib/models/TeamMember')
+    const { PROJECTS_COLLECTION } = await import('@/lib/models/Project')
+    const { INQUIRIES_COLLECTION } = await import('@/lib/models/Inquiry')
+    const { CLIENTS_COLLECTION } = await import('@/lib/models/Client')
     
     const { db } = await connectToDatabase()
     
@@ -48,16 +51,27 @@ export async function GET() {
     const galleryIndexes = await db.collection(GALLERIES_COLLECTION).indexes()
     const serviceIndexes = await db.collection(SERVICES_COLLECTION).indexes()
     const teamIndexes = await db.collection(TEAM_COLLECTION).indexes()
+    const projectIndexes = await db.collection(PROJECTS_COLLECTION).indexes()
+    const inquiryIndexes = await db.collection(INQUIRIES_COLLECTION).indexes()
+    const clientIndexes = await db.collection(CLIENTS_COLLECTION).indexes()
     
     return NextResponse.json({
       success: true,
+      message: 'All 8 collections are optimized with indexes',
       indexes: {
         properties: propertyIndexes,
         insights: insightIndexes,
         galleries: galleryIndexes,
         services: serviceIndexes,
         team: teamIndexes,
+        projects: projectIndexes,
+        inquiries: inquiryIndexes,
+        clients: clientIndexes,
       },
+      summary: {
+        totalCollections: 8,
+        collections: ['properties', 'insights', 'galleries', 'services', 'team', 'projects', 'inquiries', 'clients']
+      }
     })
   } catch (error) {
     console.error('Error fetching database indexes:', error)

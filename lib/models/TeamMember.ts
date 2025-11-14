@@ -3,6 +3,16 @@ import { ObjectId } from 'mongodb'
 export const TEAM_COLLECTION = 'team'
 
 // Database indexes for optimal query performance
+// export const TEAM_INDEXES = [
+//   { key: { id: 1 }, unique: true },
+//   { key: { department: 1 } },
+//   { key: { role: 1 } },
+//   { key: { createdAt: -1 } },
+//   // Text index for search
+//   { key: { name: 'text', bio: 'text', role: 'text' } },
+// ]
+
+// Database indexes for optimal query performance
 export const TEAM_INDEXES = [
   { key: { id: 1 }, unique: true },
   { key: { department: 1 } },
