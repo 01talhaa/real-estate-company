@@ -7,8 +7,7 @@ import { Badge } from '@/components/ui/badge'
 
 async function getLatestInsights() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-    const response = await fetch(`${baseUrl}/api/insights?status=published&limit=3`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/insights?status=published&limit=3`, {
       cache: 'no-store'
     })
     
@@ -32,7 +31,7 @@ export async function LatestInsightsSection() {
   }
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 text-amber-700 font-medium text-sm mb-4">

@@ -16,72 +16,29 @@ import Script from "next/script"
 export const dynamic = "force-dynamic"
 
 export default function Page() {
-  // Structured data for pricing
-  const pricingStructuredData = {
+  // Structured data for real estate company
+  const companyStructuredData = {
     "@context": "https://schema.org",
-    "@type": "WebPageElement",
-    "@id": "https://sabitasset.com/#pricing",
-    name: "Service Packages",
-    description: "Real estate asset management service packages including portfolio management, investment advisory, property valuation, and asset optimization",
-    url: "https://sabitasset.com/#pricing",
-    mainEntity: {
-      "@type": "PriceSpecification",
-      name: "Asset Management Services",
-      description: "Professional real estate asset management services with comprehensive packages",
-      offers: [
-        {
-          "@type": "Offer",
-          name: "Portfolio Assessment",
-          price: "50000",
-          priceCurrency: "BDT",
-          description: "Comprehensive property portfolio analysis and strategic recommendations",
-        },
-        {
-          "@type": "Offer",
-          name: "Property Management",
-          price: "150000",
-          priceCurrency: "BDT",
-          description: "Full-service property management and tenant relations",
-        },
-        {
-          "@type": "Offer",
-          name: "Investment Advisory",
-          price: "200000",
-          priceCurrency: "BDT",
-          description: "Strategic investment advisory and market intelligence",
-        },
-      ],
+    "@type": "RealEstateAgent",
+    "@id": "https://sabitasset.com",
+    name: "Sabit Asset Management LTD",
+    description: "Strategic Real Estate Asset Management Services - Professional property management, investment advisory, and portfolio optimization in Bangladesh",
+    url: "https://sabitasset.com",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "BD"
     },
-  }
-
-    // Structured data for main page
-  const pageStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://pqrix.com/",
-    name: "Pqrix | Software Development Company in Bangladesh",
-    description:
-      "Leading software development company in Bangladesh offering Discovery & Strategy, Web/SaaS Development, Mobile Apps, 3D Web/XR, and Desktop solutions with local payment integration.",
-    url: "https://pqrix.com/",
-    mainEntity: {
-      "@type": "Organization",
-      name: "Pqrix",
-      url: "https://pqrix.com",
-      sameAs: [
-        "https://twitter.com/pqrix",
-        "https://www.youtube.com/@pqrix",
-        "https://instagram.com/pqrix",
-        "https://threads.com/pqrix",
-      ],
+    areaServed: {
+      "@type": "Country",
+      name: "Bangladesh"
     },
-    hasPart: [
-      {
-        "@type": "WebPageElement",
-        "@id": "https://pqrix.com/#pricing",
-        name: "Pricing Section",
-        url: "https://pqrix.com/#pricing",
-      },
-    ],
+    serviceType: [
+      "Real Estate Asset Management",
+      "Property Portfolio Management",
+      "Investment Advisory",
+      "Property Valuation",
+      "Asset Optimization"
+    ]
   }
 
   return (
@@ -90,13 +47,22 @@ export default function Page() {
         <SiteHeader />
         <Hero />
         <Features />
-        <FeaturedPropertiesSection />
-        <GalleriesSection />
+        
+        {/* Core Services */}
         <ServicesSection />
+        
+        {/* Featured Properties Showcase */}
+        <FeaturedPropertiesSection />
+        
+        {/* Visual Portfolio */}
+        <GalleriesSection />
+        
+        {/* Market Intelligence */}
         <LatestInsightsSection />
-        <ProjectsSection />
-        {/* <LogoMarquee /> */}
-        {/* <Pricing /> */}
+        
+        {/* Completed Projects */}
+        {/* <ProjectsSection /> */}
+        
         <AppverseFooter />
       </main>
       
@@ -105,20 +71,11 @@ export default function Page() {
 
       {/* JSON-LD structured data */}
       <Script
-        id="pricing-structured-data"
+        id="company-structured-data"
         type="application/ld+json"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(pricingStructuredData),
-        }}
-      />
-
-      <Script
-        id="page-structured-data"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(pageStructuredData),
+          __html: JSON.stringify(companyStructuredData),
         }}
       />
     </>

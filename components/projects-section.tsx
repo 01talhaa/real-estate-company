@@ -53,30 +53,41 @@ export function ProjectsSection() {
     )
   }
   return (
-    <section id="projects" className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-white via-green-muted to-white">
-      <div className="mb-10 text-center">
-        <h2 className="text-[#064E3B] mb-2 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Featured <span className="text-green-dark">Projects</span></h2>
-        <p className="mx-auto max-w-2xl text-lg text-black">See how we've helped brands stand out with innovative design and creative solutions.</p>
-      </div>
+    <section id="projects" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700 font-medium text-sm mb-4">
+            <Play className="h-4 w-4" />
+            Success Stories
+          </div> */}
+          <h2 className="text-[#064E3B] text-4xl md:text-5xl font-bold mb-4">
+            Featured <span className="text-green-dark">Projects</span>
+          </h2>
+          <p className="text-xl text-black max-w-2xl mx-auto">
+            Discover our portfolio of successful real estate ventures and developments
+          </p>
+        </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
+        {/* This div was missing its closing tag */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
 
-      <div className="mt-10 text-center">
-        <Button 
-          asChild 
-          size="lg"
-          className="rounded-full  px-8   shadow-lg "
-        >
-          <Link href="/projects">
-            View All Projects
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
-      </div>
+        <div className="mt-10 text-center">
+          <Button 
+            asChild 
+            size="lg"
+            className="rounded-full  px-8   shadow-lg "
+          >
+            <Link href="/projects">
+              View All Projects
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </div> {/* Closing tag for container mx-auto px-4 */}
     </section>
   )
 }

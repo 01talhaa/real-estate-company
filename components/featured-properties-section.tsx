@@ -7,8 +7,7 @@ import { Badge } from '@/components/ui/badge'
 
 async function getFeaturedProperties() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-    const response = await fetch(`${baseUrl}/api/properties?featured=true&limit=6`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/properties?featured=true&limit=6`, {
       cache: 'no-store'
     })
     

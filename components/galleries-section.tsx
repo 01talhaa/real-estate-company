@@ -6,8 +6,7 @@ import { Images, MapPin } from 'lucide-react'
 
 async function getGalleries() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-    const response = await fetch(`${baseUrl}/api/galleries?limit=6&featured=true`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/galleries?limit=6&featured=true`, {
       cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
@@ -40,13 +39,17 @@ export async function GalleriesSection() {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-[#064E3B] text-3xl md:text-4xl font-bold mb-4">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 text-green-700 font-medium text-sm mb-4">
+            <Images className="h-4 w-4" />
+            Visual Portfolio
+          </div>
+          <h2 className="text-[#064E3B] text-4xl md:text-5xl font-bold mb-4">
             Photo Galleries
           </h2>
-          <p className="text-lg text-black max-w-2xl mx-auto">
+          <p className="text-xl text-black max-w-2xl mx-auto">
             Explore our collection of stunning property images and project showcases
           </p>
         </div>
