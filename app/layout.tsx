@@ -1,6 +1,5 @@
 import type React from "react"
 import "./globals.css"
-import "leaflet/dist/leaflet.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import Script from "next/script"
