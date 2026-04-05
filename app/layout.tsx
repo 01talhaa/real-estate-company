@@ -3,8 +3,8 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import Script from "next/script"
-import Plasma from "@/components/plasma"
 import { Toaster } from "@/components/ui/sonner"
+import PlasmaWrapper from "@/components/plasma-wrapper"
 
 const inter = Inter({ subsets: ["latin"], display: "swap" })
 
@@ -486,7 +486,7 @@ export default function RootLayout({
       </head>
       <body>
         <div className="fixed inset-0 z-0 bg-white">
-          <Plasma
+          <PlasmaWrapper
             color="#064E3B"
             speed={0.8}
             direction="forward"
