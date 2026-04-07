@@ -4,7 +4,6 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import Script from "next/script"
 import { Toaster } from "@/components/ui/sonner"
-import PlasmaWrapper from "@/components/plasma-wrapper"
 
 const inter = Inter({ subsets: ["latin"], display: "swap" })
 
@@ -485,15 +484,9 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
-        <div className="fixed inset-0 z-0 bg-white">
-          <PlasmaWrapper
-            color="#064E3B"
-            speed={0.8}
-            direction="forward"
-            scale={1.5}
-            opacity={0.10}
-            mouseInteractive={true}
-          />
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#064E3B]/10 via-white to-white"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[#064E3B]/5 via-transparent to-transparent"></div>
         </div>
         <div className="relative z-10">{children}</div>
         <Toaster />
