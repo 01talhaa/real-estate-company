@@ -40,31 +40,13 @@ export function GoogleMap({
       return
     }
 
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-    
-    if (!apiKey) {
-      console.error('Google Maps API key not found in environment variables')
-      // Fallback to simple embed
-      if (address && address.trim()) {
-        setMapUrl(`https://maps.google.com/maps?q=${encodeURIComponent(address)}&output=embed&z=${zoom}`)
-      } else {
-        setMapUrl(`https://maps.google.com/maps?q=${lat},${lng}&output=embed&z=${zoom}`)
-      }
-      return
-    }
-
-    // Use address if available, otherwise use coordinates
-    let url: string
+    // By utilizing the standard maps.google.com embedding format, we ensure the map works
+    // reliably without depending on an API key that may have restrictions or quota issues.
     if (address && address.trim()) {
-      // Using address for better map display
-      const encodedAddress = encodeURIComponent(address)
-      url = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodedAddress}&zoom=${zoom}`
+      setMapUrl(`https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=m&z=${zoom}&output=embed&iwloc=Near`)
     } else {
-      // Using coordinates
-      url = `https://www.google.com/maps/embed/v1/view?key=${apiKey}&center=${lat},${lng}&zoom=${zoom}`
+      setMapUrl(`https://maps.google.com/maps?q=${lat},${lng}&t=m&z=${zoom}&output=embed&iwloc=Near`)
     }
-
-    setMapUrl(url)
   }, [lat, lng, address, zoom, hasValidCoords])
 
   // Show placeholder if no valid coordinates

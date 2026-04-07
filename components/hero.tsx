@@ -32,7 +32,7 @@ export function Hero() {
 
   return (
     <section className="relative w-full min-h-[92vh] flex flex-col lg:flex-row overflow-hidden bg-[#FAFAFA]">
-      
+
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 left-[10%] w-[1px] h-full bg-black/[0.03]" />
@@ -48,7 +48,7 @@ export function Hero() {
         <div className="animate-in slide-in-from-left-12 fade-in duration-1000 fill-mode-both">
           <div className="inline-flex items-center gap-2 mb-8">
             <span className="w-12 h-[2px] bg-[#064E3B]" />
-            <span className="text-[#064E3B] font-bold tracking-[0.2em] text-xs uppercase">Since 2024</span>
+            <span className="text-[#064E3B] font-bold tracking-[0.2em] text-xs uppercase">Since 2014</span>
           </div>
 
           <h1 className="text-5xl sm:text-6xl lg:text-[5rem] font-extrabold tracking-tight text-gray-900 mb-8 leading-[1.05]">
@@ -62,7 +62,7 @@ export function Hero() {
           </h1>
 
           <p className="text-lg text-gray-600 max-w-xl mb-12 leading-relaxed font-normal">
-            Elevate your portfolio with Sabit's premier real estate asset management. 
+            Elevate your portfolio with Sabit's premier real estate asset management.
             We blend strategic foresight with rigorous market data to maximize your yields and minimize risks.
           </p>
 
@@ -115,13 +115,13 @@ export function Hero() {
           />
           {/* Accent Box overlay */}
           <div className="absolute -bottom-6 -left-6 w-3/4 h-32 bg-white p-6 shadow-xl lg:flex items-center hidden gap-4 group-hover:translate-x-2 transition-transform duration-500">
-             <div className="w-12 h-12 bg-green-light flex items-center justify-center shrink-0">
-               <Building2 className="text-[#064E3B] w-6 h-6" />
-             </div>
-             <div>
-               <h4 className="font-bold text-gray-900">Prime Commercial Assets</h4>
-               <p className="text-xs text-gray-500">View our latest additions to the portfolio</p>
-             </div>
+            <div className="w-12 h-12 bg-green-light flex items-center justify-center shrink-0">
+              <Building2 className="text-[#064E3B] w-6 h-6" />
+            </div>
+            <div>
+              <h4 className="font-bold text-gray-900">Prime Commercial Assets</h4>
+              <p className="text-xs text-gray-500">View our latest additions to the portfolio</p>
+            </div>
           </div>
         </div>
       </div>

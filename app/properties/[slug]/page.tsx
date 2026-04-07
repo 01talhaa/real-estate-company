@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import { SiteHeader } from '@/components/site-header'
 import { AppverseFooter } from '@/components/appverse-footer'
 import Image from 'next/image'
 import { 
-  Building2, MapPin, Bed, Bath, Square, TrendingUp, Calendar, 
-  Home, DollarSign, Maximize, ArrowLeft, Phone, Mail, MessageSquare 
+  Building2, MapPin, Bed, Bath, Square, TrendingUp,
+  Phone, Mail, MessageSquare, Expand, X, ChevronLeft, ChevronRight,
+  ZoomIn, ZoomOut, RotateCcw
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -22,6 +23,14 @@ export default function PropertyDetailPage() {
   const [property, setProperty] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [selectedImage, setSelectedImage] = useState(0)
+
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [zoom, setZoom] = useState(1)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
+  const [offset, setOffset] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     if (params.slug) {
@@ -41,6 +50,79 @@ export default function PropertyDetailPage() {
       setLoading(false)
     }
   }
+
+  const openLightbox = useCallback((index: number) => {
+    setLightboxIndex(index)
+    setZoom(1)
+    setOffset({ x: 0, y: 0 })
+    setLightboxOpen(true)
+    document.body.style.overflow = 'hidden'
+  }, [])
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false)
+    setZoom(1)
+    setOffset({ x: 0, y: 0 })
+    document.body.style.overflow = ''
+  }, [])
+
+  const lightboxPrev = useCallback((allImages: string[]) => {
+    setLightboxIndex(i => (i - 1 + allImages.length) % allImages.length)
+    setZoom(1)
+    setOffset({ x: 0, y: 0 })
+  }, [])
+
+  const lightboxNext = useCallback((allImages: string[]) => {
+    setLightboxIndex(i => (i + 1) % allImages.length)
+    setZoom(1)
+    setOffset({ x: 0, y: 0 })
+  }, [])
+
+  const handleZoomIn = () => setZoom(z => Math.min(z + 0.5, 4))
+  const handleZoomOut = () => setZoom(z => Math.max(z - 0.5, 0.5))
+  const handleZoomReset = () => { setZoom(1); setOffset({ x: 0, y: 0 }) }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (zoom <= 1) return
+    setIsDragging(true)
+    setDragStart({ x: e.clientX - offset.x, y: e.clientY - offset.y })
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    setOffset({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y })
+  }
+
+  const handleMouseUp = () => setIsDragging(false)
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault()
+    if (e.deltaY < 0) {
+      setZoom(z => Math.min(z + 0.2, 4))
+    } else {
+      setZoom(z => Math.max(z - 0.2, 0.5))
+    }
+  }
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (!lightboxOpen) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeLightbox()
+      if (e.key === 'ArrowLeft') setLightboxIndex(i => {
+        const len = property?.gallery ? [property.gallery.featuredImage, ...(property.gallery.images || [])].filter(Boolean).length : 1
+        return (i - 1 + len) % len
+      })
+      if (e.key === 'ArrowRight') setLightboxIndex(i => {
+        const len = property?.gallery ? [property.gallery.featuredImage, ...(property.gallery.images || [])].filter(Boolean).length : 1
+        return (i + 1) % len
+      })
+      if (e.key === '+') handleZoomIn()
+      if (e.key === '-') handleZoomOut()
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [lightboxOpen, closeLightbox, property])
 
   if (loading) {
     return (
@@ -101,19 +183,38 @@ export default function PropertyDetailPage() {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
               {/* Main Image */}
               <div className="lg:col-span-3">
-                <div className="relative h-[500px] rounded-lg overflow-hidden">
+                <div
+                  className="relative h-[500px] rounded-lg overflow-hidden group cursor-zoom-in"
+                  onClick={() => openLightbox(selectedImage)}
+                >
                   {allImages[selectedImage] ? (
                     <Image
                       src={allImages[selectedImage]}
                       alt={property.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-green-dark to-green-dark flex items-center justify-center">
                       <Building2 className="h-24 w-24 text-green-light" />
                     </div>
                   )}
+                  {/* Expand overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all duration-300 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/20 backdrop-blur-sm rounded-full p-4 border border-white/40">
+                      <Expand className="h-8 w-8 text-white" />
+                    </div>
+                  </div>
+                  {/* Image count badge */}
+                  {allImages.length > 1 && (
+                    <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full font-medium">
+                      {selectedImage + 1} / {allImages.length}
+                    </div>
+                  )}
+                  {/* Gallery tag */}
+                  <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5">
+                    <Expand className="h-3 w-3" /> Click to expand
+                  </div>
                 </div>
               </div>
 
@@ -122,23 +223,153 @@ export default function PropertyDetailPage() {
                 {allImages.slice(0, 4).map((image, index) => (
                   <div
                     key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`relative h-24 lg:h-32 rounded-lg overflow-hidden cursor-pointer ${
-                      selectedImage === index ? 'ring-2 ring-green-dark' : ''
+                    onClick={(e) => { e.stopPropagation(); setSelectedImage(index) }}
+                    className={`relative h-24 lg:h-32 rounded-lg overflow-hidden cursor-pointer group transition-all duration-200 ${
+                      selectedImage === index
+                        ? 'ring-2 ring-green-500 ring-offset-2 ring-offset-black'
+                        : 'opacity-60 hover:opacity-100 hover:ring-2 hover:ring-white/50'
                     }`}
                   >
                     <Image
                       src={image}
                       alt={`View ${index + 1}`}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    {/* Double-click opens lightbox */}
+                    <div
+                      className="absolute inset-0"
+                      onDoubleClick={(e) => { e.stopPropagation(); openLightbox(index) }}
                     />
                   </div>
                 ))}
+                {allImages.length > 4 && (
+                  <div
+                    onClick={() => openLightbox(4)}
+                    className="relative h-24 lg:h-32 rounded-lg overflow-hidden cursor-pointer bg-black/80 flex items-center justify-center border border-white/20 hover:border-white/60 transition-colors"
+                  >
+                    <div className="text-center text-white">
+                      <div className="text-2xl font-bold">+{allImages.length - 4}</div>
+                      <div className="text-xs opacity-70">more</div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </section>
+
+        {/* Lightbox Modal */}
+        {lightboxOpen && (
+          <div
+            className="fixed inset-0 z-[999] bg-black/95 backdrop-blur-sm flex items-center justify-center"
+            style={{ animation: 'fadeIn 0.2s ease' }}
+            onClick={closeLightbox}
+          >
+            <style>{`
+              @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+              @keyframes scaleIn { from { opacity: 0; transform: scale(0.92) } to { opacity: 1; transform: scale(1) } }
+            `}</style>
+
+            {/* Close button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors backdrop-blur-sm border border-white/20"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            {/* Zoom controls */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+              <button onClick={(e) => { e.stopPropagation(); handleZoomOut() }} className="p-1.5 rounded-full hover:bg-white/20 text-white transition-colors" title="Zoom Out (-)">
+                <ZoomOut className="h-4 w-4" />
+              </button>
+              <span className="text-white text-sm font-mono min-w-[48px] text-center">{Math.round(zoom * 100)}%</span>
+              <button onClick={(e) => { e.stopPropagation(); handleZoomIn() }} className="p-1.5 rounded-full hover:bg-white/20 text-white transition-colors" title="Zoom In (+)">
+                <ZoomIn className="h-4 w-4" />
+              </button>
+              <div className="w-px h-4 bg-white/30" />
+              <button onClick={(e) => { e.stopPropagation(); handleZoomReset() }} className="p-1.5 rounded-full hover:bg-white/20 text-white transition-colors" title="Reset">
+                <RotateCcw className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Prev button */}
+            {allImages.length > 1 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); lightboxPrev(allImages) }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all backdrop-blur-sm border border-white/20 hover:scale-110"
+              >
+                <ChevronLeft className="h-7 w-7" />
+              </button>
+            )}
+
+            {/* Next button */}
+            {allImages.length > 1 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); lightboxNext(allImages) }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all backdrop-blur-sm border border-white/20 hover:scale-110"
+              >
+                <ChevronRight className="h-7 w-7" />
+              </button>
+            )}
+
+            {/* Main lightbox image */}
+            <div
+              className="relative flex items-center justify-center w-full h-full overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onWheel={handleWheel}
+              style={{ cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default' }}
+            >
+              <div
+                style={{
+                  transform: `scale(${zoom}) translate(${offset.x / zoom}px, ${offset.y / zoom}px)`,
+                  transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  animation: 'scaleIn 0.25s ease',
+                  willChange: 'transform',
+                }}
+                className="relative"
+              >
+                {allImages[lightboxIndex] && (
+                  <img
+                    src={allImages[lightboxIndex]}
+                    alt={`${property.title} - Image ${lightboxIndex + 1}`}
+                    className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-2xl select-none"
+                    draggable={false}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Thumbnail strip at bottom */}
+            {allImages.length > 1 && (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2 max-w-[90vw] overflow-x-auto pb-1 px-2">
+                {allImages.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={(e) => { e.stopPropagation(); setLightboxIndex(i); setZoom(1); setOffset({ x: 0, y: 0 }) }}
+                    className={`flex-shrink-0 relative w-14 h-14 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                      i === lightboxIndex
+                        ? 'border-green-400 scale-110 shadow-lg shadow-green-500/30'
+                        : 'border-white/20 opacity-50 hover:opacity-100 hover:border-white/60'
+                    }`}
+                  >
+                    <img src={img} alt={`Thumb ${i + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Counter */}
+            <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-10 text-white/60 text-sm font-medium">
+              {lightboxIndex + 1} of {allImages.length}
+            </div>
+          </div>
+        )}
 
         {/* Property Info */}
         <section className="py-12">
