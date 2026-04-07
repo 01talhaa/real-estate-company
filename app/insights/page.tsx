@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Calendar, User, Search, FileText } from 'lucide-react'
+import insightsDataRaw from '@/data/insights.json'
 
 export default function InsightsPage() {
   const [insights, setInsights] = useState<any[]>([])
@@ -27,32 +28,38 @@ export default function InsightsPage() {
 
   const fetchInsights = async () => {
     setLoading(true)
-    try {
-      const params = new URLSearchParams({
-        page: String(currentPage),
-        limit: '9',
-        status: 'published',
-      })
+    await new Promise(r => setTimeout(r, 100))
 
-      if (category !== 'all') {
-        params.append('category', category)
-      }
-      if (searchQuery) {
-        params.append('search', searchQuery)
-      }
+    let filteredData = insightsDataRaw.filter((i: any) => i.status === 'published')
 
-      const response = await fetch(`/api/insights?${params}`)
-      const data = await response.json()
-
-      if (data.success) {
-        setInsights(data.data)
-        setTotalPages(data.pagination?.totalPages || 1)
-      }
-    } catch (error) {
-      console.error('Error fetching insights:', error)
-    } finally {
-      setLoading(false)
+    if (category !== 'all') {
+      filteredData = filteredData.filter((i: any) => i.category === category)
     }
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase()
+      filteredData = filteredData.filter((i: any) => 
+        i.title?.toLowerCase().includes(q) || 
+        i.excerpt?.toLowerCase().includes(q)
+      )
+    }
+
+    const limit = 9
+    const total = filteredData.length
+    const pages = Math.ceil(total / limit)
+    
+    // sorting by date descends (latest first)
+    filteredData.sort((a: any, b: any) => {
+      const dateA = new Date(a.publishDate || a.publishedAt || a.createdAt).getTime()
+      const dateB = new Date(b.publishDate || b.publishedAt || b.createdAt).getTime()
+      return dateB - dateA
+    })
+
+    const startIndex = (currentPage - 1) * limit
+    const paginatedData = filteredData.slice(startIndex, startIndex + limit)
+
+    setInsights(paginatedData)
+    setTotalPages(pages === 0 ? 1 : pages)
+    setLoading(false)
   }
 
   const handleSearch = () => {

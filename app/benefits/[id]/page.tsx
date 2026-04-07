@@ -6,7 +6,7 @@ import { Check, ArrowLeft, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import Script from "next/script"
 import { notFound } from "next/navigation"
-import { getAllServicesForBuild, getServiceByIdForBuild } from "@/lib/get-services"
+import servicesDataRaw from "@/data/services.json"
 import * as LucideIcons from "lucide-react"
 
 export const dynamic = 'force-static'
@@ -14,13 +14,12 @@ export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const services = await getAllServicesForBuild()
-  return services.map((service: any) => ({ id: service.id }))
+  return servicesDataRaw.map((service: any) => ({ id: service.id }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const service = await getServiceByIdForBuild(id)
+  const service = servicesDataRaw.find((s: any) => s.id === id)
   if (!service) return {}
 
   const s = service as any
@@ -33,33 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function BenefitDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  
-  const isProductionBuild = process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL;
-  let service: any
-  
-  if (isProductionBuild) {
-    service = await getServiceByIdForBuild(id)
-  } else {
-    try {
-      const baseUrl = process.env.VERCEL_URL 
-        ? `https://${process.env.VERCEL_URL}` 
-        : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-      
-      const response = await fetch(`${baseUrl}/api/services/${id}`, {
-        next: { revalidate: 60 }
-      })
-      
-      if (response.ok) {
-        const data = await response.json()
-        service = data.success ? data.data : null
-      } else {
-        service = await getServiceByIdForBuild(id)
-      }
-    } catch (error) {
-      console.error('API fetch failed, falling back to database:', error)
-      service = await getServiceByIdForBuild(id)
-    }
-  }
+  const service = servicesDataRaw.find((s: any) => s.id === id)
 
   if (!service) {
     notFound()

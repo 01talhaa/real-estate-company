@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import { GoogleMap } from '@/components/google-map'
+import propertiesDataRaw from '@/data/properties.json'
 
 export default function PropertyDetailPage() {
   const params = useParams()
@@ -28,18 +29,14 @@ export default function PropertyDetailPage() {
     }
   }, [params.slug])
 
-  const fetchProperty = async () => {
+  const fetchProperty = () => {
     try {
-      const response = await fetch(`/api/properties/${params.slug}`, {
-        cache: 'no-store'
-      })
-      const data = await response.json()
-      
-      if (data.success) {
-        setProperty(data.data)
+      const found = (propertiesDataRaw as any[]).find(p => p.slug === params.slug)
+      if (found) {
+        setProperty(found)
       }
     } catch (error) {
-      console.error('Error fetching property:', error)
+      console.error('Error finding property:', error)
     } finally {
       setLoading(false)
     }

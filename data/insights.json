@@ -1,0 +1,47 @@
+[
+  {
+    "_id": "insight-1",
+    "slug": "dhaka-commercial-real-estate-trends-2026",
+    "title": "Commercial Real Estate Trends in Dhaka for 2026",
+    "excerpt": "An in-depth analysis of how the completion of the Metro Rail and Elevated Expressway is reshaping commercial property demands in Motijheel, Gulshan, and Uttara.",
+    "content": "The landscape of Dhaka's commercial real estate is undergoing a massive transformation...\n\nWith infrastructural mega-projects like the MRT (Metro Rail Transit) lines becoming fully operational, we are seeing a decentralization of corporate hubs. Traditionally, Motijheel reigned supreme, closely followed by Gulshan and Banani. Today, Uttara and Mirpur are emerging as viable secondary business districts.\n\nInvestors are witnessing a steady 8-10% rental yield in Grade 'A' commercial buildings located near Metro stations. Companies prefer modern, compliant buildings that minimize commute times for their employees, hence the unprecedented demand along the MRT-6 grid.",
+    "category": "Market Analysis",
+    "status": "published",
+    "featured": true,
+    "author": "Syed Mahbubur Rahman",
+    "publishedAt": "2026-03-15T10:00:00.000Z",
+    "featuredImage": "https://images.unsplash.com/photo-1541888072465-1d6ebfaedcc7?auto=format&fit=crop&q=80&w=1200",
+    "tags": ["Dhaka", "Commercial", "Metro Rail", "Yields"],
+    "seo": { "metaDescription": "Analysis of Dhaka's commercial real estate dynamics post MRT launch." }
+  },
+  {
+    "_id": "insight-2",
+    "slug": "residential-investments-bashundhara-vs-purbachal",
+    "title": "Investment Clash: Bashundhara vs Purbachal",
+    "excerpt": "Comparing the long-term capital appreciation and immediate rental yields between Bashundhara R/A and the upcoming Purbachal New Town.",
+    "content": "For high-net-worth individuals, deciding where to deploy capital for residential development is crucial. Bashundhara Residential Area currently offers immediate maturity, high demand from expatriates and healthcare professionals (due to Evercare Hospital), and stable 5-6% rental yields.\n\nPurbachal New Town, conversely, is an investor's long play. With the 300-feet expressway enhancing connectivity, land values in Purbachal have appreciated by 20% year-on-year. While rental yields are currently non-existent, capital appreciation outpaces inflation significantly.\n\nOur advice: if looking for steady income, stick to Bashundhara. If seeking massive equity jumps over the next decade, Purbachal is the definitive choice.",
+    "category": "Investment Tips",
+    "status": "published",
+    "featured": false,
+    "author": "Nusrat Jahan",
+    "publishedAt": "2026-02-28T09:00:00.000Z",
+    "featuredImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1200",
+    "tags": ["Residential", "Purbachal", "Bashundhara", "Capital Appreciation"],
+    "seo": { "metaDescription": "Evaluating the ROI of residential plots in Bashundhara R/A compared to Purbachal." }
+  },
+  {
+    "_id": "insight-3",
+    "slug": "chattogram-logistics-boom",
+    "title": "The Logistics Boom around Mirsharai and Patenga",
+    "excerpt": "How the Bangabandhu Sheikh Mujib Shilpa Nagar (BSMSN) is driving unprecedented demand for industrial real estate.",
+    "content": "Bangladesh's industrial capacity is expanding rapidly, and Chattogram remains the epicenter. The establishment of the Bangabandhu Sheikh Mujib Shilpa Nagar (BSMSN) in Mirsharai has triggered a massive influx of foreign and domestic investments.\n\nAsset managers are advising clients to secure large warehouse spaces and logistics parks along the Dhaka-Chattogram highway. Current cap rates for industrial grade warehouses are exceeding 9.5%, making it one of the most lucrative sectors in the Bangladeshi real estate market today.\n\nThe proximity to Patenga and the new Bay Terminal project makes industrial plots in these regions prime targets for institutional investors and multinational corporations.",
+    "category": "Trends",
+    "status": "published",
+    "featured": true,
+    "author": "Kazi Tariqul Islam",
+    "publishedAt": "2026-03-20T14:30:00.000Z",
+    "featuredImage": "https://images.unsplash.com/photo-1586528116311-ad8ed7c50a30?auto=format&fit=crop&q=80&w=1200",
+    "tags": ["Industrial", "Chattogram", "Warehouse", "Logistics"],
+    "seo": { "metaDescription": "Insights into the industrial real estate demands in Chattogram's newly formed economic zones." }
+  }
+]

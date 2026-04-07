@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import propertiesDataRaw from '@/data/properties.json'
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState<any[]>([])
@@ -39,29 +40,45 @@ export default function PropertiesPage() {
   }, [filters, pagination.page])
 
   const fetchProperties = async () => {
-    try {
-      setLoading(true)
-      const params = new URLSearchParams()
-      
-      if (filters.status) params.append('status', filters.status)
-      if (filters.type) params.append('type', filters.type)
-      if (filters.category) params.append('category', filters.category)
-      if (filters.search) params.append('search', filters.search)
-      params.append('page', String(pagination.page || 1))
-      params.append('limit', String(pagination.limit || 12))
+    setLoading(true)
+    
+    // Simulate slight delay for loading state if needed, but we can do it instantly
+    await new Promise(r => setTimeout(r, 100))
 
-      const response = await fetch(`/api/properties?${params}`)
-      const data = await response.json()
+    let filteredData = propertiesDataRaw as any[]
 
-      if (data.success) {
-        setProperties(data.data)
-        setPagination(data.pagination)
-      }
-    } catch (error) {
-      console.error('Error fetching properties:', error)
-    } finally {
-      setLoading(false)
+    if (filters.status) {
+      filteredData = filteredData.filter(p => p.status === filters.status)
     }
+    if (filters.type) {
+      filteredData = filteredData.filter(p => p.type === filters.type)
+    }
+    if (filters.category) {
+      filteredData = filteredData.filter(p => p.category === filters.category)
+    }
+    if (filters.search) {
+      const q = filters.search.toLowerCase()
+      filteredData = filteredData.filter(p => 
+        p.title?.toLowerCase().includes(q) || 
+        p.location?.city?.toLowerCase().includes(q)
+      )
+    }
+
+    const total = filteredData.length
+    const limit = pagination.limit || 12
+    const pages = Math.ceil(total / limit)
+    const page = pagination.page || 1
+    
+    const startIndex = (page - 1) * limit
+    const paginatedData = filteredData.slice(startIndex, startIndex + limit)
+
+    setProperties(paginatedData)
+    setPagination(prev => ({
+      ...prev,
+      total,
+      pages: pages === 0 ? 1 : pages
+    }))
+    setLoading(false)
   }
 
   return (

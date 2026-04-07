@@ -14,8 +14,8 @@ const LatestInsightsSection = nextDynamic(() => import("@/components/latest-insi
 const AppverseFooter = nextDynamic(() => import("@/components/appverse-footer").then((mod) => mod.AppverseFooter))
 const WhatsAppButton = nextDynamic(() => import("@/components/whatsapp-button").then((mod) => mod.WhatsAppButton))
 
-// Force dynamic rendering to fetch latest data
-export const dynamic = "force-dynamic"
+// Force static rendering for super fast loading
+export const dynamic = "force-static"
 
 export default function Page() {
   // Structured data for real estate company

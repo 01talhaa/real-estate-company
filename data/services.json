@@ -1,0 +1,102 @@
+[
+  {
+    "id": "portfolio-management",
+    "title": "Portfolio Management",
+    "tagline": "Holistic Asset Oversight",
+    "description": "Comprehensive management of high-value residential and commercial properties across prime locations in Bangladesh, ensuring optimal occupancy and structural integrity.",
+    "longDescription": "We manage properties and large portfolios in key economic zones such as Gulshan, Banani, and Motijheel. Our team ensures 98% occupancy while retaining prime corporate clients and executing scheduled maintenance that protects your property value against depreciation and harsh weather environments typical in Dhaka.",
+    "icon": "Building2",
+    "color": "from-green-dark/20 to-green-dark/5",
+    "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+    "features": [
+      "Tenant Acquisition & Vetting",
+      "Rent Collection & Financial Reporting",
+      "Preventative Maintenance",
+      "Legal Compliance Assistance"
+    ],
+    "stats": [
+      { "value": "98%", "label": "Retention Rate", "icon": "TrendingUp" },
+      { "value": "200+", "label": "Properties Managed", "icon": "Building2" },
+      { "value": "24/7", "label": "Support Facility", "icon": "HeartHandshake" }
+    ],
+    "process": [
+      { "step": "Audit", "description": "We evaluate your current asset conditions." },
+      { "step": "Strategy", "description": "Formulate pricing and maintenance goals." },
+      { "step": "Execution", "description": "Deploy on-ground management teams." }
+    ]
+  },
+  {
+    "id": "investment-advisory",
+    "title": "Investment Advisory",
+    "tagline": "Capital Deployed Intelligently",
+    "description": "Strategic counsel for acquiring lucrative plots in emerging zones like Purbachal and securing Grade-A commercial floors in major business hubs.",
+    "longDescription": "Using comprehensive market analytics and leveraging our dense network within RAJUK and real estate fraternities, we provide bespoke advisory for deploying capital. Whether you are aiming for high rental yields from a Banani commercial space or equity jumps from Purbachal plots, we handle the feasibility studies for you.",
+    "icon": "LineChart",
+    "color": "from-emerald-500/20 to-emerald-500/5",
+    "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1200",
+    "features": [
+      "Market Feasibility Studies",
+      "ROI and Cap Rate Analysis",
+      "Risk Mitigation",
+      "Due Diligence & Valuation"
+    ],
+    "stats": [
+      { "value": "15%", "label": "Avg. Annual Return", "icon": "TrendingUp" },
+      { "value": "50B+", "label": "Assets Advised (BDT)", "icon": "Briefcase" }
+    ],
+    "process": [
+      { "step": "Consultation", "description": "Understand your risk appetite." },
+      { "step": "Sourcing", "description": "Identify off-market deals in BD." },
+      { "step": "Acquisition", "description": "Seamlessly close transactions." }
+    ]
+  },
+  {
+    "id": "asset-optimization",
+    "title": "Asset Optimization",
+    "tagline": "Maximizing Existing Value",
+    "description": "Revitalize aging commercial buildings in Motijheel and Dilkusha into modern, energy-efficient workspaces that command premium rental rates.",
+    "longDescription": "Many legacy commercial properties in Dhaka's original CBD suffer from low rental demand due to outdated facilities. Our structural and interior optimization protocols involve upgrading lifts, central cooling, and facade facelifts that transition C-grade properties into B+ structures, boosting NOI by almost 30%.",
+    "icon": "Settings",
+    "color": "from-teal-500/20 to-teal-500/5",
+    "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200",
+    "features": [
+      "Energy Efficiency Upgrades",
+      "Smart Building Integration",
+      "Space Reconfiguration",
+      "Aesthetic Modernization"
+    ],
+    "stats": [
+      { "value": "30%", "label": "NOI Increase", "icon": "TrendingUp" },
+      { "value": "12+", "label": "Towers Upgraded", "icon": "Building2" }
+    ],
+    "process": [
+      { "step": "Inspection", "description": "Identify underutilized spaces." },
+      { "step": "Design", "description": "Architect modern interventions." },
+      { "step": "Build", "description": "Execute renovations swiftly." }
+    ]
+  },
+  {
+    "id": "legal-compliance",
+    "title": "Legal & Compliance",
+    "tagline": "Secure Your Holdings",
+    "description": "Navigate the complex landscape of RAJUK approvals, land documentation, mutuation, and municipal tax compliance seamlessly.",
+    "longDescription": "Property ownership in Bangladesh requires steadfast navigation of bureaucratic processes. Our in-house legal experts manage everything from 'Namjari' (mutuation) and vetting land deeds across local sub-registry offices, to filing approved building plans with RAJUK and City Corporations.",
+    "icon": "ShieldCheck",
+    "color": "from-cyan-500/20 to-cyan-500/5",
+    "image": "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1200",
+    "features": [
+      "RAJUK Plan Approvals",
+      "Deed Verification",
+      "Mutuation (Namjari)",
+      "Dispute Resolution Assistance"
+    ],
+    "stats": [
+      { "value": "100%", "label": "Compliance Rate", "icon": "ShieldCheck" }
+    ],
+    "process": [
+      { "step": "Review", "description": "Examine existing paperwork." },
+      { "step": "Filing", "description": "Submit required municipal files." },
+      { "step": "Clearance", "description": "Obtain final valid certificates." }
+    ]
+  }
+]

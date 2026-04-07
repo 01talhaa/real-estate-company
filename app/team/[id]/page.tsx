@@ -5,21 +5,20 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft, Linkedin, Twitter, Mail, Award, Briefcase, GraduationCap, FolderOpen } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { getAllTeamMembersForBuild, getTeamMemberByIdForBuild } from "@/lib/get-team"
 import { getProjectByIdForBuild } from "@/lib/get-projects"
+import teamDataRaw from "@/data/team.json"
 
 export const dynamic = 'force-static'
 export const revalidate = 60
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const teamMembers = await getAllTeamMembersForBuild()
-  return teamMembers.map((member: any) => ({ id: member.id }))
+  return teamDataRaw.map((member: any) => ({ id: member.id || member._id }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const member = await getTeamMemberByIdForBuild(id)
+  const member = teamDataRaw.find((m: any) => m.id === id || m._id === id)
   if (!member) return {}
 
   return {
@@ -30,34 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function TeamMemberPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  
-  // Hybrid data fetching
-  const isProductionBuild = process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL;
-  let member: any
-  
-  if (isProductionBuild) {
-    member = await getTeamMemberByIdForBuild(id)
-  } else {
-    try {
-      const baseUrl = process.env.VERCEL_URL 
-        ? `https://${process.env.VERCEL_URL}` 
-        : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-      
-      const response = await fetch(`${baseUrl}/api/team/${id}`, {
-        next: { revalidate: 60 }
-      })
-      
-      if (response.ok) {
-        const data = await response.json()
-        member = data.success ? data.data : null
-      } else {
-        member = await getTeamMemberByIdForBuild(id)
-      }
-    } catch (error) {
-      console.error('API fetch failed, falling back to database:', error)
-      member = await getTeamMemberByIdForBuild(id)
-    }
-  }
+  const member: any = teamDataRaw.find((m: any) => m.id === id || m._id === id)
 
   if (!member) {
     notFound()
@@ -237,26 +209,24 @@ export default async function TeamMemberPage({ params }: { params: Promise<{ id:
             
             try {
               // Try fetching from API first
-              if (!isProductionBuild) {
-                try {
-                  const baseUrl = process.env.VERCEL_URL 
-                    ? `https://${process.env.VERCEL_URL}` 
-                    : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-                  
-                  const response = await fetch(`${baseUrl}/api/projects/${projectId}`, {
-                    next: { revalidate: 60 }
-                  })
-                  
-                  if (response.ok) {
-                    const data = await response.json()
-                    if (data.success && data.data) {
-                      memberProjects.push(data.data)
-                      continue
-                    }
+              try {
+                const baseUrl = process.env.VERCEL_URL 
+                  ? `https://${process.env.VERCEL_URL}` 
+                  : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+                
+                const response = await fetch(`${baseUrl}/api/projects/${projectId}`, {
+                  next: { revalidate: 60 }
+                })
+                
+                if (response.ok) {
+                  const data = await response.json()
+                  if (data.success && data.data) {
+                    memberProjects.push(data.data)
+                    continue
                   }
-                } catch (error) {
-                  console.error(`API fetch failed for project ${projectId}:`, error)
                 }
+              } catch (error) {
+                console.error(`API fetch failed for project ${projectId}:`, error)
               }
               
               // Fallback to database

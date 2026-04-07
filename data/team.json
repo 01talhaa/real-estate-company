@@ -1,0 +1,96 @@
+[
+  {
+    "id": "team-1",
+    "_id": "team-1",
+    "name": "Syed Mahbubur Rahman",
+    "role": "Chief Executive Officer",
+    "department": "Executive Board",
+    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+    "bio": "Over 25 years of reshaping institutional real estate portfolios across Bangladesh.",
+    "fullBio": "Syed Mahbubur Rahman is a veteran in the Bangladeshi real estate market. With an illustrious career spanning over two decades, he has been instrumental in the development of major commercial hubs in Gulshan and Motijheel. Before founding Sabit Asset Management, he served as the Managing Director of one of the leading property development firms in South Asia.",
+    "linkedin": "https://linkedin.com",
+    "twitter": "https://twitter.com",
+    "email": "mahbubur@sabitasset.com",
+    "expertise": ["Asset Management", "Corporate Strategy", "Market Analysis"],
+    "experience": [
+      {
+        "title": "Managing Director",
+        "company": "Dhaka Prime Developments Ltd",
+        "period": "2010 - 2020",
+        "description": "Led the acquisition and development of premium commercial spaces in Gulshan."
+      }
+    ],
+    "education": [
+      {
+        "degree": "MBA in Finance",
+        "school": "Institute of Business Administration (IBA), Dhaka University",
+        "year": "1998"
+      }
+    ],
+    "awards": [
+      "Real Estate Personality of the Year 2019 (Bangladesh Property Awards)"
+    ],
+    "projects": []
+  },
+  {
+    "id": "team-2",
+    "_id": "team-2",
+    "name": "Nusrat Jahan",
+    "role": "Head of Global Acquisitions",
+    "department": "Investment",
+    "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+    "bio": "Specialist in identifying high-yield prime market opportunities in Dhaka and Chattogram.",
+    "fullBio": "Nusrat Jahan leads the acquisitions team with a sharp focus on commercial and mixed-use properties in Bangladesh's fastest-growing economic zones. Her analytical approach has resulted in a 40% increase in portfolio valuation over the past 3 years.",
+    "linkedin": "https://linkedin.com",
+    "twitter": "https://twitter.com",
+    "email": "nusrat@sabitasset.com",
+    "expertise": ["Real Estate Acquisitions", "Financial Modeling", "Negotiation"],
+    "experience": [
+      {
+        "title": "Director of Investments",
+        "company": "Bengal Asset Partners",
+        "period": "2015 - 2021",
+        "description": "Managed an investment fund of over BDT 500 Crore focused on the real estate sector."
+      }
+    ],
+    "education": [
+      {
+        "degree": "MSc in Real Estate Economics",
+        "school": "London School of Economics",
+        "year": "2014"
+      }
+    ],
+    "awards": [],
+    "projects": []
+  },
+  {
+    "id": "team-3",
+    "_id": "team-3",
+    "name": "Kazi Tariqul Islam",
+    "role": "Director of Asset Optimization",
+    "department": "Operations",
+    "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
+    "bio": "Maximizing NOI through sustainable asset improvements in prime commercial buildings.",
+    "fullBio": "With a strong background in structural engineering and property management, Kazi Tariqul Islam focuses on modernizing existing assets in Motijheel and Banani to increase their commercial yield and environmental sustainability.",
+    "linkedin": "https://linkedin.com",
+    "email": "tariqul@sabitasset.com",
+    "expertise": ["Property Optimization", "Sustainability", "Facility Management"],
+    "experience": [
+      {
+        "title": "Head of Operations",
+        "company": "Urban Structures Bangladesh",
+        "period": "2012 - 2018",
+        "description": "Oversaw the facility management of 12 commercial towers across Dhaka."
+      }
+    ],
+    "education": [
+      {
+        "degree": "BSc in Civil Engineering",
+        "school": "BUET",
+        "year": "2010"
+      }
+    ],
+    "awards": [],
+    "projects": []
+  }
+]

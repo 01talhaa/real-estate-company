@@ -1,0 +1,176 @@
+[
+  {
+    "_id": "prop-101",
+    "slug": "gulshan-avenue-commercial-tower",
+    "title": "Gulshan Avenue Premium Corporate Tower",
+    "description": "A state-of-the-art 20-story commercial tower located in the heart of Gulshan Avenue. Features central air conditioning, multi-level basement parking, and intelligent building management systems.",
+    "status": "Current",
+    "type": "Commercial",
+    "category": "Investment",
+    "isFeatured": true,
+    "location": {
+      "address": "Gulshan Avenue, Circle 1",
+      "city": "Dhaka",
+      "state": "Dhaka",
+      "country": "Bangladesh",
+      "zipCode": "1212",
+      "coordinates": { "lat": 23.7806, "lng": 90.4152 }
+    },
+    "financials": {
+      "price": 850000000,
+      "currency": "BDT",
+      "expectedROI": 8.5,
+      "capRate": 7.2,
+      "annualAppreciation": 12,
+      "pricePerUnit": 42000
+    },
+    "specifications": {
+      "totalArea": 120000,
+      "areaUnit": "sqft",
+      "floors": 20,
+      "yearBuilt": 2022,
+      "parkingSpaces": 150
+    },
+    "amenities": {
+      "interior": ["Central AC", "Smart Lifts", "Fire Sprinkler System"],
+      "exterior": ["Double Glazed Glass", "Helipad"],
+      "building": ["24/7 Security", "Full Power Backup", "Generator"],
+      "nearby": ["Banks", "Restaurants", "Gulshan Club"]
+    },
+    "gallery": {
+      "featuredImage": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+      "images": []
+    }
+  },
+  {
+    "_id": "prop-102",
+    "slug": "bashundhara-luxury-duplex",
+    "title": "Bashundhara R/A Luxury Duplex",
+    "description": "Exclusive duplex residence in Bashundhara Residential Area Block I. Designed by renowned architects with premium imported fittings, large garden space, and double-height ceiling in the living lounge.",
+    "status": "Current",
+    "type": "Residential",
+    "category": "For Sale",
+    "isFeatured": true,
+    "location": {
+      "address": "Block I, Bashundhara R/A",
+      "city": "Dhaka",
+      "state": "Dhaka",
+      "country": "Bangladesh",
+      "zipCode": "1229",
+      "coordinates": { "lat": 23.8191, "lng": 90.4357 }
+    },
+    "financials": {
+      "price": 120000000,
+      "currency": "BDT",
+      "expectedROI": 5.2,
+      "capRate": 4.5,
+      "annualAppreciation": 8,
+      "pricePerUnit": 24000
+    },
+    "specifications": {
+      "totalArea": 5000,
+      "areaUnit": "sqft",
+      "bedrooms": 5,
+      "bathrooms": 6,
+      "floors": 2,
+      "yearBuilt": 2024,
+      "parkingSpaces": 3
+    },
+    "amenities": {
+      "interior": ["Home Theater", "Smart Home Integration", "Italian Marble Floors"],
+      "exterior": ["Landscaped Garden", "Rooftop BBQ"],
+      "building": ["CCTV", "Guard Room"],
+      "nearby": ["Evercare Hospital", "Jamuna Future Park"]
+    },
+    "gallery": {
+      "featuredImage": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200",
+      "images": []
+    }
+  },
+  {
+    "_id": "prop-103",
+    "slug": "banani-tech-hub",
+    "title": "Banani IT Center & Tech Hub",
+    "description": "A modern plug-and-play IT workspace located in Banani Road 11. Fully furnished with high-speed optical fiber connectivity, ergonomic workstations, and collaborative spaces designed for modern tech companies.",
+    "status": "Upcoming",
+    "type": "Commercial",
+    "category": "For Rent",
+    "isFeatured": true,
+    "location": {
+      "address": "Road 11, Banani",
+      "city": "Dhaka",
+      "state": "Dhaka",
+      "country": "Bangladesh",
+      "zipCode": "1213",
+      "coordinates": { "lat": 23.7940, "lng": 90.4043 }
+    },
+    "financials": {
+      "price": 1500000,
+      "currency": "BDT",
+      "expectedROI": 9.5,
+      "capRate": 8.0,
+      "annualAppreciation": 10,
+      "pricePerUnit": 150
+    },
+    "specifications": {
+      "totalArea": 10000,
+      "areaUnit": "sqft",
+      "floors": 1,
+      "yearBuilt": 2023,
+      "parkingSpaces": 20
+    },
+    "amenities": {
+      "interior": ["Fully Furnished", "High-speed Internet", "Meeting Rooms"],
+      "exterior": ["Glass Facade"],
+      "building": ["Cafeteria", "Lounge", "24/7 Access"],
+      "nearby": ["Restaurants", "Banani Super Market", "Metro Station"]
+    },
+    "gallery": {
+      "featuredImage": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",
+      "images": []
+    }
+  },
+  {
+    "_id": "prop-104",
+    "slug": "chattogram-logistics-park",
+    "title": "Patenga Port Logistics Park",
+    "description": "Premium industrial grade warehouse and logistics park located just 10km from Chattogram Port. Suitable for heavy industrial storage, garments export hub, and multinational logistics.",
+    "status": "Current",
+    "type": "Industrial",
+    "category": "Investment",
+    "isFeatured": false,
+    "location": {
+      "address": "Patenga Industrial Area",
+      "city": "Chattogram",
+      "state": "Chattogram",
+      "country": "Bangladesh",
+      "zipCode": "4204",
+      "coordinates": { "lat": 22.2533, "lng": 91.7924 }
+    },
+    "financials": {
+      "price": 1500000000,
+      "currency": "BDT",
+      "expectedROI": 12.0,
+      "capRate": 9.5,
+      "annualAppreciation": 15,
+      "pricePerUnit": 8000
+    },
+    "specifications": {
+      "totalArea": 187500,
+      "areaUnit": "sqft",
+      "floors": 1,
+      "yearBuilt": 2020,
+      "parkingSpaces": 50
+    },
+    "amenities": {
+      "interior": ["Industrial Grade Floors", "High Clear Height"],
+      "exterior": ["Large Loading Bays"],
+      "building": ["Heavy Duty Power", "Weighbridge"],
+      "nearby": ["Chattogram Port", "Airport"]
+    },
+    "gallery": {
+      "featuredImage": "https://images.unsplash.com/photo-1586528116311-ad8ed7c50a30?auto=format&fit=crop&q=80&w=1200",
+      "images": []
+    }
+  }
+]

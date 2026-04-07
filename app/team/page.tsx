@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Linkedin, Twitter, Mail } from "lucide-react"
 import Link from "next/link"
-import { getAllTeamMembersForBuild } from "@/lib/get-team"
+import teamDataRaw from "@/data/team.json"
 
 export const dynamic = 'force-static'
 export const revalidate = 60
@@ -15,33 +15,6 @@ export const metadata = {
     "Meet the talented team behind Sabit Asset Management LTD. Our professionals bring years of experience in real estate asset management, investment advisory, and portfolio optimization.",
 }
 
-async function getTeamMembers() {
-  const isProductionBuild = process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL;
-  
-  if (isProductionBuild) {
-    return await getAllTeamMembersForBuild()
-  }
-
-  try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    
-    const response = await fetch(`${baseUrl}/api/team`, {
-      next: { revalidate: 60 }
-    })
-    
-    if (response.ok) {
-      const data = await response.json()
-      return data.success ? data.data : []
-    }
-  } catch (error) {
-    console.error('API fetch failed, falling back to database:', error)
-  }
-  
-  return await getAllTeamMembersForBuild()
-}
-
 function getAllDepartments(members: any[]) {
   if (!Array.isArray(members)) return ['All']
   const departments = new Set(members.map((m: any) => m.department))
@@ -49,7 +22,7 @@ function getAllDepartments(members: any[]) {
 }
 
 export default async function TeamPage() {
-  const teamMembers = await getTeamMembers()
+  const teamMembers = teamDataRaw as any[]
   const departments = getAllDepartments(teamMembers)
   return (
     <>

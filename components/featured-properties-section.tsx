@@ -5,34 +5,12 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { cn } from "@/lib/utils"
-
-async function getFeaturedProperties() {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/properties?featured=true&limit=6`, {
-      cache: 'no-store'
-    })
-    
-    if (!response.ok) {
-      console.error('Failed to fetch featured properties:', response.status, response.statusText)
-      return []
-    }
-    
-    const data = await response.json()
-    console.log('Featured properties API response:', data)
-    console.log('Number of featured properties found:', data.data?.length || 0)
-    if (data.data && data.data.length > 0) {
-      console.log('First property sample:', data.data[0])
-      console.log('Featured flag:', data.data[0]?.isFeatured)
-    }
-    return data.success ? data.data : []
-  } catch (error) {
-    console.error('Error fetching featured properties:', error)
-    return []
-  }
-}
+import propertiesDataRaw from "@/data/properties.json"
 
 export async function FeaturedPropertiesSection() {
-  const properties = await getFeaturedProperties()
+  const properties = propertiesDataRaw
+    .filter((p: any) => p.isFeatured || p.featured)
+    .slice(0, 6)
 
   if (!properties || properties.length === 0) {
     return null

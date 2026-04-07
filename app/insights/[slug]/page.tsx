@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar, User, ArrowLeft, FileText, Facebook, Twitter, Linkedin, Share2 } from 'lucide-react'
+import insightsDataRaw from '@/data/insights.json'
 
 export default function InsightDetailPage() {
   const params = useParams()
@@ -22,18 +23,14 @@ export default function InsightDetailPage() {
     }
   }, [params.slug])
 
-  const fetchInsight = async () => {
+  const fetchInsight = () => {
     try {
-      const response = await fetch(`/api/insights/${params.slug}`, {
-        cache: 'no-store'
-      })
-      const data = await response.json()
-      
-      if (data.success) {
-        setInsight(data.data)
+      const found = (insightsDataRaw as any[]).find(i => i.slug === params.slug)
+      if (found) {
+        setInsight(found)
       }
     } catch (error) {
-      console.error('Error fetching insight:', error)
+      console.error('Error finding insight:', error)
     } finally {
       setLoading(false)
     }

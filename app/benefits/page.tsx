@@ -3,40 +3,10 @@ import { AppverseFooter } from "@/components/appverse-footer"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
 import Link from "next/link"
-import Script from "next/script"
-import { getAllServicesForBuild } from "@/lib/get-services"
 import * as LucideIcons from "lucide-react"
+import servicesDataRaw from "@/data/services.json"
 
 export const dynamic = 'force-static'
-export const revalidate = 60 
-
-async function getServices() {
-  const isProductionBuild = process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL;
-  
-  if (isProductionBuild) {
-    return getAllServicesForBuild();
-  }
-
-  try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    
-    const response = await fetch(`${baseUrl}/api/services`, {
-      next: { revalidate: 60 } 
-    })
-    
-    if (!response.ok) {
-      throw new Error('API fetch failed')
-    }
-    
-    const data = await response.json()
-    return data.success ? data.data : []
-  } catch (error) {
-    console.error('API fetch failed, falling back to database:', error);
-    return getAllServicesForBuild();
-  }
-}
 
 export const metadata = {
   title: "Investment Benefits | Sabit Asset Management",
@@ -44,7 +14,7 @@ export const metadata = {
 }
 
 export default async function BenefitsPage() {
-  const services = await getServices()
+  const services = servicesDataRaw as any[]
   
   return (
     <>

@@ -4,27 +4,12 @@ import { Lightbulb, Calendar, User, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-
-async function getLatestInsights() {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/insights?status=published&limit=3`, {
-      cache: 'no-store'
-    })
-    
-    if (!response.ok) {
-      return []
-    }
-    
-    const data = await response.json()
-    return data.success ? data.data : []
-  } catch (error) {
-    console.error('Error fetching insights:', error)
-    return []
-  }
-}
+import insightsDataRaw from '@/data/insights.json'
 
 export async function LatestInsightsSection() {
-  const insights = await getLatestInsights()
+  const insights = insightsDataRaw
+    .filter((insight: any) => insight.status === 'published')
+    .slice(0, 3)
 
   if (!insights || insights.length === 0) {
     return null
