@@ -1,0 +1,102 @@
+export interface ManagementMember {
+  id: string
+  name: { en: string; bn: string }
+  role: { en: string; bn: string }
+  bio: { en: string; bn: string }
+  department: { en: string; bn: string }
+  image: string
+  linkedin?: string
+}
+
+export const managementTeam: ManagementMember[] = [
+  {
+    id: "ceo",
+    name: { en: "Md. Sabit Hossain", bn: "মোঃ সাবিত হোসেন" },
+    role: { en: "Chief Executive Officer", bn: "প্রধান নির্বাহী কর্মকর্তা" },
+    department: { en: "Executive", bn: "নির্বাহী" },
+    bio: {
+      en: "Leading Sabit Property Management with a vision to make homeownership accessible to every Bangladeshi family. Over 15 years in real estate development.",
+      bn: "প্রতিটি বাংলাদেশি পরিবারের জন্য বাড়ির মালিকানা সহজলভ্য করার লক্ষ্যে সাবিত প্রপার্টি ম্যানেজমেন্ট পরিচালনা করছেন। রিয়েল এস্টেট উন্নয়নে ১৫ বছরেরও বেশি অভিজ্ঞতা।",
+    },
+    image:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: "project-manager",
+    name: { en: "Md. Jahirul Islam", bn: "মোঃ জাহিরুল ইসলাম" },
+    role: { en: "Project Manager", bn: "প্রকল্প ব্যবস্থাপক" },
+    department: { en: "Operations", bn: "পরিচালনা" },
+    bio: {
+      en: "Oversees all construction timelines and contractor coordination. Has successfully delivered 5 residential projects on time and within budget.",
+      bn: "সমস্ত নির্মাণ সময়সীমা এবং ঠিকাদার সমন্বয় পর্যবেক্ষণ করেন। সময়মতো এবং বাজেটের মধ্যে ৫টি আবাসিক প্রকল্প সফলভাবে সম্পন্ন করেছেন।",
+    },
+    image:
+      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
+    linkedin: "https://linkedin.com",
+  },
+  {
+    id: "finance-manager",
+    name: { en: "Md. Faruk Ahmed", bn: "মোঃ ফারুক আহমেদ" },
+    role: { en: "Finance Manager", bn: "অর্থ ব্যবস্থাপক" },
+    department: { en: "Finance", bn: "অর্থ" },
+    bio: {
+      en: "Manages share collections, investor accounts, and financial reporting with full transparency. Certified accountant with 10+ years of experience.",
+      bn: "সম্পূর্ণ স্বচ্ছতার সাথে শেয়ার সংগ্রহ, বিনিয়োগকারী অ্যাকাউন্ট এবং আর্থিক প্রতিবেদন পরিচালনা করেন। ১০+ বছরের অভিজ্ঞতাসম্পন্ন সনদপ্রাপ্ত হিসাবরক্ষক।",
+    },
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: "legal-advisor",
+    name: { en: "Adv. Razia Sultana", bn: "অ্যাডভ. রাজিয়া সুলতানা" },
+    role: { en: "Legal Advisor", bn: "আইন উপদেষ্টা" },
+    department: { en: "Legal", bn: "আইন" },
+    bio: {
+      en: "Ensures all property transactions, land documentation, and shareholder agreements comply fully with Bangladeshi property law. 12 years in real estate law.",
+      bn: "সমস্ত সম্পত্তি লেনদেন, জমির কাগজপত্র এবং শেয়ারহোল্ডার চুক্তি বাংলাদেশি সম্পত্তি আইন পুরোপুরি মেনে চলে তা নিশ্চিত করেন। রিয়েল এস্টেট আইনে ১২ বছরের অভিজ্ঞতা।",
+    },
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: "crm",
+    name: { en: "Nasrin Akter", bn: "নাসরিন আক্তার" },
+    role: {
+      en: "Customer Relations Manager",
+      bn: "গ্রাহক সম্পর্ক ব্যবস্থাপক",
+    },
+    department: { en: "Customer Service", bn: "গ্রাহক সেবা" },
+    bio: {
+      en: "First point of contact for all shareholders. Ensures every client query is resolved with warmth, professionalism, and within 24 hours.",
+      bn: "সমস্ত শেয়ারহোল্ডারদের জন্য প্রথম যোগাযোগের ব্যক্তি। উষ্ণতা, পেশাদারিত্ব এবং ২৪ ঘণ্টার মধ্যে প্রতিটি ক্লায়েন্টের প্রশ্নের সমাধান নিশ্চিত করেন।",
+    },
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: "site-engineer",
+    name: { en: "Engr. Touhidul Hasan", bn: "ইঞ্জি. তৌহিদুল হাসান" },
+    role: { en: "Site Engineer", bn: "সাইট ইঞ্জিনিয়ার" },
+    department: { en: "Engineering", bn: "প্রকৌশল" },
+    bio: {
+      en: "On-site quality assurance and structural compliance at every stage of construction. BUET graduate with experience on 8+ residential projects.",
+      bn: "নির্মাণের প্রতিটি পর্যায়ে অন-সাইট মান নিশ্চিতকরণ এবং কাঠামোগত সম্মতি। ৮+ আবাসিক প্রকল্পের অভিজ্ঞতাসম্পন্ন বুয়েট গ্র্যাজুয়েট।",
+    },
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
+    linkedin: "https://linkedin.com",
+  },
+]
+
+export const getDepartments = (): Array<{ en: string; bn: string }> => {
+  const seen = new Set<string>()
+  const all = { en: "All Departments", bn: "সকল বিভাগ" }
+  const depts: Array<{ en: string; bn: string }> = [all]
+  for (const m of managementTeam) {
+    if (!seen.has(m.department.en)) {
+      seen.add(m.department.en)
+      depts.push(m.department)
+    }
+  }
+  return depts
+}

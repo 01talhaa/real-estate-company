@@ -1,22 +1,22 @@
 import { SiteHeader } from "@/components/site-header"
 import { AppverseFooter } from "@/components/appverse-footer"
-import { ProjectsBilingualSection } from "@/components/projects-bilingual-section"
+import { EventsSection } from "@/components/events-section"
 import type { Metadata } from "next"
 
 export const dynamic = "force-static"
 
 export const metadata: Metadata = {
-  title: "Our Projects | Sabit Property Management Ltd.",
+  title: "Events & Announcements | Sabit Property Management Ltd.",
   description:
-    "Explore all real estate projects by Sabit Property Management Ltd. — completed, ongoing, and upcoming residential flats in Khilgaon and Jodhivita, Dhaka.",
+    "Stay updated with Sabit Property Management's latest project launches, investor meets, and community events across Khilgaon and Jodhivita, Dhaka.",
   openGraph: {
-    title: "Our Projects | Sabit Property Management Ltd.",
+    title: "Events & Announcements | Sabit Property Management",
     description:
-      "Handover, ongoing, and upcoming residential flats in prime Dhaka locations.",
+      "Project launches, investor meets, and community events — stay close to Sabit.",
   },
 }
 
-export default function ProjectsPage() {
+export default function EventsPage() {
   return (
     <>
       <main className="min-h-[100dvh] bg-white text-black">
@@ -26,19 +26,19 @@ export default function ProjectsPage() {
         <div className="bg-gradient-to-br from-[#064E3B] to-[#043d2f] py-16 sm:py-20">
           <div className="container mx-auto px-4 max-w-7xl text-center text-white">
             <p className="text-green-light/80 text-xs font-bold tracking-[0.3em] uppercase mb-4">
-              আমাদের প্রকল্পসমূহ · Our Projects
+              ইভেন্ট ও ঘোষণা · Events & Announcements
             </p>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
-              Every Project,{" "}
-              <span className="text-green-light">Delivered with Integrity</span>
+              Stay{" "}
+              <span className="text-green-light">Connected with Sabit</span>
             </h1>
             <p className="text-white/60 text-lg max-w-2xl mx-auto font-light">
-              পরিকল্পনা থেকে চাবি হস্তান্তর — প্রতিটি প্রকল্পে সততার নিশ্চয়তা।
+              আমাদের সর্বশেষ প্রকল্প উদ্বোধন, বিনিয়োগকারী সভা ও কমিউনিটি ইভেন্ট সম্পর্কে আপডেট থাকুন।
             </p>
           </div>
         </div>
 
-        <ProjectsBilingualSection />
+        <EventsSection />
 
         <AppverseFooter />
       </main>

@@ -1,0 +1,539 @@
+export interface NearbyPlace {
+  category: "hospital" | "school" | "college" | "university" | "mall" | "park" | "mosque" | "transport"
+  name: { en: string; bn: string }
+  distance: string // e.g. "0.8 km"
+}
+
+export interface RealEstateProject {
+  id: string
+  slug: string
+  name: { en: string; bn: string }
+  location: { en: string; bn: string }
+  address: { en: string; bn: string }
+  coordinates: { lat: number; lng: number }
+  status: "handover" | "ongoing" | "upcoming"
+  description: { en: string; bn: string }
+  longDescription?: { en: string; bn: string }
+  image: string
+  gallery?: string[]
+  completionDate?: string
+  progressPercent?: number
+  flats?: number
+  floors?: number
+  specifications?: {
+    totalAreaSqft?: number
+    bedrooms?: number
+    bathrooms?: number
+    parkingSpaces?: number
+    yearBuilt?: number
+  }
+  amenities?: {
+    interior: { en: string; bn: string }[]
+    exterior: { en: string; bn: string }[]
+    building: { en: string; bn: string }[]
+  }
+  financials?: {
+    sharePrice?: number
+    pricePerSqft?: number
+    currency: string
+    expectedROI?: number
+  }
+  nearbyPlaces?: NearbyPlace[]
+}
+
+export const realEstateProjects: RealEstateProject[] = [
+  // ─── Handover Projects ───────────────────────────────────────────────────────
+  {
+    id: "khilgaon-residency-a",
+    slug: "khilgaon-residency-a",
+    name: {
+      en: "Sabit Khilgaon Residency — Block A",
+      bn: "সাবিত খিলগাঁও রেসিডেন্সি — ব্লক এ",
+    },
+    location: {
+      en: "Khilgaon Thana Residential Area, Dhaka",
+      bn: "খিলগাঁও থানা আবাসিক এলাকা, ঢাকা",
+    },
+    address: {
+      en: "Khilgaon Thana Residential Area, Khilgaon, Dhaka-1219",
+      bn: "খিলগাঁও থানা আবাসিক এলাকা, খিলগাঁও, ঢাকা-১২১৯",
+    },
+    coordinates: { lat: 23.7361, lng: 90.4280 },
+    status: "handover",
+    description: {
+      en: "A 6-storey residential building comprising 12 modern flats — fully handed over to shareholders in 2023. Each flat features quality finishes, natural ventilation, and rooftop access.",
+      bn: "৬ তলা আবাসিক ভবনে ১২টি আধুনিক ফ্ল্যাট — ২০২৩ সালে শেয়ারহোল্ডারদের কাছে সম্পূর্ণ হস্তান্তর করা হয়েছে।",
+    },
+    longDescription: {
+      en: "Sabit Khilgaon Residency Block A is our flagship completed project situated in the heart of the Khilgaon residential community. With 12 thoughtfully designed flats spread across 6 storeys, this building represents our commitment to quality and affordable homeownership. Every shareholder received full legal documentation, title deeds, and handed keys on time — a promise we always keep.",
+      bn: "সাবিত খিলগাঁও রেসিডেন্সি ব্লক এ খিলগাঁও আবাসিক এলাকার কেন্দ্রে অবস্থিত আমাদের প্রথম সম্পন্ন প্রকল্প। ৬ তলায় ১২টি সুপরিকল্পিত ফ্ল্যাট নিয়ে এই ভবনটি আমাদের গুণমান ও সাশ্রয়ী মূল্যে গৃহমালিকানার প্রতি অঙ্গীকারের প্রতিনিধিত্ব করে।",
+    },
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=1200",
+    gallery: [
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=900",
+    ],
+    completionDate: "2023-06",
+    flats: 12,
+    floors: 6,
+    specifications: {
+      totalAreaSqft: 850,
+      bedrooms: 3,
+      bathrooms: 2,
+      parkingSpaces: 6,
+      yearBuilt: 2023,
+    },
+    amenities: {
+      interior: [
+        { en: "Ceramic Tile Flooring", bn: "সিরামিক টাইল মেঝে" },
+        { en: "Built-in Wardrobes", bn: "বিল্ট-ইন আলমারি" },
+        { en: "Quality Sanitary Fittings", bn: "মানসম্পন্ন স্যানিটারি ফিটিং" },
+        { en: "Natural Cross Ventilation", bn: "প্রাকৃতিক বায়ু চলাচল" },
+      ],
+      exterior: [
+        { en: "Rooftop Access", bn: "ছাদে প্রবেশাধিকার" },
+        { en: "External Tile Cladding", bn: "বাহ্যিক টাইল আবরণ" },
+        { en: "Main Gate with Guard", bn: "প্রধান গেট ও গার্ড" },
+      ],
+      building: [
+        { en: "24/7 Security CCTV", bn: "২৪/৭ নিরাপত্তা সিসিটিভি" },
+        { en: "Full Generator Backup", bn: "পূর্ণ জেনারেটর ব্যাকআপ" },
+        { en: "Clean Water Supply", bn: "বিশুদ্ধ পানি সরবরাহ" },
+        { en: "Fire Safety System", bn: "অগ্নি নিরাপত্তা ব্যবস্থা" },
+      ],
+    },
+    financials: {
+      sharePrice: 300000,
+      pricePerSqft: 3500,
+      currency: "BDT",
+      expectedROI: 7.5,
+    },
+    nearbyPlaces: [
+      { category: "hospital", name: { en: "Khilgaon General Hospital", bn: "খিলগাঁও জেনারেল হাসপাতাল" }, distance: "0.4 km" },
+      { category: "hospital", name: { en: "Dhaka Medical College Hospital", bn: "ঢাকা মেডিকেল কলেজ হাসপাতাল" }, distance: "3.2 km" },
+      { category: "school", name: { en: "Khilgaon High School", bn: "খিলগাঁও উচ্চ বিদ্যালয়" }, distance: "0.3 km" },
+      { category: "school", name: { en: "Govt. Laboratory School", bn: "সরকারি ল্যাবরেটরি স্কুল" }, distance: "2.5 km" },
+      { category: "college", name: { en: "Tejgaon College", bn: "তেজগাঁও কলেজ" }, distance: "2.8 km" },
+      { category: "university", name: { en: "Dhaka University", bn: "ঢাকা বিশ্ববিদ্যালয়" }, distance: "4.5 km" },
+      { category: "university", name: { en: "BUET", bn: "বুয়েট" }, distance: "3.8 km" },
+      { category: "mall", name: { en: "Bashundhara City Shopping Mall", bn: "বসুন্ধরা সিটি শপিং মল" }, distance: "4.0 km" },
+      { category: "mall", name: { en: "Khilgaon Local Market", bn: "খিলগাঁও স্থানীয় বাজার" }, distance: "0.5 km" },
+      { category: "park", name: { en: "Khilgaon Park", bn: "খিলগাঁও পার্ক" }, distance: "0.6 km" },
+      { category: "mosque", name: { en: "Khilgaon Jamia Mosque", bn: "খিলগাঁও জামে মসজিদ" }, distance: "0.2 km" },
+      { category: "transport", name: { en: "Khilgaon Flyover Bus Stop", bn: "খিলগাঁও ফ্লাইওভার বাস স্টপ" }, distance: "0.3 km" },
+      { category: "transport", name: { en: "Sayedabad Bus Terminal", bn: "সায়েদাবাদ বাস টার্মিনাল" }, distance: "1.5 km" },
+    ],
+  },
+  {
+    id: "jodhivita-green-homes",
+    slug: "jodhivita-green-homes",
+    name: {
+      en: "Sabit Green Homes — Jodhivita",
+      bn: "সাবিত গ্রিন হোমস — জোড়াভিটা",
+    },
+    location: {
+      en: "Jodhivita Residential Area, Trimohoni Bridge, Dhaka",
+      bn: "জোড়াভিটা আবাসিক এলাকা, ত্রিমোহনী ব্রিজ, ঢাকা",
+    },
+    address: {
+      en: "Jodhivita Residential Area, near Trimohoni Bridge, Demra, Dhaka-1362",
+      bn: "জোড়াভিটা আবাসিক এলাকা, ত্রিমোহনী ব্রিজ সংলগ্ন, ডেমরা, ঢাকা-১৩৬২",
+    },
+    coordinates: { lat: 23.7137, lng: 90.4789 },
+    status: "handover",
+    description: {
+      en: "Our first completed project in Jodhivita — 8 spacious flats handed over to proud owners in 2022. Located in a peaceful neighborhood with easy transport access.",
+      bn: "জোড়াভিটায় আমাদের প্রথম সম্পন্ন প্রকল্প — ২০২২ সালে ৮টি প্রশস্ত ফ্ল্যাট মালিকদের হাতে তুলে দেওয়া হয়েছে।",
+    },
+    longDescription: {
+      en: "Sabit Green Homes in Jodhivita marked the beginning of our mission to bring affordable, quality housing to the outskirts of Dhaka. Nestled near the iconic Trimohoni Bridge, this 4-storey building houses 8 families who now enjoy a peaceful life away from the city's chaos — yet still connected via easy transport routes.",
+      bn: "জোড়াভিটায় সাবিত গ্রিন হোমস ঢাকার উপকণ্ঠে সাশ্রয়ী ও মানসম্পন্ন আবাসন আনার আমাদের মিশনের সূচনা করেছিল। প্রাকৃতিক পরিবেশে ঘেরা এই ৪ তলা ভবনে ৮টি পরিবার আজ শহরের কোলাহল থেকে দূরে শান্তিময় জীবনযাপন করছে।",
+    },
+    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=1200",
+    gallery: [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&q=80&w=900",
+    ],
+    completionDate: "2022-12",
+    flats: 8,
+    floors: 4,
+    specifications: {
+      totalAreaSqft: 800,
+      bedrooms: 3,
+      bathrooms: 2,
+      parkingSpaces: 4,
+      yearBuilt: 2022,
+    },
+    amenities: {
+      interior: [
+        { en: "Mosaic Tile Flooring", bn: "মোজাইক টাইল মেঝে" },
+        { en: "Quality Paint Finish", bn: "উন্নতমানের রং" },
+        { en: "Modern Kitchen Fittings", bn: "আধুনিক রান্নাঘর সরঞ্জাম" },
+      ],
+      exterior: [
+        { en: "Rooftop Garden Space", bn: "ছাদ বাগানের জায়গা" },
+        { en: "Boundary Wall", bn: "সীমানা প্রাচীর" },
+      ],
+      building: [
+        { en: "Security Guard", bn: "নিরাপত্তা প্রহরী" },
+        { en: "Generator Backup", bn: "জেনারেটর ব্যাকআপ" },
+        { en: "Tube Well Water", bn: "টিউবওয়েল পানি" },
+      ],
+    },
+    financials: {
+      sharePrice: 250000,
+      pricePerSqft: 3000,
+      currency: "BDT",
+      expectedROI: 6.5,
+    },
+    nearbyPlaces: [
+      { category: "hospital", name: { en: "Demra General Hospital", bn: "ডেমরা জেনারেল হাসপাতাল" }, distance: "0.9 km" },
+      { category: "hospital", name: { en: "Ibn Sina Hospital (Demra)", bn: "ইবনে সিনা হাসপাতাল (ডেমরা)" }, distance: "1.5 km" },
+      { category: "school", name: { en: "Jodhivita Govt. Primary School", bn: "জোড়াভিটা সরকারি প্রাথমিক বিদ্যালয়" }, distance: "0.4 km" },
+      { category: "school", name: { en: "Demra High School", bn: "ডেমরা উচ্চ বিদ্যালয়" }, distance: "1.2 km" },
+      { category: "college", name: { en: "Demra College", bn: "ডেমরা কলেজ" }, distance: "1.8 km" },
+      { category: "university", name: { en: "Dhaka International University", bn: "ঢাকা ইন্টারন্যাশনাল ইউনিভার্সিটি" }, distance: "4.0 km" },
+      { category: "mall", name: { en: "Trimohoni Bazar", bn: "ত্রিমোহনী বাজার" }, distance: "0.5 km" },
+      { category: "mall", name: { en: "Demra Shopping Complex", bn: "ডেমরা শপিং কমপ্লেক্স" }, distance: "1.0 km" },
+      { category: "park", name: { en: "Trimohoni Community Park", bn: "ত্রিমোহনী কমিউনিটি পার্ক" }, distance: "0.7 km" },
+      { category: "mosque", name: { en: "Jodhivita Central Mosque", bn: "জোড়াভিটা কেন্দ্রীয় মসজিদ" }, distance: "0.2 km" },
+      { category: "transport", name: { en: "Trimohoni Bridge Bus Stop", bn: "ত্রিমোহনী ব্রিজ বাস স্টপ" }, distance: "0.3 km" },
+      { category: "transport", name: { en: "Demra Ferry Ghat", bn: "ডেমরা ফেরি ঘাট" }, distance: "1.8 km" },
+    ],
+  },
+
+  // ─── Ongoing Projects ─────────────────────────────────────────────────────────
+  {
+    id: "khilgaon-residency-b",
+    slug: "khilgaon-residency-b",
+    name: {
+      en: "Sabit Khilgaon Residency — Block B",
+      bn: "সাবিত খিলগাঁও রেসিডেন্সি — ব্লক বি",
+    },
+    location: {
+      en: "Khilgaon Thana Residential Area, Dhaka",
+      bn: "খিলগাঁও থানা আবাসিক এলাকা, ঢাকা",
+    },
+    address: {
+      en: "Khilgaon Thana Residential Area, Khilgaon, Dhaka-1219",
+      bn: "খিলগাঁও থানা আবাসিক এলাকা, খিলগাঁও, ঢাকা-১২১৯",
+    },
+    coordinates: { lat: 23.7365, lng: 90.4285 },
+    status: "ongoing",
+    description: {
+      en: "Currently under construction — an 8-storey building comprising 16 flats. Structural work is complete; interior finishing underway. Expected handover Q2 2025.",
+      bn: "বর্তমানে নির্মাণাধীন — ১৬টি ফ্ল্যাট সমৃদ্ধ ৮ তলা ভবন। কাঠামো নির্মাণ সম্পন্ন; অভ্যন্তরীণ ফিনিশিং চলছে।",
+    },
+    longDescription: {
+      en: "Block B is the natural expansion of our successful Khilgaon Residency Block A project. Delivering 16 modern flats across 8 storeys, this building raises the bar with improved room layouts, enhanced natural light, and upgraded materials. Share registration is still open for a limited number of units — contact us via WhatsApp to secure your flat today.",
+      bn: "ব্লক বি আমাদের সফল খিলগাঁও রেসিডেন্সি ব্লক এ প্রকল্পের স্বাভাবিক সম্প্রসারণ। ৮ তলায় ১৬টি আধুনিক ফ্ল্যাট নিয়ে এই ভবনটি উন্নত রুম লেআউট, আরও বেশি প্রাকৃতিক আলো ও উন্নতমানের উপকরণ দিয়ে মান বাড়িয়েছে।",
+    },
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200",
+    gallery: [
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1621624904680-cb0c3af02bf6?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=900",
+    ],
+    completionDate: "2025-06",
+    progressPercent: 75,
+    flats: 16,
+    floors: 8,
+    specifications: {
+      totalAreaSqft: 950,
+      bedrooms: 3,
+      bathrooms: 2,
+      parkingSpaces: 8,
+    },
+    amenities: {
+      interior: [
+        { en: "Premium Tile Flooring", bn: "প্রিমিয়াম টাইল মেঝে" },
+        { en: "Built-in Wardrobes", bn: "বিল্ট-ইন আলমারি" },
+        { en: "Quality Sanitary Fittings", bn: "মানসম্পন্ন স্যানিটারি ফিটিং" },
+        { en: "Natural Cross Ventilation", bn: "প্রাকৃতিক বায়ু চলাচল" },
+        { en: "Separate Gas Line", bn: "পৃথক গ্যাস লাইন" },
+      ],
+      exterior: [
+        { en: "Rooftop Access", bn: "ছাদে প্রবেশাধিকার" },
+        { en: "External Tile Cladding", bn: "বাহ্যিক টাইল আবরণ" },
+        { en: "Boundary Wall & Gate", bn: "সীমানা প্রাচীর ও গেট" },
+      ],
+      building: [
+        { en: "24/7 Security CCTV", bn: "২৪/৭ নিরাপত্তা সিসিটিভি" },
+        { en: "Full Generator Backup", bn: "পূর্ণ জেনারেটর ব্যাকআপ" },
+        { en: "Clean Water Supply", bn: "বিশুদ্ধ পানি সরবরাহ" },
+        { en: "Fire Safety System", bn: "অগ্নি নিরাপত্তা ব্যবস্থা" },
+        { en: "Intercom System", bn: "ইন্টারকম সিস্টেম" },
+      ],
+    },
+    financials: {
+      sharePrice: 350000,
+      pricePerSqft: 3700,
+      currency: "BDT",
+      expectedROI: 8.0,
+    },
+    nearbyPlaces: [
+      { category: "hospital", name: { en: "Khilgaon General Hospital", bn: "খিলগাঁও জেনারেল হাসপাতাল" }, distance: "0.4 km" },
+      { category: "hospital", name: { en: "Dhaka Medical College Hospital", bn: "ঢাকা মেডিকেল কলেজ হাসপাতাল" }, distance: "3.2 km" },
+      { category: "school", name: { en: "Khilgaon High School", bn: "খিলগাঁও উচ্চ বিদ্যালয়" }, distance: "0.3 km" },
+      { category: "college", name: { en: "Tejgaon College", bn: "তেজগাঁও কলেজ" }, distance: "2.8 km" },
+      { category: "university", name: { en: "Dhaka University", bn: "ঢাকা বিশ্ববিদ্যালয়" }, distance: "4.5 km" },
+      { category: "mall", name: { en: "Bashundhara City", bn: "বসুন্ধরা সিটি" }, distance: "4.0 km" },
+      { category: "mall", name: { en: "Khilgaon Local Market", bn: "খিলগাঁও স্থানীয় বাজার" }, distance: "0.5 km" },
+      { category: "park", name: { en: "Khilgaon Park", bn: "খিলগাঁও পার্ক" }, distance: "0.6 km" },
+      { category: "mosque", name: { en: "Khilgaon Jamia Mosque", bn: "খিলগাঁও জামে মসজিদ" }, distance: "0.2 km" },
+      { category: "transport", name: { en: "Khilgaon Flyover Bus Stop", bn: "খিলগাঁও ফ্লাইওভার বাস স্টপ" }, distance: "0.3 km" },
+    ],
+  },
+  {
+    id: "jodhivita-phase2",
+    slug: "jodhivita-phase2",
+    name: {
+      en: "Sabit Jodhivita Heights — Phase 2",
+      bn: "সাবিত জোড়াভিটা হাইটস — ফেজ ২",
+    },
+    location: {
+      en: "Jodhivita Residential Area, Trimohoni Bridge, Dhaka",
+      bn: "জোড়াভিটা আবাসিক এলাকা, ত্রিমোহনী ব্রিজ, ঢাকা",
+    },
+    address: {
+      en: "Jodhivita Residential Area, near Trimohoni Bridge, Demra, Dhaka-1362",
+      bn: "জোড়াভিটা আবাসিক এলাকা, ত্রিমোহনী ব্রিজ সংলগ্ন, ডেমরা, ঢাকা-১৩৬২",
+    },
+    coordinates: { lat: 23.7139, lng: 90.4792 },
+    status: "ongoing",
+    description: {
+      en: "Phase 2 expansion — 10 premium flats on a 5-storey building. Foundation and slab work done. Brickwork 60% complete. On track for Q4 2025 handover.",
+      bn: "ফেজ ২ সম্প্রসারণ — ৫ তলা ভবনে ১০টি প্রিমিয়াম ফ্ল্যাট। ভিত্তি ও স্ল্যাবের কাজ সম্পন্ন। ইটের কাজ ৬০% সম্পন্ন।",
+    },
+    longDescription: {
+      en: "Following the overwhelming success of Sabit Green Homes, Phase 2 — Jodhivita Heights — raises the standard higher. Ten premium flats feature larger living rooms, modern bathroom fittings, and dedicated parking. The project is firmly on schedule for Q4 2025 delivery. Share registration is currently open.",
+      bn: "সাবিত গ্রিন হোমসের অভূতপূর্ব সাফল্যের পর, ফেজ ২ — জোড়াভিটা হাইটস — মান আরও উঁচুতে নিয়ে যাচ্ছে। দশটি প্রিমিয়াম ফ্ল্যাটে বড় লিভিং রুম, আধুনিক বাথরুম ফিটিং এবং নিজস্ব পার্কিং রয়েছে।",
+    },
+    image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&q=80&w=1200",
+    gallery: [
+      "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1626178793926-22b28830aa30?auto=format&fit=crop&q=80&w=900",
+    ],
+    completionDate: "2025-12",
+    progressPercent: 55,
+    flats: 10,
+    floors: 5,
+    specifications: {
+      totalAreaSqft: 900,
+      bedrooms: 3,
+      bathrooms: 2,
+      parkingSpaces: 5,
+    },
+    amenities: {
+      interior: [
+        { en: "Premium Tile Flooring", bn: "প্রিমিয়াম টাইল মেঝে" },
+        { en: "Modern Kitchen Counter", bn: "আধুনিক রান্নাঘর কাউন্টার" },
+        { en: "Quality Sanitary Fittings", bn: "মানসম্পন্ন স্যানিটারি ফিটিং" },
+        { en: "Natural Ventilation Design", bn: "প্রাকৃতিক বায়ু চলাচল ডিজাইন" },
+      ],
+      exterior: [
+        { en: "Rooftop Garden Space", bn: "ছাদ বাগানের জায়গা" },
+        { en: "Boundary Wall & Gate", bn: "সীমানা প্রাচীর ও গেট" },
+        { en: "External Cladding Tiles", bn: "বাহ্যিক ক্ল্যাডিং টাইলস" },
+      ],
+      building: [
+        { en: "Security Guard", bn: "নিরাপত্তা প্রহরী" },
+        { en: "Generator Backup", bn: "জেনারেটর ব্যাকআপ" },
+        { en: "Clean Water Supply", bn: "বিশুদ্ধ পানি সরবরাহ" },
+        { en: "CCTV Surveillance", bn: "সিসিটিভি নজরদারি" },
+      ],
+    },
+    financials: {
+      sharePrice: 320000,
+      pricePerSqft: 3600,
+      currency: "BDT",
+      expectedROI: 7.8,
+    },
+    nearbyPlaces: [
+      { category: "hospital", name: { en: "Demra General Hospital", bn: "ডেমরা জেনারেল হাসপাতাল" }, distance: "0.9 km" },
+      { category: "hospital", name: { en: "Ibn Sina Hospital (Demra)", bn: "ইবনে সিনা হাসপাতাল (ডেমরা)" }, distance: "1.5 km" },
+      { category: "school", name: { en: "Jodhivita Govt. Primary School", bn: "জোড়াভিটা সরকারি প্রাথমিক বিদ্যালয়" }, distance: "0.4 km" },
+      { category: "college", name: { en: "Demra College", bn: "ডেমরা কলেজ" }, distance: "1.8 km" },
+      { category: "university", name: { en: "Dhaka International University", bn: "ঢাকা ইন্টারন্যাশনাল ইউনিভার্সিটি" }, distance: "4.0 km" },
+      { category: "mall", name: { en: "Trimohoni Bazar", bn: "ত্রিমোহনী বাজার" }, distance: "0.5 km" },
+      { category: "park", name: { en: "Trimohoni Community Park", bn: "ত্রিমোহনী কমিউনিটি পার্ক" }, distance: "0.7 km" },
+      { category: "mosque", name: { en: "Jodhivita Central Mosque", bn: "জোড়াভিটা কেন্দ্রীয় মসজিদ" }, distance: "0.2 km" },
+      { category: "transport", name: { en: "Trimohoni Bridge Bus Stop", bn: "ত্রিমোহনী ব্রিজ বাস স্টপ" }, distance: "0.3 km" },
+    ],
+  },
+
+  // ─── Upcoming Projects ─────────────────────────────────────────────────────────
+  {
+    id: "khilgaon-twin-towers",
+    slug: "khilgaon-twin-towers",
+    name: {
+      en: "Sabit Khilgaon Twin Towers",
+      bn: "সাবিত খিলগাঁও টুইন টাওয়ার",
+    },
+    location: {
+      en: "Khilgaon Thana Residential Area, Dhaka",
+      bn: "খিলগাঁও থানা আবাসিক এলাকা, ঢাকা",
+    },
+    address: {
+      en: "Khilgaon Thana Residential Area, Khilgaon, Dhaka-1219",
+      bn: "খিলগাঁও থানা আবাসিক এলাকা, খিলগাঁও, ঢাকা-১২১৯",
+    },
+    coordinates: { lat: 23.7370, lng: 90.4292 },
+    status: "upcoming",
+    description: {
+      en: "Our most ambitious project yet — twin 10-storey towers featuring 40 modern flats with rooftop garden, parking, and 24/7 security. Share registration opening soon.",
+      bn: "আমাদের সবচেয়ে উচ্চাভিলাষী প্রকল্প — রুফটপ গার্ডেন, পার্কিং এবং ২৪/৭ নিরাপত্তা সহ ৪০টি আধুনিক ফ্ল্যাট সম্বলিত জোড়া ১০ তলা টাওয়ার।",
+    },
+    longDescription: {
+      en: "Sabit Khilgaon Twin Towers represents the next leap in our mission — a landmark twin-tower development that will redefine the skyline of Khilgaon. With 40 thoughtfully designed flats, rooftop gardens, dedicated parking bays, and a community recreation area, this project is designed for families who want more than just four walls. Share registration opens soon — register your interest now via WhatsApp.",
+      bn: "সাবিত খিলগাঁও টুইন টাওয়ার আমাদের মিশনের পরবর্তী উল্লম্ফন — একটি ল্যান্ডমার্ক টুইন-টাওয়ার উন্নয়ন যা খিলগাঁওয়ের দিগন্তকে নতুনভাবে সংজ্ঞায়িত করবে। ৪০টি সুপরিকল্পিত ফ্ল্যাট, ছাদ বাগান, নিজস্ব পার্কিং বে এবং কমিউনিটি বিনোদন এলাকা সহ এই প্রকল্পটি এমন পরিবারগুলির জন্য ডিজাইন করা হয়েছে যারা চার দেওয়ালের বেশি কিছু চায়।",
+    },
+    image: "https://images.unsplash.com/photo-1496196614460-48988a57fccf?auto=format&fit=crop&q=80&w=1200",
+    gallery: [
+      "https://images.unsplash.com/photo-1496196614460-48988a57fccf?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=900",
+    ],
+    completionDate: "2027-06",
+    flats: 40,
+    floors: 10,
+    specifications: {
+      totalAreaSqft: 1100,
+      bedrooms: 3,
+      bathrooms: 3,
+      parkingSpaces: 20,
+    },
+    amenities: {
+      interior: [
+        { en: "Premium Marble-Effect Tiles", bn: "প্রিমিয়াম মার্বেল-ইফেক্ট টাইলস" },
+        { en: "Built-in Wardrobes", bn: "বিল্ট-ইন আলমারি" },
+        { en: "Modern Kitchen with Counter", bn: "কাউন্টার সহ আধুনিক রান্নাঘর" },
+        { en: "Quality Sanitary Fittings", bn: "মানসম্পন্ন স্যানিটারি ফিটিং" },
+        { en: "High-Speed Internet Ready", bn: "হাই-স্পিড ইন্টারনেট সংযোগ প্রস্তুত" },
+      ],
+      exterior: [
+        { en: "Rooftop Garden", bn: "ছাদ বাগান" },
+        { en: "Children's Play Area", bn: "শিশুদের খেলার মাঠ" },
+        { en: "Dedicated Parking Bays", bn: "নিজস্ব পার্কিং বে" },
+        { en: "Landscaped Entrance", bn: "ল্যান্ডস্কেপড প্রবেশদ্বার" },
+      ],
+      building: [
+        { en: "24/7 Armed Security", bn: "২৪/৭ সশস্ত্র নিরাপত্তা" },
+        { en: "Full CCTV Coverage", bn: "সম্পূর্ণ সিসিটিভি কভারেজ" },
+        { en: "Full Generator Backup", bn: "পূর্ণ জেনারেটর ব্যাকআপ" },
+        { en: "Fire Safety System", bn: "অগ্নি নিরাপত্তা ব্যবস্থা" },
+        { en: "Intercom & Video Doorbell", bn: "ইন্টারকম ও ভিডিও ডোরবেল" },
+        { en: "Lift / Elevator", bn: "লিফট / এলিভেটর" },
+      ],
+    },
+    financials: {
+      sharePrice: 400000,
+      pricePerSqft: 3900,
+      currency: "BDT",
+      expectedROI: 9.0,
+    },
+    nearbyPlaces: [
+      { category: "hospital", name: { en: "Khilgaon General Hospital", bn: "খিলগাঁও জেনারেল হাসপাতাল" }, distance: "0.4 km" },
+      { category: "hospital", name: { en: "Dhaka Medical College Hospital", bn: "ঢাকা মেডিকেল কলেজ হাসপাতাল" }, distance: "3.2 km" },
+      { category: "school", name: { en: "Khilgaon High School", bn: "খিলগাঁও উচ্চ বিদ্যালয়" }, distance: "0.3 km" },
+      { category: "college", name: { en: "Tejgaon College", bn: "তেজগাঁও কলেজ" }, distance: "2.8 km" },
+      { category: "university", name: { en: "Dhaka University", bn: "ঢাকা বিশ্ববিদ্যালয়" }, distance: "4.5 km" },
+      { category: "mall", name: { en: "Bashundhara City", bn: "বসুন্ধরা সিটি" }, distance: "4.0 km" },
+      { category: "mall", name: { en: "Khilgaon Local Market", bn: "খিলগাঁও স্থানীয় বাজার" }, distance: "0.5 km" },
+      { category: "park", name: { en: "Khilgaon Park", bn: "খিলগাঁও পার্ক" }, distance: "0.6 km" },
+      { category: "mosque", name: { en: "Khilgaon Jamia Mosque", bn: "খিলগাঁও জামে মসজিদ" }, distance: "0.2 km" },
+      { category: "transport", name: { en: "Khilgaon Flyover Bus Stop", bn: "খিলগাঁও ফ্লাইওভার বাস স্টপ" }, distance: "0.3 km" },
+      { category: "transport", name: { en: "Sayedabad Bus Terminal", bn: "সায়েদাবাদ বাস টার্মিনাল" }, distance: "1.5 km" },
+    ],
+  },
+  {
+    id: "jodhivita-garden-city",
+    slug: "jodhivita-garden-city",
+    name: {
+      en: "Sabit Jodhivita Garden City",
+      bn: "সাবিত জোড়াভিটা গার্ডেন সিটি",
+    },
+    location: {
+      en: "Jodhivita Residential Area, Trimohoni Bridge, Dhaka",
+      bn: "জোড়াভিটা আবাসিক এলাকা, ত্রিমোহনী ব্রিজ, ঢাকা",
+    },
+    address: {
+      en: "Jodhivita Residential Area, near Trimohoni Bridge, Demra, Dhaka-1362",
+      bn: "জোড়াভিটা আবাসিক এলাকা, ত্রিমোহনী ব্রিজ সংলগ্ন, ডেমরা, ঢাকা-১৩৬২",
+    },
+    coordinates: { lat: 23.7143, lng: 90.4796 },
+    status: "upcoming",
+    description: {
+      en: "A community-focused development with green spaces, children's play area, and mosque facilities. 24 affordable flats designed for middle-income families.",
+      bn: "সবুজ পরিবেশ, শিশুদের খেলার মাঠ এবং মসজিদ সুবিধা সহ একটি পারিবারিক পরিবেশ-কেন্দ্রিক উন্নয়ন প্রকল্প। ২৪টি সাশ্রয়ী ফ্ল্যাট।",
+    },
+    longDescription: {
+      en: "Sabit Jodhivita Garden City is designed around community living. At its heart sits a landscaped garden, a children's safe play zone, and a community mosque — creating a neighbourhood that families will love for generations. The 24 thoughtfully priced flats are structured to be accessible on our easy share-based installment plan.",
+      bn: "সাবিত জোড়াভিটা গার্ডেন সিটি কমিউনিটি জীবনযাপনকে কেন্দ্র করে ডিজাইন করা হয়েছে। এর কেন্দ্রে রয়েছে একটি ল্যান্ডস্কেপড গার্ডেন, শিশুদের নিরাপদ খেলার জায়গা এবং একটি কমিউনিটি মসজিদ — এমন একটি প্রতিবেশী তৈরি করছে যা পরিবারগুলি প্রজন্মের পর প্রজন্ম ভালোবাসবে।",
+    },
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1200",
+    gallery: [
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&q=80&w=900",
+      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80&w=900",
+    ],
+    completionDate: "2027-12",
+    flats: 24,
+    floors: 6,
+    specifications: {
+      totalAreaSqft: 850,
+      bedrooms: 3,
+      bathrooms: 2,
+      parkingSpaces: 12,
+    },
+    amenities: {
+      interior: [
+        { en: "Quality Tile Flooring", bn: "মানসম্পন্ন টাইল মেঝে" },
+        { en: "Good Ventilation Design", bn: "ভালো বায়ু চলাচল ডিজাইন" },
+        { en: "Quality Sanitary Fittings", bn: "মানসম্পন্ন স্যানিটারি ফিটিং" },
+      ],
+      exterior: [
+        { en: "Landscaped Garden", bn: "ল্যান্ডস্কেপড গার্ডেন" },
+        { en: "Children's Play Area", bn: "শিশুদের খেলার মাঠ" },
+        { en: "Community Mosque", bn: "কমিউনিটি মসজিদ" },
+        { en: "Rooftop Access", bn: "ছাদে প্রবেশাধিকার" },
+      ],
+      building: [
+        { en: "24/7 Security", bn: "২৪/৭ নিরাপত্তা" },
+        { en: "Generator Backup", bn: "জেনারেটর ব্যাকআপ" },
+        { en: "Clean Water Supply", bn: "বিশুদ্ধ পানি সরবরাহ" },
+        { en: "CCTV Surveillance", bn: "সিসিটিভি নজরদারি" },
+      ],
+    },
+    financials: {
+      sharePrice: 280000,
+      pricePerSqft: 3200,
+      currency: "BDT",
+      expectedROI: 7.0,
+    },
+    nearbyPlaces: [
+      { category: "hospital", name: { en: "Demra General Hospital", bn: "ডেমরা জেনারেল হাসপাতাল" }, distance: "0.9 km" },
+      { category: "school", name: { en: "Jodhivita Govt. Primary School", bn: "জোড়াভিটা সরকারি প্রাথমিক বিদ্যালয়" }, distance: "0.4 km" },
+      { category: "college", name: { en: "Demra College", bn: "ডেমরা কলেজ" }, distance: "1.8 km" },
+      { category: "university", name: { en: "Dhaka International University", bn: "ঢাকা ইন্টারন্যাশনাল ইউনিভার্সিটি" }, distance: "4.0 km" },
+      { category: "mall", name: { en: "Trimohoni Bazar", bn: "ত্রিমোহনী বাজার" }, distance: "0.5 km" },
+      { category: "park", name: { en: "Trimohoni Community Park", bn: "ত্রিমোহনী কমিউনিটি পার্ক" }, distance: "0.7 km" },
+      { category: "mosque", name: { en: "Jodhivita Central Mosque", bn: "জোড়াভিটা কেন্দ্রীয় মসজিদ" }, distance: "0.2 km" },
+      { category: "transport", name: { en: "Trimohoni Bridge Bus Stop", bn: "ত্রিমোহনী ব্রিজ বাস স্টপ" }, distance: "0.3 km" },
+    ],
+  },
+]
+
+export const getProjectsByStatus = (status: RealEstateProject["status"]) =>
+  realEstateProjects.filter((p) => p.status === status)
+
+export const getProjectBySlug = (slug: string) =>
+  realEstateProjects.find((p) => p.slug === slug) ?? null

@@ -3,8 +3,9 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { User, LogOut, FolderOpen, Wrench, HelpCircle, Tag, Briefcase, Menu, Users, ChevronDown } from "lucide-react"
+import { User, LogOut, FolderOpen, Wrench, HelpCircle, Tag, Briefcase, Menu, Users, ChevronDown, CalendarDays, BookOpen } from "lucide-react"
 import React, { useEffect, useState } from "react"
+import { useLanguage } from "@/contexts/language-context"
 import { useRouter } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { NoticeMarquee } from "@/components/notice-marquee"
@@ -17,6 +18,7 @@ interface Client {
 }
 
 export function SiteHeader() {
+  const { lang, setLang, t } = useLanguage()
   const [client, setClient] = useState<Client | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
@@ -66,12 +68,13 @@ export function SiteHeader() {
   }
 
   const links = [
-    { href: "/", label: "Home", icon: Briefcase },
-    { href: "/properties", label: "Properties", icon: FolderOpen },
-    { href: "/galleries", label: "Galleries", icon: Tag },
-    { href: "/insights", label: "Insights", icon: HelpCircle },
-    { href: "/benefits", label: "Benefits", icon: Wrench },
-    { href: "/team", label: "Team", icon: Users },
+    // { href: "/", label: t({ en: "Home", bn: "হোম" }), icon: Briefcase },
+    { href: "/#our-story", label: t({ en: "Our Story", bn: "আমাদের কথা" }), icon: BookOpen },
+    { href: "/projects", label: t({ en: "Projects", bn: "প্রকল্পসমূহ" }), icon: FolderOpen },
+    { href: "/events", label: t({ en: "Events", bn: "ইভেন্ট" }), icon: CalendarDays },
+    { href: "/galleries", label: t({ en: "Gallery", bn: "গ্যালারি" }), icon: Tag },
+    // { href: "/insights", label: t({ en: "Insights", bn: "ইনসাইটস" }), icon: HelpCircle },
+    { href: "/management", label: t({ en: "Management", bn: "ব্যবস্থাপনা" }), icon: Users },
   ]
 
   return (
@@ -84,85 +87,61 @@ export function SiteHeader() {
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="flex items-center justify-center p-2.5 bg-gradient-to-br from-green-light to-[#064E3B] rounded-xl shadow-md group-hover:shadow-lg group-hover:-translate-y-0.5 transition-all">
-              <span className="text-white font-black text-sm tracking-widest">SAML</span>
+              <span className="text-white font-black text-sm tracking-widest">SPML</span>
             </div>
             <span className="font-extrabold tracking-tight text-lg">
-              <span className="text-[#064E3B]">Sabit Asset</span>
-              <span className="text-gray-900 group-hover:text-[#064E3B] transition-colors"> Management</span>
+              <span className="text-[#064E3B]">Sabit Property</span>
+              <span className="text-gray-900 group-hover:text-[#064E3B] transition-colors"> Management Ltd</span>
             </span>
           </Link>
 
-          {/* Desktop Nav Ultra-Fast CSS Hover Menu */}
-          <nav className="hidden lg:flex items-center gap-8 h-full">
-            <Link href="/" className="text-gray-700 font-bold hover:text-[#064E3B] text-[15px] h-full flex items-center transition-colors">
-              Home
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-6 h-full">
+            {/* <Link href="/" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
+              {t({ en: "Home", bn: "হোম" })}
+            </Link> */}
+            <Link href="/#our-story" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
+              {t({ en: "Our Story", bn: "আমাদের কথা" })}
             </Link>
-
-            {/* Services CSS Dropdown */}
-            <div className="group h-full flex items-center relative">
-              <Link href="/benefits" className="text-gray-700 font-bold group-hover:text-[#064E3B] text-[15px] transition-colors flex items-center gap-1 cursor-pointer">
-                Benefits <ChevronDown className="w-4 h-4 opacity-50 group-hover:rotate-180 transition-transform duration-300" />
-              </Link>
-              <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] bg-white border border-gray-100 shadow-[0_20px_40px_-15px_rgba(6,78,59,0.2)] rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-4 group-hover:translate-y-0 grid grid-cols-2 p-3 gap-1 z-50">
-                <div className="p-6 bg-gradient-to-b from-[#064E3B]/5 to-green-muted/30 rounded-xl">
-                  <Wrench className="w-8 h-8 text-[#064E3B] mb-4" />
-                  <h4 className="text-lg font-bold text-[#064E3B] mb-2">Core Benefits</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">Comprehensive asset management tailored for premium portfolios.</p>
-                </div>
-                <div className="flex flex-col gap-2 p-3">
-                  <Link href="/benefits#property-management" className="p-3 hover:bg-gray-50 rounded-lg group/link transition-colors">
-                    <h5 className="font-bold text-gray-900 group-hover/link:text-[#064E3B]">Property Management</h5>
-                    <p className="text-xs text-gray-500 mt-1">End-to-end management</p>
-                  </Link>
-                  <Link href="/benefits#advisory" className="p-3 hover:bg-gray-50 rounded-lg group/link transition-colors">
-                    <h5 className="font-bold text-gray-900 group-hover/link:text-[#064E3B]">Strategic Advisory</h5>
-                    <p className="text-xs text-gray-500 mt-1">Data-driven guidance</p>
-                  </Link>
-                  <Link href="/benefits#valuation" className="p-3 hover:bg-gray-50 rounded-lg group/link transition-colors">
-                    <h5 className="font-bold text-gray-900 group-hover/link:text-[#064E3B]">Property Valuation</h5>
-                    <p className="text-xs text-gray-500 mt-1">Accurate assessment</p>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Properties CSS Dropdown */}
-            <div className="group h-full flex items-center relative">
-              <Link href="/properties" className="text-gray-700 font-bold group-hover:text-[#064E3B] text-[15px] transition-colors flex items-center gap-1 cursor-pointer">
-                Properties <ChevronDown className="w-4 h-4 opacity-50 group-hover:rotate-180 transition-transform duration-300" />
-              </Link>
-              <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[350px] bg-white border border-gray-100 shadow-[0_20px_40px_-15px_rgba(6,78,59,0.2)] rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-4 group-hover:translate-y-0 p-3 flex flex-col gap-1 z-50">
-                <Link href="/properties?type=residential" className="p-4 hover:bg-gray-50 rounded-lg group/prop transition-colors">
-                  <h5 className="font-bold text-gray-900 group-hover/prop:text-[#064E3B]">Residential Properties</h5>
-                  <p className="text-sm text-gray-500">Luxury apartments & villas</p>
-                </Link>
-                <Link href="/properties?type=commercial" className="p-4 hover:bg-gray-50 rounded-lg group/prop transition-colors">
-                  <h5 className="font-bold text-gray-900 group-hover/prop:text-[#064E3B]">Commercial Spaces</h5>
-                  <p className="text-sm text-gray-500">Office suites & retail centers</p>
-                </Link>
-                <Link href="/properties?type=mixed" className="p-4 hover:bg-gray-50 rounded-lg group/prop transition-colors">
-                  <h5 className="font-bold text-gray-900 group-hover/prop:text-[#064E3B]">Mixed-Use Developments</h5>
-                  <p className="text-sm text-gray-500">Integrated lifestyle hubs</p>
-                </Link>
-              </div>
-            </div>
-
-            <Link href="/galleries" className="text-gray-700 font-bold hover:text-[#064E3B] text-[15px] h-full flex items-center transition-colors">
-              Galleries
+            <Link href="/projects" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
+              {t({ en: "Projects", bn: "প্রকল্পসমূহ" })}
             </Link>
-
-            <Link href="/insights" className="text-gray-700 font-bold hover:text-[#064E3B] text-[15px] h-full flex items-center transition-colors">
-              Insights
+            <Link href="/events" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
+              {t({ en: "Events", bn: "ইভেন্ট" })}
             </Link>
-
-            <Link href="/team" className="text-gray-700 font-bold hover:text-[#064E3B] text-[15px] h-full flex items-center transition-colors">
-              Team
+            <Link href="/galleries" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
+              {t({ en: "Gallery", bn: "গ্যালারি" })}
             </Link>
+            <Link href="/management" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
+              {t({ en: "Management", bn: "ব্যবস্থাপনা" })}
+            </Link>
+            {/* <Link href="/properties" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
+              {t({ en: "Properties", bn: "সম্পত্তি" })}
+            </Link> */}
           </nav>
 
           {/* Desktop Right Side Auth / Client */}
           <div className="hidden lg:flex items-center gap-4">
-            {!loading && (
+            {/* Language Toggle */}
+            <div className="flex items-center bg-gray-100 rounded-full p-1">
+              <button
+                id="lang-toggle-en"
+                onClick={() => setLang("en")}
+                className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === "en" ? "bg-[#064E3B] text-white shadow-sm" : "text-gray-500 hover:text-gray-800"
+                  }`}
+              >
+                EN
+              </button>
+              <button
+                id="lang-toggle-bn"
+                onClick={() => setLang("bn")}
+                className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === "bn" ? "bg-[#064E3B] text-white shadow-sm" : "text-gray-500 hover:text-gray-800"
+                  }`}
+              >
+                বাং
+              </button>
+            </div>
+            {/* {!loading && (
               client ? (
                 <div className="group relative">
                   <div className="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded-full transition-colors pr-4 border border-transparent hover:border-gray-200">
@@ -178,7 +157,7 @@ export function SiteHeader() {
                     </div>
                     <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-[#064E3B]" />
                   </div>
-                  {/* Account Dropdown */}
+
                   <div className="absolute top-16 right-0 w-56 bg-white border border-gray-100 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 p-2 z-50">
                     <div className="px-3 py-2 border-b border-gray-50 mb-2">
                       <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Account</span>
@@ -203,7 +182,7 @@ export function SiteHeader() {
                   <Link href="/client/login">Client Login</Link>
                 </Button>
               )
-            )}
+            )} */}
           </div>
 
           {/* Mobile Nav Button */}
@@ -217,9 +196,17 @@ export function SiteHeader() {
               <SheetContent side="right" className="w-full sm:w-80 bg-white border-l border-gray-100 p-0 flex flex-col">
                 <div className="flex items-center gap-3 p-6 border-b border-gray-50">
                   <div className="flex items-center justify-center p-2 bg-gradient-to-br from-green-light to-[#064E3B] rounded-lg">
-                    <span className="text-white font-black text-xs tracking-wider">SAML</span>
+                    <span className="text-white font-black text-xs tracking-wider">SPML</span>
                   </div>
-                  <span className="font-extrabold text-gray-900">Sabit Asset</span>
+                  <span className="font-extrabold text-gray-900">Sabit Property</span>
+                </div>
+
+                {/* Mobile Language Toggle */}
+                <div className="px-6 py-3 border-b border-gray-50">
+                  <div className="flex items-center bg-gray-100 rounded-full p-1 w-fit">
+                    <button onClick={() => setLang("en")} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${lang === "en" ? "bg-[#064E3B] text-white" : "text-gray-500"}`}>EN</button>
+                    <button onClick={() => setLang("bn")} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${lang === "bn" ? "bg-[#064E3B] text-white" : "text-gray-500"}`}>বাংলা</button>
+                  </div>
                 </div>
 
                 <nav className="flex-1 overflow-y-auto py-6 px-4">
@@ -238,7 +225,7 @@ export function SiteHeader() {
                 </nav>
 
                 <div className="p-6 border-t border-gray-50 bg-gray-50/50">
-                  {!loading && (
+                  {/* {!loading && (
                     client ? (
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3 px-2 py-3 bg-white rounded-xl shadow-sm border border-gray-100 mb-2">
@@ -265,12 +252,9 @@ export function SiteHeader() {
                         <Button asChild className="w-full rounded-xl h-12 bg-gray-900 hover:bg-[#064E3B] font-bold shadow-lg">
                           <Link href="/client/login">Client Login</Link>
                         </Button>
-                        <Button asChild variant="outline" className="w-full rounded-xl h-12 font-bold border-gray-200">
-                          <Link href="https://wa.me/8801401658685">Get a Quote</Link>
-                        </Button>
                       </div>
                     )
-                  )}
+                  )} */}
                 </div>
               </SheetContent>
             </Sheet>

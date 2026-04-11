@@ -1,683 +1,445 @@
+"use client"
+
+import { notFound } from "next/navigation"
+import { use } from "react"
+import Link from "next/link"
+import Image from "next/image"
+import {
+  ArrowLeft, ArrowRight, MapPin, Building2, Layers, Car, Bath, BedDouble,
+  Calendar, TrendingUp, CheckCircle2, Wifi, Shield, Zap, Trees, ShoppingBag,
+  GraduationCap, Heart, Bus, BookOpen, Landmark, Flame, Phone,
+} from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
 import { AppverseFooter } from "@/components/appverse-footer"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Check, CheckCircle2, Quote, Users, Calendar, DollarSign, Award, ExternalLink, Lightbulb, Target, Code2, TrendingUp, AlertCircle } from "lucide-react"
-import Link from "next/link"
-import Script from "next/script"
-import { notFound } from "next/navigation"
-import { getTeamMemberById } from "@/data/team"
-import Image from "next/image"
-import { getAllProjectsForBuild, getProjectByIdForBuild } from "@/lib/get-projects"
+import { useLanguage } from "@/contexts/language-context"
+import { realEstateProjects, type NearbyPlace } from "@/data/real-estate-projects"
+import { GalleryGrid } from "@/components/gallery-lightbox"
 
-interface ProjectLink {
-  label: string
-  url: string
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const statusConfig = {
+  handover: { label: { en: "Completed", bn: "সম্পন্ন" }, cls: "bg-emerald-100 text-emerald-700 border-emerald-200", dot: "bg-emerald-500" },
+  ongoing:  { label: { en: "Ongoing",   bn: "চলমান"  }, cls: "bg-orange-100 text-orange-700 border-orange-200",   dot: "bg-orange-500"  },
+  upcoming: { label: { en: "Upcoming",  bn: "আসন্ন"  }, cls: "bg-blue-100 text-blue-700 border-blue-200",         dot: "bg-blue-500"    },
 }
 
-interface TimelinePhase {
-  phase: string
-  duration: string
-  description: string
+const nearbyIcon: Record<NearbyPlace["category"], React.ReactNode> = {
+  hospital:   <Heart    className="w-4 h-4" />,
+  school:     <BookOpen className="w-4 h-4" />,
+  college:    <GraduationCap className="w-4 h-4" />,
+  university: <Landmark className="w-4 h-4" />,
+  mall:       <ShoppingBag className="w-4 h-4" />,
+  park:       <Trees    className="w-4 h-4" />,
+  mosque:     <Landmark className="w-4 h-4" />,
+  transport:  <Bus      className="w-4 h-4" />,
 }
 
-interface Metric {
-  label: string
-  value: string
+const nearbyLabel: Record<NearbyPlace["category"], { en: string; bn: string }> = {
+  hospital:   { en: "Hospital",   bn: "হাসপাতাল"     },
+  school:     { en: "School",     bn: "স্কুল"        },
+  college:    { en: "College",    bn: "কলেজ"         },
+  university: { en: "University", bn: "বিশ্ববিদ্যালয়" },
+  mall:       { en: "Mall / Market", bn: "মল / বাজার" },
+  park:       { en: "Park",       bn: "পার্ক"        },
+  mosque:     { en: "Mosque",     bn: "মসজিদ"        },
+  transport:  { en: "Transport",  bn: "পরিবহন"       },
 }
 
-// Enable static generation with ISR
-export const dynamic = 'force-static'
-export const revalidate = 60 // Revalidate every 60 seconds
-export const dynamicParams = true // Allow dynamic params not in generateStaticParams
-
-async function getProject(id: string) {
-  // During build time, use direct database access
-  // During runtime, use API with ISR revalidation
-  const isProductionBuild = process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL;
-  
-  if (isProductionBuild) {
-    // Build time: Direct database access
-    return getProjectByIdForBuild(id);
-  }
-
-  // Runtime: Try API first, fallback to DB if it fails
-  try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-    
-    const response = await fetch(`${baseUrl}/api/projects/${id}`, {
-      next: { revalidate: 60 }, // Revalidate every 60 seconds
-    })
-    
-    if (!response.ok) {
-      throw new Error('API fetch failed')
-    }
-    
-    const data = await response.json()
-    return data.success ? data.data : null
-  } catch (error) {
-    console.error('API fetch failed, falling back to database:', error)
-    // Fallback to database
-    return getProjectByIdForBuild(id);
-  }
+const nearbyColor: Record<NearbyPlace["category"], string> = {
+  hospital:   "bg-red-50 text-red-600 border-red-100",
+  school:     "bg-blue-50 text-blue-600 border-blue-100",
+  college:    "bg-indigo-50 text-indigo-600 border-indigo-100",
+  university: "bg-purple-50 text-purple-600 border-purple-100",
+  mall:       "bg-amber-50 text-amber-600 border-amber-100",
+  park:       "bg-green-50 text-green-600 border-green-100",
+  mosque:     "bg-teal-50 text-teal-600 border-teal-100",
+  transport:  "bg-gray-50 text-gray-600 border-gray-200",
 }
 
-async function getAllProjects() {
-  // During build time, use direct DB access
-  if (process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL) {
-    return getAllProjectsForBuild()
-  }
-
-  // During runtime, use API
-  try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-    
-    const response = await fetch(`${baseUrl}/api/projects`, {
-      next: { revalidate: 3600 }, // Revalidate every hour for build
-    })
-    
-    if (!response.ok) {
-      return []
-    }
-    
-    const data = await response.json()
-    return data.success ? data.data : []
-  } catch (error) {
-    console.error('Error fetching projects:', error)
-    // Fallback to direct DB access if API fails
-    return getAllProjectsForBuild()
-  }
+const amenityIconMap: Record<string, React.ReactNode> = {
+  "wifi": <Wifi className="w-4 h-4" />,
+  "security": <Shield className="w-4 h-4" />,
+  "generator": <Zap className="w-4 h-4" />,
+  "fire": <Flame className="w-4 h-4" />,
+  "default": <CheckCircle2 className="w-4 h-4" />,
 }
 
-export async function generateStaticParams() {
-  const projects = await getAllProjects()
-  return projects
-    .filter((project: any) => project.id && typeof project.id === 'string')
-    .map((project: any) => ({ 
-      id: project.id.toString() 
-    }))
+function getAmenityIcon(text: string) {
+  const lower = text.toLowerCase()
+  if (lower.includes("wifi") || lower.includes("internet")) return amenityIconMap["wifi"]
+  if (lower.includes("security") || lower.includes("cctv") || lower.includes("guard")) return amenityIconMap["security"]
+  if (lower.includes("generator") || lower.includes("power") || lower.includes("backup")) return amenityIconMap["generator"]
+  if (lower.includes("fire")) return amenityIconMap["fire"]
+  return amenityIconMap["default"]
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const project = await getProject(id)
-  if (!project) return {}
+// ─── Page Component ───────────────────────────────────────────────────────────
 
-  const keywords = [
-    project.title,
-    `${project.title} case study`,
-    `${project.category} project`,
-    `${project.category} Bangladesh`,
-    project.client,
-    `${project.client} project`,
-    "software development case study",
-    "Bangladesh software project",
-    ...project.tags,
-    "successful software implementation",
-    "software project results",
-    "client testimonial Bangladesh"
-  ].join(", ")
+export default function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: slug } = use(params)
+  const project = realEstateProjects.find((p) => p.slug === slug)
+  const { t, lang } = useLanguage()
 
-  const description = `${project.longDescription || project.description} See how we helped ${project.client} with ${project.category}. Project completed in ${project.year}. ${project.results ? 'Results: ' + project.results.slice(0, 2).join(', ') : ''}`
+  if (!project) notFound()
 
-  return {
-    title: `${project.title} - ${project.client} | Software Project Case Study | Pqrix`,
-    description: description.slice(0, 160),
-    keywords,
-    openGraph: {
-      title: `${project.title} - ${project.client} | Pqrix Bangladesh`,
-      description: `${project.category} project for ${project.client}. ${project.description}`,
-      type: "article",
-      url: `https://pqrix.com/projects/${project.id}`,
-      images: [
-        {
-          url: project.image || "/icons/pqrix-logo.png",
-          width: 1200,
-          height: 630,
-          alt: `${project.title} by Pqrix`,
-        },
-      ],
-      article: {
-        publishedTime: `${project.year}-01-01`,
-        authors: ["Pqrix Team"],
-        tags: project.tags,
-      },
+  const cfg = statusConfig[project.status]
+  const mapSrc = `https://maps.google.com/maps?q=${project.coordinates.lat},${project.coordinates.lng}&z=16&output=embed`
+
+  const fmt = (n: number) =>
+    new Intl.NumberFormat("en-BD").format(n)
+
+  // Group nearby places by category
+  const groupedNearby = (project.nearbyPlaces ?? []).reduce<Partial<Record<NearbyPlace["category"], NearbyPlace[]>>>(
+    (acc, place) => {
+      acc[place.category] = acc[place.category] ?? []
+      acc[place.category]!.push(place)
+      return acc
     },
-    twitter: {
-      card: "summary_large_image",
-      title: `${project.title} - ${project.client}`,
-      description: project.description,
-      images: [project.image || "/icons/pqrix-logo.png"],
-    },
-    alternates: {
-      canonical: `https://pqrix.com/projects/${project.id}`,
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-  }
-}
+    {}
+  )
 
-export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const project = await getProject(id)
+  const nearbyCategories = Object.keys(groupedNearby) as NearbyPlace["category"][]
 
-  if (!project) {
-    notFound()
-  }
+  const waMsg = encodeURIComponent(
+    project.status === "upcoming"
+      ? `Assalamu Alaikum,\n\nI am interested in your upcoming project:\n*${project.name.en}*\nLocation: ${project.address.en}\n\nCould you please share:\n- Share price & payment plan\n- Expected handover date\n- Available units\n\nThank you.`
+      : `Assalamu Alaikum,\n\nI would like to enquire about:\n*${project.name.en}*\nLocation: ${project.address.en}\n\nPlease share full details, pricing, and payment schedule.\n\nThank you.`
+  )
+  const waHref = `https://wa.me/8801401658685?text=${waMsg}`
 
   return (
-    <>
-      <main className="min-h-[100dvh] bg-white text-black">
-        <SiteHeader />
+    <main className="min-h-[100dvh] bg-white text-black">
+      <SiteHeader />
 
-        {/* Back Button */}
-        <div className="container mx-auto px-4 pt-8 bg-gradient-to-b from-white to-green-muted">
-          <Button asChild variant="ghost" className="text-black hover:text-black hover:bg-green-muted">
-            <Link href="/projects">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Projects
-            </Link>
-          </Button>
+      {/* ── Hero ──────────────────────────────────────────────────────────────── */}
+      <div className="relative h-[60vh] min-h-[400px] max-h-[600px] w-full overflow-hidden">
+        <Image
+          src={project.image}
+          alt={t(project.name)}
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
+        />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+        {/* Back button */}
+        <div className="absolute top-6 left-6">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full text-sm font-semibold hover:bg-white/20 transition-all"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            {t({ en: "Back to Projects", bn: "প্রকল্পে ফিরুন" })}
+          </Link>
         </div>
 
-        {/* Hero Section */}
-        <section className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-green-muted to-white">
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-start">
-            <div>
-              <div className="flex items-center gap-3 mb-4 flex-wrap">
-                <span className="inline-flex items-center rounded-full bg-green-dark/20 border border-green-light px-4 py-1.5 text-sm font-medium text-green-dark">
-                  {project.category}
-                </span>
-                <span className="inline-flex items-center rounded-full bg-white border border-green-muted px-4 py-1.5 text-sm font-medium text-black">
-                  {project.year}
-                </span>
-                {project.status && (
-                  <span className="inline-flex items-center rounded-full bg-green-500/20 border border-green-500/30 px-4 py-1.5 text-sm font-medium text-green-600">
-                    {project.status}
-                  </span>
-                )}
-              </div>
-              <p className="text-sm font-medium text-black mb-3">Client: {project.client}</p>
-              <h1 className="text-[#064E3B] mb-4 text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-black">
-                {project.title}
-              </h1>
-              <p className="text-xl text-black mb-6">{project.description}</p>
-              <p className="text-black mb-6">{project.longDescription}</p>
-
-              {/* Project Meta Info */}
-              <div className="grid grid-cols-2 gap-4">
-                {project.duration && (
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-5 w-5 text-green-dark" />
-                    <div>
-                      <p className="text-xs text-black">Duration</p>
-                      <p className="text-sm font-medium text-black">{project.duration}</p>
-                    </div>
-                  </div>
-                )}
-                {project.budget && (
-                  <div className="flex items-center gap-2">
-                    <DollarSign className="h-5 w-5 text-green-dark" />
-                    <div>
-                      <p className="text-xs text-black">Budget</p>
-                      <p className="text-sm font-medium text-black">{project.budget}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
+        {/* Hero content */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12">
+          <div className="container mx-auto max-w-7xl">
+            {/* Status pill */}
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border mb-4 ${cfg.cls}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+              {t(cfg.label)}
             </div>
-
-            {/* Main Media */}
-            <div className="relative aspect-video rounded-2xl overflow-hidden liquid-glass border border-green-muted shadow-lg shadow-green-muted/30">
-              {project.video ? (
-                <video
-                  src={project.video}
-                  className="h-full w-full object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                />
-              ) : (
-                <img
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  className="h-full w-full object-cover"
-                />
-              )}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-3 leading-tight">
+              {t(project.name)}
+            </h1>
+            <div className="flex items-center gap-2 text-white/70 text-sm">
+              <MapPin className="w-4 h-4 text-green-400" />
+              <span>{t(project.address)}</span>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
 
-        {/* Image Gallery */}
-        {project.images && project.images.length > 1 && (
-          <section className="container mx-auto px-4 pb-12 bg-white">
-            <h2 className="text-[#064E3B] text-2xl font-bold text-black mb-6">Project Gallery</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {project.images.slice(1).map((image: string, idx: number) => (
-                <div
-                  key={idx}
-                  className="relative aspect-square rounded-xl overflow-hidden liquid-glass border border-green-muted hover:scale-105 transition-transform cursor-pointer shadow-sm hover:shadow-md hover:shadow-green-muted/30"
-                >
-                  <img
-                    src={image || "/placeholder.svg"}
-                    alt={`${project.title} - Image ${idx + 2}`}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Key Metrics */}
-        {project.metrics && project.metrics.length > 0 && (
-          <section className="container mx-auto px-4 pb-12 bg-gradient-to-b from-green-muted to-white">
-            <h2 className="text-[#064E3B] text-3xl font-bold text-black mb-8 text-center">Key Results & Metrics</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {project.metrics.map((metric, idx) => (
-                <Card
-                  key={idx}
-                  className="liquid-glass-enhanced border border-green-muted bg-white shadow-lg shadow-green-muted/30 text-center p-6 hover:scale-105 transition-transform hover:shadow-xl hover:"
-                >
-                  <TrendingUp className="h-8 w-8 text-green-dark mx-auto mb-3" />
-                  <p className="text-3xl font-bold text-black mb-2">{metric.value}</p>
-                  <p className="text-sm text-black">{metric.label}</p>
-                </Card>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Tags */}
-        {project.tags && (
-          <section className="container mx-auto px-4 py-12 bg-green-muted">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-[#064E3B] text-3xl font-bold mb-8 text-black">Tags</h2>
-              <div className="flex flex-wrap gap-3">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center rounded-full bg-white border border-green-muted px-4 py-2 text-sm font-medium text-green-dark shadow-sm hover:shadow-md hover:shadow-green-muted/30 transition-shadow"
-                  >
-                    #{tag}
-                  </span>
-                ))}
+      {/* ── Stats Bar ─────────────────────────────────────────────────────────── */}
+      <div className="bg-[#064E3B] text-white">
+        <div className="container mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-white/10">
+            {[
+              { icon: <Building2 className="w-5 h-5" />, label: t({ en: "Flats", bn: "ফ্ল্যাট" }), value: project.flats ?? "—" },
+              { icon: <Layers    className="w-5 h-5" />, label: t({ en: "Storeys", bn: "তলা" }), value: project.floors ?? "—" },
+              { icon: <BedDouble className="w-5 h-5" />, label: t({ en: "Bedrooms", bn: "শোবার ঘর" }), value: project.specifications?.bedrooms ?? "—" },
+              { icon: <Bath      className="w-5 h-5" />, label: t({ en: "Bathrooms", bn: "বাথরুম" }), value: project.specifications?.bathrooms ?? "—" },
+              { icon: <Car       className="w-5 h-5" />, label: t({ en: "Parking", bn: "পার্কিং" }), value: project.specifications?.parkingSpaces ?? "—" },
+              {
+                icon: <Calendar  className="w-5 h-5" />,
+                label: project.status === "handover" ? t({ en: "Delivered", bn: "হস্তান্তর" }) : t({ en: "Expected", bn: "প্রত্যাশিত" }),
+                value: project.completionDate
+                  ? new Date(project.completionDate).toLocaleDateString("en-GB", { month: "short", year: "numeric" })
+                  : "—",
+              },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center justify-center py-4 px-3 text-center gap-1">
+                <span className="text-green-300/70">{item.icon}</span>
+                <span className="text-xl font-black">{item.value}</span>
+                <span className="text-[10px] uppercase tracking-widest text-white/50 font-semibold">{item.label}</span>
               </div>
-            </div>
-          </section>
-        )}
+            ))}
+          </div>
+        </div>
+      </div>
 
-        {/* Metrics */}
-        {project.metrics && (
-          <section className="container mx-auto px-4 py-12 bg-white">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-[#064E3B] text-3xl font-bold mb-8 text-black">Key Metrics</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {project.metrics.map((metric, idx) => (
-                  <div
-                    key={idx}
-                    className="liquid-glass rounded-xl p-6 border border-green-muted shadow-lg shadow-green-muted/30 text-center hover:shadow-xl hover: transition-shadow"
-                  >
-                    <div className="text-3xl font-bold text-green-dark mb-2">{metric.value}</div>
-                    <p className="text-sm text-black">{metric.label}</p>
+      <div className="container mx-auto max-w-7xl px-6 py-16 space-y-24">
+
+        {/* ── Description ───────────────────────────────────────────────────── */}
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div>
+            <div className="inline-flex items-center gap-3 mb-6">
+              <span className="w-10 h-[2px] bg-[#064E3B]" />
+              <span className="text-[#064E3B] font-bold tracking-[0.2em] text-xs uppercase">
+                {t({ en: "About This Project", bn: "এই প্রকল্প সম্পর্কে" })}
+              </span>
+            </div>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-6 leading-tight">
+              {t(project.name)}
+            </h2>
+            <p className="text-gray-600 text-lg leading-relaxed mb-4">{t(project.description)}</p>
+            {project.longDescription && (
+              <p className="text-gray-500 leading-relaxed">{t(project.longDescription)}</p>
+            )}
+          </div>
+
+          {/* Financials card */}
+          {project.financials && (
+            <div className="bg-gradient-to-br from-[#064E3B] to-[#043d2f] rounded-3xl p-8 text-white shadow-2xl shadow-[#064E3B]/20">
+              <p className="text-green-300/70 text-xs font-bold tracking-[0.2em] uppercase mb-6">
+                {t({ en: "Investment Info", bn: "বিনিয়োগ তথ্য" })}
+              </p>
+              <div className="space-y-5">
+                {project.financials.sharePrice && (
+                  <div className="flex justify-between items-center border-b border-white/10 pb-5">
+                    <span className="text-white/60 text-sm font-medium">
+                      {t({ en: "Share Price", bn: "শেয়ারের মূল্য" })}
+                    </span>
+                    <span className="text-2xl font-black">
+                      ৳ {fmt(project.financials.sharePrice)}
+                    </span>
                   </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Technologies Used */}
-        {project.technologies && project.technologies.length > 0 && (
-          <section className="container mx-auto px-4 pb-12 bg-green-muted">
-            <Card className="liquid-glass border border-green-muted bg-white shadow-lg shadow-green-muted/30 p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Code2 className="h-6 w-6 text-green-dark" />
-                <h2 className="text-[#064E3B] text-2xl font-bold text-black">Technologies & Tools</h2>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {project.technologies.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-green-muted to-green-muted border border-green-light px-4 py-2 text-sm font-medium text-green-dark shadow-sm hover:shadow-md hover:shadow-green-muted/30 transition-shadow"
-                  >
-                    <Code2 className="h-4 w-4" />
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </Card>
-          </section>
-        )}
-
-        {/* Timeline */}
-        {project.timeline && project.timeline.length > 0 && (
-          <section className="container mx-auto px-4 pb-12 bg-white">
-            <h2 className="text-[#064E3B] text-3xl font-bold text-black mb-8 text-center">Project Timeline</h2>
-            <div className="max-w-4xl mx-auto">
-              <div className="space-y-6">
-                {project.timeline.map((phase, idx) => (
-                  <Card
-                    key={idx}
-                    className="liquid-glass border border-green-muted bg-white shadow-md shadow-green-muted/30 p-6 hover:shadow-lg hover: transition-shadow"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-green-muted border-2 border-green-light flex items-center justify-center shadow-sm">
-                        <span className="text-lg font-bold text-green-dark">{idx + 1}</span>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-[#064E3B] text-xl font-bold text-black">{phase.phase}</h3>
-                          <span className="text-sm text-black">{phase.duration}</span>
-                        </div>
-                        <p className="text-black">{phase.description}</p>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Challenges & Solutions */}
-        {(project.challenges || project.solutions) && (
-          <section className="container mx-auto px-4 pb-12 bg-gradient-to-b from-green-muted to-white">
-            <div className="grid gap-8 lg:grid-cols-2">
-              {/* Challenges */}
-              {project.challenges && project.challenges.length > 0 && (
-                <Card className="liquid-glass border border-red-300 bg-red-50 shadow-lg shadow-red-200/30 p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <AlertCircle className="h-6 w-6 text-red-500" />
-                    <h2 className="text-[#064E3B] text-2xl font-bold text-black">Challenges</h2>
+                )}
+                {project.financials.pricePerSqft && (
+                  <div className="flex justify-between items-center border-b border-white/10 pb-5">
+                    <span className="text-white/60 text-sm font-medium">
+                      {t({ en: "Price per sqft", bn: "প্রতি বর্গফুট মূল্য" })}
+                    </span>
+                    <span className="text-xl font-black">
+                      ৳ {fmt(project.financials.pricePerSqft)}
+                    </span>
                   </div>
-                  <div className="space-y-4">
-                    {project.challenges.map((challenge, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 border border-red-300 flex items-center justify-center mt-0.5 shadow-sm">
-                          <span className="text-xs font-bold text-red-600">{idx + 1}</span>
-                        </div>
-                        <p className="text-black">{challenge}</p>
-                      </div>
-                    ))}
+                )}
+                {project.specifications?.totalAreaSqft && (
+                  <div className="flex justify-between items-center border-b border-white/10 pb-5">
+                    <span className="text-white/60 text-sm font-medium">
+                      {t({ en: "Flat Area", bn: "ফ্ল্যাটের আয়তন" })}
+                    </span>
+                    <span className="text-xl font-black">
+                      {project.specifications.totalAreaSqft} {t({ en: "sqft", bn: "বর্গফুট" })}
+                    </span>
                   </div>
-                </Card>
-              )}
-
-              {/* Solutions */}
-              {project.solutions && project.solutions.length > 0 && (
-                <Card className="liquid-glass border border-green-300 bg-green-50 shadow-lg shadow-green-200/30 p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <Lightbulb className="h-6 w-6 text-green-600" />
-                    <h2 className="text-[#064E3B] text-2xl font-bold text-black">Solutions</h2>
+                )}
+                {project.financials.expectedROI && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-white/60 text-sm font-medium">
+                      {t({ en: "Expected ROI", bn: "প্রত্যাশিত রিটার্ন" })}
+                    </span>
+                    <span className="text-xl font-black text-green-300">
+                      {project.financials.expectedROI}% <TrendingUp className="inline w-4 h-4" />
+                    </span>
                   </div>
-                  <div className="space-y-4">
-                    {project.solutions.map((solution, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <Check className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                        <p className="text-black">{solution}</p>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-              )}
+                )}
+              </div>
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 flex items-center justify-center gap-2 w-full py-4 bg-white text-[#064E3B] font-black text-sm rounded-2xl hover:bg-green-50 transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                {t({ en: "Enquire via WhatsApp", bn: "হোয়াটসঅ্যাপে যোগাযোগ করুন" })}
+              </a>
             </div>
-          </section>
-        )}
+          )}
+        </div>
 
-                {/* Deliverables */}
-        {project.deliverables && (
-          <section className="container mx-auto px-4 py-12 bg-white">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-[#064E3B] text-3xl font-bold mb-8 text-black">Deliverables</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                {project.deliverables.map((deliverable, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-3 liquid-glass rounded-xl p-4 border border-green-muted shadow-sm hover:shadow-md hover:shadow-green-muted/30 transition-shadow"
-                  >
-                    <CheckCircle2 className="h-5 w-5 text-green-dark flex-shrink-0" />
-                    <p className="text-black">{deliverable}</p>
-                  </div>
-                ))}
-              </div>
+        {/* ── Progress (ongoing only) ────────────────────────────────────────── */}
+        {project.status === "ongoing" && project.progressPercent !== undefined && (
+          <div className="bg-orange-50 border border-orange-100 rounded-3xl p-8">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-lg font-bold text-gray-900">
+                {t({ en: "Construction Progress", bn: "নির্মাণ অগ্রগতি" })}
+              </h3>
+              <span className="text-2xl font-black text-orange-600">{project.progressPercent}%</span>
             </div>
-          </section>
-        )}
-
-        {/* Awards & Recognition */}
-        {project.awards && (
-          <section className="container mx-auto px-4 py-12 bg-gradient-to-b from-green-muted to-white">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-[#064E3B] text-3xl font-bold mb-8 text-black flex items-center gap-3">
-                <Award className="h-8 w-8 text-green-dark" />
-                Awards & Recognition
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {project.awards.map((award, idx) => (
-                  <div key={idx} className="liquid-glass rounded-xl p-6 border border-green-muted shadow-sm hover:shadow-md hover:shadow-green-muted/30 transition-shadow">
-                    <p className="text-lg font-semibold text-black mb-1">{award}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full h-3 bg-orange-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full transition-all duration-1000"
+                style={{ width: `${project.progressPercent}%` }}
+              />
             </div>
-          </section>
-        )}
-
-        {/* Results & Metrics */}
-        {project.results && (
-          <section className="container mx-auto px-4 py-12 bg-white">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-[#064E3B] text-3xl font-bold mb-8 text-black">Results & Impact</h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                {project.results.map((result, idx) => (
-                  <div
-                    key={idx}
-                    className="liquid-glass rounded-xl p-6 border border-green-muted shadow-lg shadow-green-muted/30 text-center hover:shadow-xl hover: transition-shadow"
-                  >
-                    <div className="text-4xl font-bold text-green-dark mb-2">{result.metric}</div>
-                    <p className="text-black">{result.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Awards */}
-        {project.awards && project.awards.length > 0 && (
-          <section className="container mx-auto px-4 pb-12 bg-white">
-            <Card className="liquid-glass border border-amber-300 bg-amber-50 shadow-lg shadow-amber-200/30 p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Award className="h-6 w-6 text-amber-500" />
-                <h2 className="text-[#064E3B] text-2xl font-bold text-black">Awards & Recognition</h2>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {project.awards.map((award, idx) => (
-                  <div key={idx} className="flex items-center gap-3 p-4 rounded-lg bg-white border border-amber-300 shadow-sm hover:shadow-md hover:shadow-amber-200/30 transition-shadow">
-                    <Award className="h-5 w-5 text-amber-500 flex-shrink-0" />
-                    <span className="text-black font-medium">{award}</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </section>
-        )}
-
-        {/* Results */}
-        {project.results && (
-          <section className="container mx-auto px-4 pb-12 bg-gradient-to-b from-green-muted to-white">
-            <h2 className="text-[#064E3B] text-3xl font-bold text-black mb-8 text-center">Project Outcomes</h2>
-            <div className="grid gap-6 sm:grid-cols-3">
-              {project.results.map((result, idx) => (
-                <Card
-                  key={idx}
-                  className="liquid-glass border border-green-muted bg-white shadow-lg shadow-green-muted/30 text-center p-6 hover:shadow-xl hover: transition-shadow"
-                >
-                  <Check className="h-8 w-8 text-green-dark mx-auto mb-3" />
-                  <p className="text-lg font-semibold text-black">{result}</p>
-                </Card>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Testimonial */}
-        {project.testimonial && (
-          <section className="container mx-auto px-4 pb-12 bg-white">
-            <Card className="liquid-glass-enhanced border border-green-muted bg-green-muted shadow-xl shadow-green-muted/30 p-8 sm:p-12 max-w-4xl mx-auto">
-              <div className="flex justify-center mb-6">
-                <div className="h-16 w-16 rounded-full bg-green-dark/20 border-2 border-green-light flex items-center justify-center shadow-sm">
-                  <Quote className="h-8 w-8 text-green-dark" />
-                </div>
-              </div>
-              <blockquote className="text-xl sm:text-2xl text-center text-black mb-6 italic leading-relaxed">
-                "{project.testimonial.quote}"
-              </blockquote>
-              <div className="text-center">
-                <p className="font-bold text-xl text-black">{project.testimonial.author}</p>
-                <p className="text-sm text-black mt-1">{project.testimonial.role}</p>
-              </div>
-            </Card>
-          </section>
-        )}
-
-        {/* Links */}
-        {project.links && project.links.length > 0 && (
-          <section className="container mx-auto px-4 pb-12 bg-gradient-to-b from-white to-green-muted">
-            <div className="flex flex-wrap gap-4 justify-center">
-              {project.links.map((link, idx) => (
-                <Button
-                  key={idx}
-                  asChild
-                  variant="outline"
-                  className="liquid-glass hover:liquid-glass-enhanced border-green-light text-green-dark hover:bg-green-muted shadow-sm hover:shadow-md hover:shadow-green-muted/30"
-                >
-                  <Link href={link.url} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    {link.label}
-                  </Link>
-                </Button>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Team Members */}
-        {project.teamMembers && project.teamMembers.length > 0 && (
-          <section className="container mx-auto px-4 pb-12 bg-green-muted">
-            <Card className="liquid-glass border border-green-muted bg-white shadow-lg shadow-green-muted/30 p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Users className="h-6 w-6 text-green-dark" />
-                <h2 className="text-[#064E3B] text-2xl font-bold text-black">Project Team</h2>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {project.teamMembers.map((memberId) => {
-                  const member = getTeamMemberById(memberId)
-                  if (!member) return null
-                  return (
-                    <Link key={memberId} href={`/team/${memberId}`}>
-                      <div className="flex items-center gap-3 p-4 rounded-lg bg-green-muted hover:bg-green-muted transition-all hover:scale-105 border border-green-muted shadow-sm hover:shadow-md hover:shadow-green-muted/30">
-                        <div className="relative h-14 w-14 rounded-full overflow-hidden bg-green-muted flex-shrink-0 shadow-sm">
-                          <img
-                            src={member.image || "/placeholder.svg"}
-                            alt={member.name}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-black">{member.name}</p>
-                          <p className="text-sm text-black">{member.role}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  )
-                })}
-              </div>
-            </Card>
-          </section>
-        )}
-
-        {/* CTA */}
-        <section className="container mx-auto px-4 pb-16 sm:pb-24 bg-gradient-to-b from-green-muted to-white">
-          <Card className="liquid-glass-enhanced border border-green-light bg-gradient-to-br from-green-light/20 to-green-dark/20 shadow-2xl  text-center p-8 sm:p-12">
-            <h2 className="text-[#064E3B] mb-4 text-3xl font-bold text-black sm:text-4xl">Ready to Start Your Project?</h2>
-            <p className="mb-8 text-lg text-black max-w-2xl mx-auto">
-              Let's create something amazing together. Get in touch to discuss how we can help bring your vision to life.
+            <p className="text-orange-600/70 text-sm mt-3 font-medium">
+              {t({
+                en: `Expected completion: ${new Date(project.completionDate!).toLocaleDateString("en-GB", { month: "long", year: "numeric" })}`,
+                bn: `প্রত্যাশিত সমাপ্তি: ${new Date(project.completionDate!).toLocaleDateString("bn-BD", { month: "long", year: "numeric" })}`,
+              })}
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full  px-8 text-base font-semibold   shadow-lg "
-              >
-                <Link href="https://wa.me/8801401658685?text=Hi!%20I'm%20interested%20in%20this%20project">Get in Touch via WhatsApp</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-full border-green-light text-green-dark hover:bg-green-muted shadow-sm"
-              >
-                <Link href="/services">Explore Our Services</Link>
-              </Button>
-            </div>
-          </Card>
-        </section>
+          </div>
+        )}
 
-        <AppverseFooter />
-      </main>
-      
-      {/* Structured Data for Project Case Study */}
-      <Script
-        id="project-schema"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            "name": project.title,
-            "description": project.longDescription || project.description,
-            "author": {
-              "@type": "Organization",
-              "name": "Pqrix"
-            },
-            "datePublished": `${project.year}-01-01`,
-            "image": project.image || project.video,
-            "keywords": project.tags.join(", "),
-            "about": {
-              "@type": "Thing",
-              "name": project.category
-            },
-            "client": {
-              "@type": "Organization",
-              "name": project.client
-            },
-            "review": project.testimonial ? {
-              "@type": "Review",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5"
-              },
-              "author": {
-                "@type": "Person",
-                "name": project.testimonial.author,
-                "jobTitle": project.testimonial.role
-              },
-              "reviewBody": project.testimonial.quote
-            } : undefined
-          })
-        }}
-      />
-    </>
+        {/* ── Amenities ─────────────────────────────────────────────────────── */}
+        {project.amenities && (
+          <div>
+            <div className="inline-flex items-center gap-3 mb-10">
+              <span className="w-10 h-[2px] bg-[#064E3B]" />
+              <span className="text-[#064E3B] font-bold tracking-[0.2em] text-xs uppercase">
+                {t({ en: "Amenities & Features", bn: "সুযোগ-সুবিধা ও বৈশিষ্ট্য" })}
+              </span>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { key: "interior" as const, title: { en: "Interior", bn: "অভ্যন্তরীণ" }, bg: "bg-green-50", border: "border-green-100", icon: "text-green-600" },
+                { key: "exterior" as const, title: { en: "Exterior", bn: "বাহ্যিক"    }, bg: "bg-blue-50",  border: "border-blue-100",  icon: "text-blue-600"  },
+                { key: "building" as const, title: { en: "Building", bn: "ভবন"        }, bg: "bg-purple-50", border: "border-purple-100", icon: "text-purple-600" },
+              ].map(({ key, title, bg, border, icon }) => (
+                <div key={key} className={`${bg} border ${border} rounded-2xl p-6`}>
+                  <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-5">{t(title)}</h3>
+                  <ul className="space-y-3">
+                    {project.amenities![key].map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className={`mt-0.5 shrink-0 ${icon}`}>
+                          {getAmenityIcon(item.en)}
+                        </span>
+                        <span className="text-gray-700 text-sm leading-snug">{t(item)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Photo Gallery ─────────────────────────────────────────────────── */}
+        {project.gallery && project.gallery.length > 0 && (
+          <div>
+            <div className="inline-flex items-center gap-3 mb-10">
+              <span className="w-10 h-[2px] bg-[#064E3B]" />
+              <span className="text-[#064E3B] font-bold tracking-[0.2em] text-xs uppercase">
+                {t({ en: "Photo Gallery", bn: "ফটো গ্যালারি" })}
+              </span>
+            </div>
+            <GalleryGrid
+              images={project.gallery}
+              projectName={t(project.name)}
+            />
+          </div>
+        )}
+
+        {/* ── Nearby Places ─────────────────────────────────────────────────── */}
+        {nearbyCategories.length > 0 && (
+          <div>
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span className="w-10 h-[2px] bg-[#064E3B]" />
+              <span className="text-[#064E3B] font-bold tracking-[0.2em] text-xs uppercase">
+                {t({ en: "Location & Connectivity", bn: "অবস্থান ও সংযোগ" })}
+              </span>
+            </div>
+            <p className="text-gray-500 text-sm mb-10">
+              {t({
+                en: "Distances are approximate straight-line estimates.",
+                bn: "দূরত্বগুলো আনুমানিক সরলরেখার মাপ।",
+              })}
+            </p>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+              {nearbyCategories.map((cat) => (
+                <div key={cat} className={`rounded-2xl border p-5 ${nearbyColor[cat].replace("text-", "border-").split(" ")[1]}`}>
+                  <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold mb-4 border ${nearbyColor[cat]}`}>
+                    {nearbyIcon[cat]}
+                    {t(nearbyLabel[cat])}
+                  </div>
+                  <ul className="space-y-2.5">
+                    {groupedNearby[cat].map((place, i) => (
+                      <li key={i} className="flex items-start justify-between gap-3">
+                        <span className="text-gray-700 text-sm leading-snug">{t(place.name)}</span>
+                        <span className="shrink-0 text-xs font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+                          {place.distance}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* ── Embedded Google Map ──────────────────────────────────────── */}
+            <div className="rounded-3xl overflow-hidden shadow-2xl shadow-[#064E3B]/10 border border-gray-100">
+              <div className="bg-white px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+                <MapPin className="w-5 h-5 text-[#064E3B]" />
+                <div>
+                  <p className="font-bold text-gray-900 text-sm">{t(project.name)}</p>
+                  <p className="text-gray-500 text-xs">{t(project.address)}</p>
+                </div>
+              </div>
+              <iframe
+                title={`Map of ${t(project.name)}`}
+                src={mapSrc}
+                width="100%"
+                height="420"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* ── CTA ───────────────────────────────────────────────────────────── */}
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#064E3B] to-[#043d2f] p-10 sm:p-16 text-center shadow-2xl">
+          {/* Decorative blobs */}
+          <div className="pointer-events-none absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/5 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-green-400/10 blur-3xl" />
+
+          <p className="text-green-300/70 text-xs font-bold tracking-[0.3em] uppercase mb-4">
+            {t({ en: "Interested?", bn: "আগ্রহী?" })}
+          </p>
+          <h2 className="text-white text-3xl sm:text-4xl font-extrabold mb-4">
+            {project.status === "upcoming"
+              ? t({ en: "Register Your Interest Today", bn: "আজই আপনার আগ্রহ জানান" })
+              : t({ en: "Want to Own a Flat Here?", bn: "এখানে ফ্ল্যাটের মালিক হতে চান?" })}
+          </h2>
+          <p className="text-white/60 max-w-xl mx-auto mb-8 leading-relaxed">
+            {t({
+              en: "Contact us via WhatsApp to get full details, pricing, and payment schedule. We respond within the hour.",
+              bn: "হোয়াটসঅ্যাপে যোগাযোগ করুন সম্পূর্ণ বিবরণ, মূল্য এবং পেমেন্ট সময়সূচি পেতে। আমরা এক ঘণ্টার মধ্যে সাড়া দিই।",
+            })}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#064E3B] font-black text-sm rounded-full hover:bg-green-50 transition-colors shadow-xl"
+            >
+              <Phone className="w-4 h-4" />
+              {t({ en: "WhatsApp Us Now", bn: "এখনই হোয়াটসঅ্যাপ করুন" })}
+            </a>
+            <Link
+              href="/projects"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/20 text-white font-bold text-sm rounded-full hover:bg-white/10 transition-colors"
+            >
+              {t({ en: "View All Projects", bn: "সব প্রকল্প দেখুন" })}
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
+      </div>
+
+      <AppverseFooter />
+    </main>
   )
 }

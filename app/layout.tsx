@@ -3,7 +3,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import Script from "next/script"
-import { Toaster } from "@/components/ui/sonner"
+import { ClientProviders } from "@/components/client-providers"
 
 const inter = Inter({ subsets: ["latin"], display: "swap" })
 
@@ -488,8 +488,9 @@ export default function RootLayout({
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#064E3B]/10 via-white to-white"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[#064E3B]/5 via-transparent to-transparent"></div>
         </div>
-        <div className="relative z-10">{children}</div>
-        <Toaster />
+        <div className="relative z-10">
+          <ClientProviders>{children}</ClientProviders>
+        </div>
       </body>
     </html>
   )

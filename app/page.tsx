@@ -1,90 +1,91 @@
 import { SiteHeader } from "@/components/site-header"
 import { Hero } from "@/components/hero"
-import { Features } from "@/components/features"
 import Script from "next/script"
 import nextDynamic from "next/dynamic"
 
-// Dynamic imports for below-the-fold components
-const StatsSection = nextDynamic(() => import("@/components/stats-section").then((mod) => mod.StatsSection))
-const ServicesSection = nextDynamic(() => import("@/components/services-section").then((mod) => mod.ServicesSection))
-const FeaturedPropertiesSection = nextDynamic(() => import("@/components/featured-properties-section").then((mod) => mod.FeaturedPropertiesSection))
-const GalleriesSection = nextDynamic(() => import("@/components/galleries-section").then((mod) => mod.GalleriesSection))
-const BoardOfDirectorsSection = nextDynamic(() => import("@/components/board-of-directors-section").then((mod) => mod.BoardOfDirectorsSection))
-const LatestInsightsSection = nextDynamic(() => import("@/components/latest-insights-section").then((mod) => mod.LatestInsightsSection))
-const AppverseFooter = nextDynamic(() => import("@/components/appverse-footer").then((mod) => mod.AppverseFooter))
-const WhatsAppButton = nextDynamic(() => import("@/components/whatsapp-button").then((mod) => mod.WhatsAppButton))
+// Immediately after hero
+const OurStorySection = nextDynamic(() => import("@/components/our-story-section").then((m) => m.OurStorySection))
+const WhyChooseSection = nextDynamic(() => import("@/components/why-choose-section").then((m) => m.WhyChooseSection))
 
-// Force static rendering for super fast loading
+// Below the fold — all lazy
+const StatsSection = nextDynamic(() => import("@/components/stats-section").then((m) => m.StatsSection))
+const ServicesSection = nextDynamic(() => import("@/components/services-section").then((m) => m.ServicesSection))
+const ProjectsBilingualSection = nextDynamic(() => import("@/components/projects-bilingual-section").then((m) => m.ProjectsBilingualSection))
+const GalleriesSection = nextDynamic(() => import("@/components/galleries-section").then((m) => m.GalleriesSection))
+const BoardOfDirectorsSection = nextDynamic(() => import("@/components/board-of-directors-section").then((m) => m.BoardOfDirectorsSection))
+const TestimonialsSection = nextDynamic(() => import("@/components/testimonials-section").then((m) => m.TestimonialsSection))
+const EventsSection = nextDynamic(() => import("@/components/events-section").then((m) => m.EventsSection))
+const LatestInsightsSection = nextDynamic(() => import("@/components/latest-insights-section").then((m) => m.LatestInsightsSection))
+const AppverseFooter = nextDynamic(() => import("@/components/appverse-footer").then((m) => m.AppverseFooter))
+const WhatsAppButton = nextDynamic(() => import("@/components/whatsapp-button").then((m) => m.WhatsAppButton))
+
 export const dynamic = "force-static"
 
 export default function Page() {
-  // Structured data for real estate company
   const companyStructuredData = {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    "@id": "https://sabitasset.com",
-    name: "Sabit Asset Management LTD",
-    description: "Strategic Real Estate Asset Management Services - Professional property management, investment advisory, and portfolio optimization in Bangladesh",
-    url: "https://sabitasset.com",
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "BD"
-    },
-    areaServed: {
-      "@type": "Country",
-      name: "Bangladesh"
-    },
-    serviceType: [
-      "Real Estate Asset Management",
-      "Property Portfolio Management",
-      "Investment Advisory",
-      "Property Valuation",
-      "Asset Optimization"
-    ]
+    "@id": "https://sabitproperty.com",
+    name: "Sabit Property Management Ltd.",
+    alternateName: "সাবিত প্রপার্টি ম্যানেজমেন্ট লিঃ",
+    description:
+      "Share-based flat acquisition for middle-income Bangladeshi families in Khilgaon and Jodhivita, Dhaka",
+    url: "https://sabitproperty.com",
+    address: { "@type": "PostalAddress", addressCountry: "BD", addressLocality: "Dhaka" },
+    areaServed: { "@type": "City", name: "Dhaka" },
+    serviceType: ["Residential Flat Sales", "Share-Based Property Acquisition", "Property Management"],
   }
 
   return (
     <>
       <main className="min-h-[100dvh] bg-white text-black">
         <SiteHeader />
+
+        {/* 1 — Hero (bilingual + animated headline) */}
         <Hero />
-        <Features />
-        
-        {/* Corporate Milestones / Stats */}
-        <StatsSection />
 
-        {/* Core Services */}
-        <ServicesSection />
+        {/* 2 — Our Story */}
+        <OurStorySection />
 
-        {/* Featured Properties Showcase */}
-        <FeaturedPropertiesSection />
 
-        {/* Visual Portfolio */}
-        <GalleriesSection />
 
-        {/* Leadership */}
+        {/* 4 — Stats */}
+        {/* <StatsSection /> */}
+
+        {/* 5 — Services */}
+        {/* <ServicesSection /> */}
+
+        {/* 6 — Projects (alternating case-study layout, preview=3) */}
+        <ProjectsBilingualSection preview />
+
+        {/* 3 — Why Choose Sabit */}
+        <WhyChooseSection />
+        {/* 7 — Photo Galleries */}
+        {/* <GalleriesSection /> */}
+
+        {/* 8 — Board of Directors */}
         <BoardOfDirectorsSection />
 
-        {/* Market Intelligence */}
-        <LatestInsightsSection />
 
-        {/* Completed Projects */}
-        {/* <ProjectsSection /> */}
+
+        {/* 10 — Events preview */}
+        <EventsSection preview />
+        {/* 9 — Testimonials carousel */}
+        <TestimonialsSection />
+
+        {/* 11 — Market Insights */}
+        {/* <LatestInsightsSection /> */}
 
         <AppverseFooter />
       </main>
 
-      {/* WhatsApp Floating Button */}
       <WhatsAppButton />
 
-      {/* JSON-LD structured data */}
       <Script
         id="company-structured-data"
         type="application/ld+json"
         strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(companyStructuredData),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(companyStructuredData) }}
       />
     </>
   )

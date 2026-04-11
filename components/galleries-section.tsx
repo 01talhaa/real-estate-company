@@ -1,64 +1,62 @@
-import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Images, MapPin } from 'lucide-react'
+"use client"
 
-async function getGalleries() {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/galleries?limit=6&featured=true`, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    
-    if (!response.ok) {
-      console.error('Failed to fetch galleries:', response.status, response.statusText)
-      return []
+import { useEffect, useState } from "react"
+import Link from "next/link"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Images, MapPin } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
+
+export function GalleriesSection() {
+  const { t } = useLanguage()
+  const [galleries, setGalleries] = useState<any[]>([])
+
+  useEffect(() => {
+    async function fetchGalleries() {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/galleries?limit=6&featured=true`,
+          { headers: { "Content-Type": "application/json" } }
+        )
+        if (!response.ok) return
+        const data = await response.json()
+        if (data.success) setGalleries(data.data)
+      } catch {
+        // silently fail
+      }
     }
-    
-    const data = await response.json()
-    console.log('Galleries data from homepage:', data)
-    console.log('Number of galleries found:', data.data?.length || 0)
-    if (data.data && data.data.length > 0) {
-      console.log('First gallery sample:', data.data[0])
-    }
-    return data.success ? data.data : []
-  } catch (error) {
-    console.error('Error fetching galleries:', error)
-    return []
-  }
-}
+    fetchGalleries()
+  }, [])
 
-export async function GalleriesSection() {
-  const galleries = await getGalleries()
-
-  if (!galleries || galleries.length === 0) {
-    return null
-  }
+  if (!galleries || galleries.length === 0) return null
 
   return (
     <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
+        {/* Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 text-green-700 font-medium text-sm mb-4">
             <Images className="h-4 w-4" />
-            Visual Portfolio
+            {t({ en: "Visual Portfolio", bn: "ভিজ্যুয়াল পোর্টফোলিও" })}
           </div>
           <h2 className="text-[#064E3B] text-4xl md:text-5xl font-bold mb-4">
-            Photo Galleries
+            {t({ en: "Photo Galleries", bn: "ফটো গ্যালারি" })}
           </h2>
           <p className="text-xl text-black max-w-2xl mx-auto">
-            Explore our collection of stunning property images and project showcases
+            {t({
+              en: "Explore our collection of stunning property images and project showcases",
+              bn: "আমাদের চমৎকার প্রপার্টি চিত্র ও প্রকল্প প্রদর্শনীর সংগ্রহ দেখুন",
+            })}
           </p>
         </div>
 
+        {/* Gallery Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {galleries.map((gallery: any) => (
             <Link key={gallery._id} href="/galleries">
               <Card className="overflow-hidden hover:shadow-xl transition-shadow group cursor-pointer">
-                {/* Display First Image */}
+                {/* First Image */}
                 <div className="relative h-64 overflow-hidden">
                   {gallery.images && gallery.images.length > 0 && gallery.images[0].url ? (
                     <img
@@ -71,13 +69,14 @@ export async function GalleriesSection() {
                       <Images className="h-16 w-16 text-white" />
                     </div>
                   )}
-                  
+
                   {/* Image Count Badge */}
                   {gallery.images && gallery.images.length > 0 && (
                     <div className="absolute top-4 right-4">
                       <Badge className="bg-black/70 text-white">
                         <Images className="h-3 w-3 mr-1" />
-                        {gallery.images.length} Photos
+                        {gallery.images.length}{" "}
+                        {t({ en: "Photos", bn: "ছবি" })}
                       </Badge>
                     </div>
                   )}
@@ -120,8 +119,11 @@ export async function GalleriesSection() {
         {galleries.length >= 6 && (
           <div className="text-center mt-12">
             <Link href="/galleries">
-              <Button size="lg" className="bg-gradient-to-r from-green-dark to-green-dark hover:from-green-dark hover:to-green-dark">
-                View All Galleries
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-green-dark to-green-dark hover:from-green-dark hover:to-green-dark"
+              >
+                {t({ en: "View All Galleries", bn: "সব গ্যালারি দেখুন" })}
               </Button>
             </Link>
           </div>
