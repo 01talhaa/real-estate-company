@@ -1,165 +1,107 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowRight, Sparkles } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Play } from "lucide-react"
-import Link from "next/link"
-import { useState, useEffect } from "react"
-
-interface Project {
-  id: string
-  title: string
-  client: string
-  category: string
-  description: string
-  image?: string
-  images?: string[]
-  video?: string
-  tags: string[]
-  year?: string
-}
+import type { RealEstateProject } from "@/types"
 
 export function ProjectsSection() {
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<RealEstateProject[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let mounted = true
+
     async function fetchProjects() {
       try {
-        const response = await fetch('/api/projects')
-        if (response.ok) {
-          const data = await response.json()
-          // Get only first 4 projects
-          const projectsData = data.data || data || []
-          setProjects(projectsData.slice(0, 4))
+        const response = await fetch("/api/projects")
+        if (!response.ok) return
+        const data = await response.json()
+        if (mounted) {
+          setProjects((data.data || data || []).slice(0, 4))
         }
       } catch (error) {
-        console.error('Failed to fetch projects:', error)
+        console.error("Failed to fetch projects:", error)
       } finally {
-        setLoading(false)
+        if (mounted) setLoading(false)
       }
     }
+
     fetchProjects()
+    return () => {
+      mounted = false
+    }
   }, [])
 
-  if (loading) {
-    return (
-      <section id="projects" className="container mx-auto px-4 py-12 sm:py-16 bg-gradient-to-b from-white via-green-muted to-white">
-        <div className="mb-10 text-center">
-          <h2 className="text-[#064E3B] mb-2 text-4xl font-extrabold tracking-tight text-black sm:text-5xl">Featured Projects</h2>
-          <p className="mx-auto max-w-2xl text-lg text-black">Loading projects...</p>
-        </div>
-      </section>
-    )
-  }
   return (
-    <section id="projects" className="py-24 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700 font-medium text-sm mb-4">
-            <Play className="h-4 w-4" />
-            Success Stories
-          </div> */}
-          <h2 className="text-[#064E3B] text-4xl md:text-5xl font-bold mb-4">
-            Featured <span className="text-green-dark">Projects</span>
+    <section id="projects" className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white py-24">
+      <div className="container mx-auto max-w-7xl px-4">
+        <div className="mb-14 flex flex-col gap-6 text-center">
+          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.28em] text-emerald-700">
+            <Sparkles className="h-3.5 w-3.5" />
+            Projects
+          </div>
+          <h2 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
+            Featured <span className="text-emerald-700">Projects</span>
           </h2>
-          <p className="text-xl text-black max-w-2xl mx-auto">
-            Discover our portfolio of successful real estate ventures and developments
+          <p className="mx-auto max-w-2xl text-lg leading-7 text-slate-600">
+            A fast, polished preview of the real-estate projects stored in the JSON CMS.
           </p>
         </div>
 
-        {/* This div was missing its closing tag */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="h-[420px] animate-pulse rounded-[1.75rem] bg-slate-100" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {projects.map((project) => (
+              <Link key={project.id} href={`/projects/${project.slug}`}>
+                <Card className="group h-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-lg shadow-slate-200/60 transition-all hover:-translate-y-1 hover:shadow-2xl">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                    <Image
+                      src={project.image}
+                      alt={project.name.en}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-transparent" />
+                  </div>
+                  <div className="space-y-4 p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                        {project.status}
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-slate-400">{project.floors || 0} floors</span>
+                    </div>
+                    <h3 className="line-clamp-1 text-xl font-black text-slate-950">{project.name.en}</h3>
+                    <p className="line-clamp-2 text-sm leading-6 text-slate-600">{project.description.en}</p>
+                    <div className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+                      View details
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </div>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
 
         <div className="mt-10 text-center">
-          <Button 
-            asChild 
-            size="lg"
-            className="rounded-full  px-8   shadow-lg "
-          >
+          <Button asChild size="lg" className="rounded-full bg-slate-950 px-8 shadow-lg hover:bg-slate-800">
             <Link href="/projects">
               View All Projects
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </div>
-      </div> {/* Closing tag for container mx-auto px-4 */}
+      </div>
     </section>
-  )
-}
-
-function ProjectCard({ project }: { project: Project }) {
-  const [isHovered, setIsHovered] = useState(false)
-
-  return (
-    <Link href={`/projects/${project.id}`}>
-      <Card
-        className="group liquid-glass border border-green-muted bg-white/80 backdrop-blur-xl overflow-hidden transition-all hover:border-green-light hover:bg-white/90 h-full flex flex-col shadow-lg shadow-green-muted/30"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div className="relative aspect-video overflow-hidden bg-green-muted">
-          {project.video ? (
-            <>
-              <video
-                src={project.video}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-green-dark/40 to-transparent" />
-            </>
-          ) : (
-            <>
-              <img
-                src={project.image || project.images?.[0] || "/placeholder.svg"}
-                alt={project.title}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-green-dark/40 to-transparent" />
-            </>
-          )}
-
-          {/* Play button overlay for video projects */}
-          {project.video && (
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-dark/90 backdrop-blur-sm shadow-lg">
-                <Play className="h-7 w-7 text-white fill-white ml-1" />
-              </div>
-            </div>
-          )}
-
-          {/* Category badge */}
-          <div className="absolute top-3 left-3">
-            <span className="inline-flex items-center rounded-full bg-white/90 backdrop-blur-sm px-2.5 py-0.5 text-xs font-medium text-green-dark border border-green-light">
-              {project.category}
-            </span>
-          </div>
-        </div>
-
-        <div className="p-4 flex-grow flex flex-col">
-          <div className="mb-1 text-sm text-black">
-            <span>{project.client}</span>
-          </div>
-          <h3 className="text-[#064E3B] mb-2 text-xl font-bold text-black group-hover:text-green-dark transition-colors">
-            {project.title}
-          </h3>
-          <p className="mb-3 text-black text-sm flex-grow line-clamp-2">{project.description}</p>
-          <div className="flex flex-wrap gap-2 mt-auto">
-            {project.tags.slice(0, 2).map((tag: string) => (
-              <span key={tag} className="rounded-full bg-green-muted px-2.5 py-0.5 text-xs text-black border border-green-muted">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </Card>
-    </Link>
   )
 }

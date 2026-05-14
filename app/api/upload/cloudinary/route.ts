@@ -1,15 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { v2 as cloudinary } from 'cloudinary'
 
+const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+const apiKey = process.env.CLOUDINARY_API_KEY
+const apiSecret = process.env.CLOUDINARY_API_SECRET
+
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: cloudName,
+  api_key: apiKey,
+  api_secret: apiSecret,
 })
 
 export async function POST(request: NextRequest) {
   try {
+    if (!cloudName || !apiKey || !apiSecret) {
+      return NextResponse.json(
+        { success: false, error: 'Cloudinary credentials are not configured' },
+        { status: 500 }
+      )
+    }
+
     const formData = await request.formData()
     const file = formData.get('file') as File
 

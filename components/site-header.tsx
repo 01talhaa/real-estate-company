@@ -72,7 +72,7 @@ export function SiteHeader() {
     { href: "/#our-story", label: t({ en: "Our Story", bn: "আমাদের কথা" }), icon: BookOpen },
     { href: "/projects", label: t({ en: "Projects", bn: "প্রকল্পসমূহ" }), icon: FolderOpen },
     { href: "/events", label: t({ en: "Events", bn: "ইভেন্ট" }), icon: CalendarDays },
-    { href: "/galleries", label: t({ en: "Gallery", bn: "গ্যালারি" }), icon: Tag },
+    // { href: "/galleries", label: t({ en: "Gallery", bn: "গ্যালারি" }), icon: Tag },
     // { href: "/insights", label: t({ en: "Insights", bn: "ইনসাইটস" }), icon: HelpCircle },
     { href: "/management", label: t({ en: "Management", bn: "ব্যবস্থাপনা" }), icon: Users },
   ]
@@ -109,9 +109,9 @@ export function SiteHeader() {
             <Link href="/events" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
               {t({ en: "Events", bn: "ইভেন্ট" })}
             </Link>
-            <Link href="/galleries" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
+            {/* <Link href="/galleries" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
               {t({ en: "Gallery", bn: "গ্যালারি" })}
-            </Link>
+            </Link> */}
             <Link href="/management" className="text-gray-700 font-bold hover:text-[#064E3B] text-[14px] h-full flex items-center transition-colors">
               {t({ en: "Management", bn: "ব্যবস্থাপনা" })}
             </Link>

@@ -12,13 +12,13 @@ export interface BilingualText {
 interface LanguageContextValue {
   lang: Lang
   setLang: (lang: Lang) => void
-  t: (content: BilingualText) => string
+  t: (content?: Partial<BilingualText> | null) => string
 }
 
 const LanguageContext = createContext<LanguageContextValue>({
   lang: "bn",
   setLang: () => {},
-  t: (c) => c.bn,
+  t: (c) => c?.bn || c?.en || "",
 })
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
@@ -42,7 +42,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const t = useCallback(
-    (content: BilingualText) => content[lang],
+    (content?: Partial<BilingualText> | null) => content?.[lang] || content?.en || content?.bn || "",
     [lang]
   )
 

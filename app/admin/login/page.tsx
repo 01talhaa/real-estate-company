@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/lib/auth"
+import { AlertCircle, Building2, Lock, Mail } from "lucide-react"
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("")
@@ -17,102 +18,118 @@ export default function AdminLoginPage() {
     setError("")
     setLoading(true)
 
-    console.log("Form submitted with:", { email, password })
-
     const success = await login(email, password, "admin")
 
-    console.log("Login success:", success)
-
     if (success) {
-      console.log("Setting cookie and redirecting...")
       document.cookie = "admin-session=authenticated; path=/; max-age=86400"
-      
-      // Wait a bit for state to persist
-      await new Promise(resolve => setTimeout(resolve, 500))
-      
-      console.log("Redirecting to /admin")
-      window.location.href = "/admin"
+      router.push("/admin/dashboard")
     } else {
-      console.log("Login failed")
-      setError("Invalid email or password - Try: abstalha@gmail.com / 123456")
+      setError("Invalid email or password.")
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-muted via-white to-green-muted p-4">
-      <div className="w-full max-w-md">
-        <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-green-muted">
-          <div className="mb-8 text-center">
-            <h1 className="text-[#064E3B] text-4xl font-bold text-green-dark mb-2">Pqrix Admin</h1>
-            <p className="text-black">Sign in to your account</p>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.16),_transparent_38%),linear-gradient(180deg,_#f8fbff_0%,_#eef4ff_100%)] flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl grid lg:grid-cols-[1.05fr_0.95fr] gap-6 items-stretch">
+        <section className="hidden lg:flex flex-col justify-between rounded-[2rem] bg-slate-950 text-white p-10 xl:p-12 overflow-hidden relative border border-white/10 shadow-2xl">
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(59,130,246,0.28),transparent_35%,rgba(14,165,233,0.16)_70%,transparent)]" />
+          <div className="relative">
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-200">
+              <Building2 className="h-4 w-4" />
+              GitHub-powered CMS
+            </div>
+            <h1 className="mt-8 max-w-xl text-5xl font-semibold tracking-tight">
+              Real estate content management without a database.
+            </h1>
+            <p className="mt-5 max-w-lg text-base leading-7 text-slate-300">
+              Manage projects, events, and future content directly from JSON files in GitHub with
+              validation, image uploads, and automatic redeploys.
+            </p>
+          </div>
+          <div className="relative grid grid-cols-3 gap-4 text-sm text-slate-300">
+            {[
+              ["GitHub", "source of truth"],
+              ["Zod", "validated forms"],
+              ["Vercel", "redeploy on save"],
+            ].map(([title, subtitle]) => (
+              <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                <div className="font-medium text-white">{title}</div>
+                <div className="mt-1 text-xs text-slate-300">{subtitle}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-[2rem] bg-white/90 backdrop-blur-xl border border-white/70 shadow-[0_30px_100px_rgba(15,23,42,0.12)] p-6 sm:p-8 xl:p-10">
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+              <Lock className="h-3.5 w-3.5" />
+              Admin access
+            </div>
+            <h2 className="mt-4 text-3xl font-semibold text-slate-900">Sign in to the dashboard</h2>
+            <p className="mt-2 text-sm text-slate-600">
+              Use your admin credentials to manage the CMS.
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <div className="p-4 text-sm text-red-700 bg-red-50 border border-red-300 rounded-lg">
-                {error}
-              </div>
-            )}
+          {error && (
+            <div className="mb-6 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
-                Email Address
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                Email address
               </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="abstalha@gmail.com"
-                required
-                autoComplete="email"
-                className="w-full px-4 py-3 bg-white border border-green-muted rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-dark focus:border-transparent transition"
-              />
+              <div className="relative">
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@sabit.com"
+                  autoComplete="email"
+                  className="h-12 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                />
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-black mb-2">
+            <div className="space-y-2">
+              <label htmlFor="password" className="text-sm font-medium text-slate-700">
                 Password
               </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                required
-                autoComplete="current-password"
-                className="w-full px-4 py-3 bg-white border border-green-muted rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-dark focus:border-transparent transition"
-              />
+              <div className="relative">
+                <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  autoComplete="current-password"
+                  className="h-12 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                />
+              </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-green-dark to-green-dark hover:from-green-dark hover:to-green-dark disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:"
+              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-slate-950 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  Signing in...
-                </span>
-              ) : (
-                "Sign In"
-              )}
+              {loading ? "Signing in..." : "Open dashboard"}
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-gray-700 text-center">
-            <p className="text-xs text-black">
-              Test Credentials:<br />
-              <span className="text-gray-400">abstalha@gmail.com / 123456</span>
-            </p>
+          <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+            Demo account: admin@sabitasset.com / admin123
           </div>
-        </div>
+        </section>
       </div>
     </div>
   )

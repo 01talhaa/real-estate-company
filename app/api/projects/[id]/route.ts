@@ -1,9 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { connectToDatabase } from '@/lib/mongodb'
-import { PROJECTS_COLLECTION } from '@/lib/models/Project'
-import { ObjectId } from 'mongodb'
-import { deleteFromCloudinary, extractPublicId } from '@/lib/cloudinary'
-import { withCache, CacheTTL, apiCache } from '@/lib/cache'
+import { NextRequest, NextResponse } from "next/server"
+import { getProjectById, saveProject, deleteProject } from "@/src/lib/projects-store"
+import type { RealEstateProject } from "@/types"
 
 // GET /api/projects/[id] - Get a single project
 export async function GET(
@@ -12,29 +9,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params
-    
-    // Cache individual project details with 10 minute TTL
-    const project = await withCache(
-      `project:${id}`,
-      async () => {
-        const { db } = await connectToDatabase()
-        
-        // Try to find by custom id field first, then fall back to _id
-        let project = await db
-          .collection(PROJECTS_COLLECTION)
-          .findOne({ id })
-
-        // If not found by id field, try _id (for MongoDB ObjectId)
-        if (!project && ObjectId.isValid(id)) {
-          project = await db
-            .collection(PROJECTS_COLLECTION)
-            .findOne({ _id: new ObjectId(id) })
-        }
-
-        return project
-      },
-      CacheTTL.LONG // 30 minutes cache for individual projects
-    )
+    const project = await getProjectById(id)
 
     if (!project) {
       return NextResponse.json(
@@ -61,37 +36,8 @@ export async function PUT(
   try {
     const { id } = await params
     const body = await request.json()
-    const { db } = await connectToDatabase()
-
-    // Update project document
-    const updateData = {
-      ...body,
-      updatedAt: new Date(),
-    }
-
-    // Remove _id from update data if present
-    delete updateData._id
-
-    const result = await db
-      .collection(PROJECTS_COLLECTION)
-      .findOneAndUpdate(
-        { _id: new ObjectId(id) },
-        { $set: updateData },
-        { returnDocument: 'after' }
-      )
-
-    if (!result) {
-      return NextResponse.json(
-        { success: false, error: 'Project not found' },
-        { status: 404 }
-      )
-    }
-
-    // Invalidate cache for this project and listings
-    apiCache.delete(`project:${id}`)
-    apiCache.clear() // Clear all listings cache
-
-    return NextResponse.json({ success: true, data: result })
+    const result = await saveProject({ ...(body as RealEstateProject), id } as RealEstateProject)
+    return NextResponse.json(result, { status: result.success ? 200 : 400 })
   } catch (error) {
     console.error('Error updating project:', error)
     return NextResponse.json(
@@ -108,51 +54,8 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params
-    const { db } = await connectToDatabase()
-
-    // First, get the project to delete images from Cloudinary
-    const project = await db
-      .collection(PROJECTS_COLLECTION)
-      .findOne({ _id: new ObjectId(id) })
-
-    if (!project) {
-      return NextResponse.json(
-        { success: false, error: 'Project not found' },
-        { status: 404 }
-      )
-    }
-
-    // Delete images from Cloudinary
-    if (project.images && Array.isArray(project.images)) {
-      for (const imageUrl of project.images) {
-        try {
-          const publicId = extractPublicId(imageUrl)
-          if (publicId) {
-            await deleteFromCloudinary(publicId)
-          }
-        } catch (error) {
-          console.error('Error deleting image from Cloudinary:', error)
-          // Continue even if image deletion fails
-        }
-      }
-    }
-
-    // Delete the project from database
-    const result = await db
-      .collection(PROJECTS_COLLECTION)
-      .deleteOne({ _id: new ObjectId(id) })
-
-    if (result.deletedCount === 0) {
-      return NextResponse.json(
-        { success: false, error: 'Failed to delete project' },
-        { status: 500 }
-      )
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Project deleted successfully',
-    })
+    const result = await deleteProject(id)
+    return NextResponse.json(result, { status: result.success ? 200 : 400 })
   } catch (error) {
     console.error('Error deleting project:', error)
     return NextResponse.json(

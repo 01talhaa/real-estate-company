@@ -1,0 +1,24 @@
+[
+  {
+    "id": "Aut quis et lorem co",
+    "title": {
+      "en": "Perferendis qui dese",
+      "bn": "Voluptatem Omnis id"
+    },
+    "date": "2002-08-18T07:28:00.000Z",
+    "location": {
+      "en": "Exercitationem ab im",
+      "bn": "Do odit quod volupta"
+    },
+    "description": {
+      "en": "Corporis quo reicien",
+      "bn": "Asperiores ipsum ob"
+    },
+    "type": "announcement",
+    "displayImage": "https://res.cloudinary.com/dgj01f9zt/image/upload/v1778780172/real-estate/fdqf2ajuofz46ch6dhyc.png",
+    "registrationLink": "Nostrum in suscipit ",
+    "isUpcoming": true,
+    "createdAt": "2026-05-14T17:36:17.364Z",
+    "updatedAt": "2026-05-14T17:36:17.364Z"
+  }
+]

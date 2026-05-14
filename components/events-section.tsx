@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { Calendar, MapPin, ArrowRight, ExternalLink } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
-import { type SabitEvent, events } from "@/data/events"
+import { type SabitEvent } from "@/types"
 
 type FilterTab = "all" | "upcoming" | "past"
 
@@ -37,14 +37,45 @@ interface Props {
 export function EventsSection({ preview = false }: Props) {
   const { t, lang } = useLanguage()
   const [filter, setFilter] = useState<FilterTab>("all")
+  const [events, setEvents] = useState<SabitEvent[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let mounted = true
+
+    async function loadEvents() {
+      try {
+        const response = await fetch("/api/events")
+        const json = await response.json()
+        if (mounted) {
+          const nextEvents = Array.isArray(json.data) ? json.data : []
+          setEvents(nextEvents)
+        }
+      } catch {
+        if (mounted) setEvents([])
+      } finally {
+        if (mounted) setLoading(false)
+      }
+    }
+
+    loadEvents()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const sortedEvents = useMemo(
+    () => [...events].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+    [events]
+  )
 
   const filtered = preview
-    ? events.filter((e) => e.isUpcoming).slice(0, 3)
+    ? sortedEvents.filter((e) => e.isUpcoming).slice(0, 3)
     : filter === "upcoming"
-    ? events.filter((e) => e.isUpcoming)
+    ? sortedEvents.filter((e) => e.isUpcoming)
     : filter === "past"
-    ? events.filter((e) => !e.isUpcoming)
-    : events
+    ? sortedEvents.filter((e) => !e.isUpcoming)
+    : sortedEvents
 
   const tabs: Array<{ key: FilterTab; label: { en: string; bn: string } }> = [
     { key: "all", label: { en: "All", bn: "সকল" } },
@@ -97,7 +128,15 @@ export function EventsSection({ preview = false }: Props) {
 
         {/* Cards */}
         <div className={`grid gap-6 ${preview ? "md:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3"}`}>
-          {filtered.map((ev) => (
+          {loading ? (
+            <div className="col-span-full rounded-3xl border border-dashed border-slate-200 bg-white p-12 text-center text-slate-500">
+              Loading events...
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="col-span-full rounded-3xl border border-dashed border-slate-200 bg-white p-12 text-center text-slate-500">
+              No events found.
+            </div>
+          ) : filtered.map((ev) => (
             <div
               key={ev.id}
               className={`group relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
@@ -106,6 +145,16 @@ export function EventsSection({ preview = false }: Props) {
                   : "bg-gray-50/70 border-gray-100 opacity-80"
               }`}
             >
+              {ev.displayImage ? (
+                <div className="mb-5 overflow-hidden rounded-2xl border border-gray-100 bg-gray-100">
+                  <img
+                    src={ev.displayImage}
+                    alt={t(ev.title)}
+                    className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                </div>
+              ) : null}
+
               {/* Type badge */}
               <div className="flex items-center justify-between mb-4">
                 <span className={`px-3 py-1 rounded-full text-xs font-bold ${typeColors[ev.type]}`}>

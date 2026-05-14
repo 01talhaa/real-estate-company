@@ -7,115 +7,133 @@ import { useAuth } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
-import { LayoutDashboard, Briefcase, FolderKanban, Users, LogOut, FlaskConical, UserCircle, FileText, Building2, Lightbulb, Images } from "lucide-react"
+import { BarChart3, Building2, CalendarDays, LogOut, Menu, Users, X } from "lucide-react"
+import { useState } from "react"
+
+const navItems = [
+  { href: "/admin/dashboard", label: "Dashboard", icon: BarChart3 },
+  { href: "/admin/projects", label: "Projects", icon: Building2 },
+  { href: "/admin/events", label: "Events", icon: CalendarDays },
+  { href: "/admin/management", label: "Management", icon: Users },
+]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { logout, user } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleLogout = () => {
-    // Clear the cookie
     document.cookie = "admin-session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC"
     logout()
     router.push("/admin/login")
   }
 
-  // If it's the login page, don't wrap with ProtectedRoute
   if (pathname === "/admin/login") {
     return <>{children}</>
   }
 
   return (
     <ProtectedRoute requiredRole="admin">
-      <div className="min-h-screen bg-white">
-        {/* Admin Header */}
-        <header className="border-b border-green-muted bg-white/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
-          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              <Link
-                href="/admin"
-                className="flex items-center gap-3"
+      <div className="min-h-screen bg-slate-50 text-slate-900">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col">
+          <div className="flex flex-1 flex-col border-r border-slate-200 bg-white/90 backdrop-blur-xl px-6 py-8 shadow-sm">
+            <Link href="/admin/dashboard" className="group inline-flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-white shadow-lg transition group-hover:scale-105">
+                SA
+              </div>
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Sabit CMS</p>
+                <p className="text-lg font-semibold text-slate-900">Admin Panel</p>
+              </div>
+            </Link>
+
+            <nav className="mt-10 space-y-2">
+              {navItems.map((item) => {
+                const Icon = item.icon
+                const active = pathname === item.href
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
+                      active
+                        ? "bg-slate-950 text-white shadow-lg shadow-slate-950/10"
+                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                  </Link>
+                )
+              })}
+            </nav>
+
+            <div className="mt-auto rounded-3xl border border-slate-200 bg-slate-50 p-4">
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">Signed in as</p>
+              <p className="mt-2 text-sm font-semibold text-slate-900">{user?.name}</p>
+              <Button
+                variant="outline"
+                onClick={handleLogout}
+                className="mt-4 w-full justify-start rounded-2xl border-slate-200 bg-white text-slate-700 hover:bg-slate-950 hover:text-white"
               >
-                <div className="flex items-center justify-center h-10 w-10 bg-[#064E3B] rounded-lg shadow-md">
-                  <span className="text-white font-bold text-base">SAML</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-lg font-bold text-[#064E3B]">Admin Panel</span>
-                  <span className="text-xs text-black">Sabit Asset Management</span>
-                </div>
-              </Link>
-              <nav className="hidden md:flex items-center gap-6">
-                <Link
-                  href="/admin"
-                  className="text-sm text-black hover:text-green-dark transition-colors flex items-center gap-2"
-                >
-                  <LayoutDashboard className="w-4 h-4" />
-                  Dashboard
-                </Link>
-                <Link
-                  href="/admin/properties"
-                  className="text-sm text-black hover:text-green-dark transition-colors flex items-center gap-2"
-                >
-                  <Building2 className="w-4 h-4" />
-                  Properties
-                </Link>
-                <Link
-                  href="/admin/insights"
-                  className="text-sm text-black hover:text-green-dark transition-colors flex items-center gap-2"
-                >
-                  <Lightbulb className="w-4 h-4" />
-                  Insights
-                </Link>
-                <Link
-                  href="/admin/galleries"
-                  className="text-sm text-black hover:text-green-dark transition-colors flex items-center gap-2"
-                >
-                  <Images className="w-4 h-4" />
-                  Galleries
-                </Link>
-                <Link
-                  href="/admin/services"
-                  className="text-sm text-black hover:text-green-dark transition-colors flex items-center gap-2"
-                >
-                  <Briefcase className="w-4 h-4" />
-                  Services
-                </Link>
-                <Link
-                  href="/admin/team"
-                  className="text-sm text-black hover:text-green-dark transition-colors flex items-center gap-2"
-                >
-                  <Users className="w-4 h-4" />
-                  Team
-                </Link>
-                <Link
-                  href="/admin/clients"
-                  className="text-sm text-black hover:text-green-dark transition-colors flex items-center gap-2"
-                >
-                  <UserCircle className="w-4 h-4" />
-                  Clients
-                </Link>
-                <Link
-                  href="/admin/inquiries"
-                  className="text-sm text-black hover:text-green-dark transition-colors flex items-center gap-2"
-                >
-                  <FileText className="w-4 h-4" />
-                  Inquiries
-                </Link>
-              </nav>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-black">Welcome, {user?.name}</span>
-              <Button variant="outline" size="sm" onClick={handleLogout} className="border-green-light text-green-dark hover:bg-green-muted">
-                <LogOut className="w-4 h-4 mr-2" />
+                <LogOut className="mr-2 h-4 w-4" />
                 Logout
               </Button>
             </div>
           </div>
-        </header>
+        </div>
 
-        {/* Main Content */}
-        <main className="container mx-auto px-4 py-8 bg-gradient-to-b from-green-muted to-white min-h-[calc(100vh-73px)]">{children}</main>
+        <div className="lg:pl-72">
+          <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+              <div className="flex items-center gap-3 lg:hidden">
+                <button
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700"
+                >
+                  {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+                </button>
+                <span className="text-sm font-semibold text-slate-900">Admin Panel</span>
+              </div>
+              <div className="hidden lg:block">
+                <p className="text-sm text-slate-500">Welcome back</p>
+                <h1 className="text-lg font-semibold text-slate-900">{user?.name}</h1>
+              </div>
+              <Button
+                variant="outline"
+                onClick={handleLogout}
+                className="rounded-xl border-slate-200 bg-white text-slate-700 hover:bg-slate-950 hover:text-white"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </Button>
+            </div>
+          </header>
+
+          {mobileMenuOpen && (
+            <div className="border-b border-slate-200 bg-white px-4 py-4 lg:hidden">
+              <div className="grid gap-2">
+                {navItems.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-100"
+                    >
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">{children}</main>
+        </div>
       </div>
     </ProtectedRoute>
   )
