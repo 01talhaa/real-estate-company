@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { initializeDatabase } from '@/lib/db-init'
 
+export const dynamic = 'force-dynamic'
+
 /**
  * Initialize database indexes
  * POST /api/admin/db-init
