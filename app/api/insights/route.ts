@@ -4,6 +4,8 @@ import { withCache, CacheTTL, apiCache } from '@/lib/cache'
 
 const INSIGHTS_COLLECTION = 'insights'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/insights - Get all insights with filters
 export async function GET(request: NextRequest) {
   try {
