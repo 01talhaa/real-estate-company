@@ -4,6 +4,8 @@ import { withCache, CacheTTL, apiCache } from '@/lib/cache'
 
 const GALLERIES_COLLECTION = 'galleries'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/galleries - Get all galleries with filters
 export async function GET(request: NextRequest) {
   try {
