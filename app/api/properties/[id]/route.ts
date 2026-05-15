@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/mongodb'
 import { PROPERTIES_COLLECTION } from '@/lib/models/Property'
 import { ObjectId } from 'mongodb'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/properties/[id] - Get single property
 export async function GET(
   request: NextRequest,
