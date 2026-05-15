@@ -98,6 +98,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 /**
  * PUT /api/admin/events/[id]
  * Update event

@@ -68,3 +68,5 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid token or server error' }, { status: 401 })
   }
 }
+
+export const dynamic = 'force-dynamic'

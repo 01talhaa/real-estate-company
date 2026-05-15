@@ -41,3 +41,5 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
   }
 }
+
+export const dynamic = 'force-dynamic'

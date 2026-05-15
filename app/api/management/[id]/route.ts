@@ -13,3 +13,5 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
   response.headers.set("Cache-Control", "s-maxage=60, stale-while-revalidate=300")
   return response
 }
+
+export const dynamic = 'force-dynamic'

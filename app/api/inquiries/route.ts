@@ -110,3 +110,5 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message || 'Failed to create inquiry' }, { status: 500 })
   }
 }
+
+export const dynamic = 'force-dynamic'

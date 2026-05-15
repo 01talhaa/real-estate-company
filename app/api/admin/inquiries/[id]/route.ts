@@ -134,3 +134,5 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     return NextResponse.json({ error: error.message || 'Failed to delete inquiry' }, { status: 500 })
   }
 }
+
+export const dynamic = 'force-dynamic'

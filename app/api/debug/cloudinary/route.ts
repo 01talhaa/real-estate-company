@@ -21,3 +21,5 @@ export async function GET() {
       : 'Some Cloudinary credentials are missing. Please check your .env file ❌',
   })
 }
+
+export const dynamic = 'force-dynamic'

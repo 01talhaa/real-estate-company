@@ -84,3 +84,5 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to refresh token' }, { status: 500 })
   }
 }
+
+export const dynamic = 'force-dynamic'

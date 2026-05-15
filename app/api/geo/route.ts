@@ -29,3 +29,5 @@ export async function GET(request: Request) {
     currency, // "INR" or "USD"
   })
 }
+
+export const dynamic = 'force-dynamic'

@@ -115,3 +115,5 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     return NextResponse.json({ error: error.message || 'Failed to cancel inquiry' }, { status: 500 })
   }
 }
+
+export const dynamic = 'force-dynamic'
