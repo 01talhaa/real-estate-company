@@ -4,6 +4,8 @@ import { ObjectId } from 'mongodb'
 
 const INSIGHTS_COLLECTION = 'insights'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/insights/[id] - Get single insight
 export async function GET(
   request: NextRequest,
