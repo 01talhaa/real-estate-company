@@ -1,13 +1,18 @@
+import { notFound } from "next/navigation"
 import ManagementForm from "@/components/management-form"
+import { getManagementTeam } from "@/lib/management"
 
-export default function EditManagementPage({ params }: { params: { id: string } }) {
+export default async function EditManagementMemberPage({ params }: { params: { id: string } }) {
+  const team = await getManagementTeam()
+  const member = team.find((m) => m.id === params.id)
+
+  if (!member) {
+    notFound()
+  }
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-black text-slate-950">Edit Management Member</h1>
-        <p className="mt-2 text-sm text-slate-500">Update the selected management profile.</p>
-      </div>
-      <ManagementForm mode="edit" memberId={params.id} />
+    <div className="container mx-auto px-4 py-8">
+      <ManagementForm mode="edit" memberId={member.id} initialData={member} />
     </div>
   )
 }

@@ -2,7 +2,7 @@
   {
     "id": "ceo",
     "name": {
-      "en": "Md. Sabit Hossain",
+      "en": "Md. Sabit Hossainnn",
       "bn": "মোঃ সাবিত হোসেন"
     },
     "role": {
@@ -17,7 +17,11 @@
       "en": "Leading Sabit Property Management with a vision to make homeownership accessible to every Bangladeshi family. Over 15 years in real estate development.",
       "bn": "প্রতিটি বাংলাদেশি পরিবারের জন্য বাড়ির মালিকানা সহজলভ্য করার লক্ষ্যে সাবিত প্রপার্টি ম্যানেজমেন্ট পরিচালনা করছেন। রিয়েল এস্টেট উন্নয়নে ১৫ বছরেরও বেশি অভিজ্ঞতা।"
     },
-    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800"
+    "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+    "linkedin": "",
+    "order": 0,
+    "createdAt": "2026-05-15T05:28:16.002Z",
+    "updatedAt": "2026-05-15T05:28:31.099Z"
   },
   {
     "id": "project-manager",

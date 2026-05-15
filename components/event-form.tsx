@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react"
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { Loader2, Save, Upload, ImagePlus } from "lucide-react"
 import { toast } from "sonner"
@@ -9,65 +9,43 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import type { BilingualText, EventType, SabitEvent } from "@/types"
+import { Event } from "@/types/event"
+import { createEvent, updateEvent } from "@/app/admin/events/actions"
 
 interface EventFormProps {
   mode?: "create" | "edit"
   eventId?: string
-  initialData?: Partial<SabitEvent>
+  initialData?: Partial<Event>
   onSuccess?: () => void
   onCancel?: () => void
 }
 
-type EventDraft = {
-  id: string
-  title: BilingualText
-  date: string
-  location: BilingualText
-  description: BilingualText
-  type: EventType
-  displayImage: string
-  registrationLink: string
-  isUpcoming: boolean
-}
+const emptyText = () => ({ en: "", bn: "" });
 
-const emptyText = (): BilingualText => ({ en: "", bn: "" })
-
-const defaultEvent = (): EventDraft => ({
+const defaultEvent = (): Event => ({
   id: "",
   title: emptyText(),
   date: "",
   location: emptyText(),
   description: emptyText(),
-  type: "launch",
+  type: "announcement",
   displayImage: "",
   registrationLink: "",
   isUpcoming: true,
-})
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+});
 
-function normalizeEvent(event?: Partial<SabitEvent> | null): EventDraft {
-  const safeEvent = event ?? {}
+function normalizeEvent(event?: Partial<Event> | null): Event {
+  const safeEvent = event ?? {};
   return {
     ...defaultEvent(),
-    id: safeEvent.id ?? "",
-    title: {
-      en: safeEvent.title?.en ?? "",
-      bn: safeEvent.title?.bn ?? "",
-    },
+    ...safeEvent,
+    title: { en: safeEvent.title?.en ?? "", bn: safeEvent.title?.bn ?? "" },
+    location: { en: safeEvent.location?.en ?? "", bn: safeEvent.location?.bn ?? "" },
+    description: { en: safeEvent.description?.en ?? "", bn: safeEvent.description?.bn ?? "" },
     date: safeEvent.date ? safeEvent.date.slice(0, 16) : "",
-    location: {
-      en: safeEvent.location?.en ?? "",
-      bn: safeEvent.location?.bn ?? "",
-    },
-    description: {
-      en: safeEvent.description?.en ?? "",
-      bn: safeEvent.description?.bn ?? "",
-    },
-    type: safeEvent.type ?? "launch",
-    displayImage: safeEvent.displayImage ?? "",
-    registrationLink: safeEvent.registrationLink ?? "",
-    isUpcoming: safeEvent.isUpcoming ?? true,
-  }
+  };
 }
 
 function SectionCard({
@@ -97,12 +75,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 export default function EventForm({ mode = "create", eventId, initialData, onSuccess, onCancel }: EventFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState<EventDraft>(() => normalizeEvent(initialData))
+  const [formData, setFormData] = useState<Event>(() => normalizeEvent(initialData))
   const storageKey = mode === "edit" ? `admin-event-draft:${eventId || "unknown"}` : "admin-event-draft:new"
 
-  const locationPreview = useMemo(() => {
-    return [formData.location.en, formData.location.bn].filter(Boolean).join(" · ")
-  }, [formData.location.en, formData.location.bn])
+  const locationPreview = [formData.location.en, formData.location.bn].filter(Boolean).join(" · ")
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -126,34 +102,11 @@ export default function EventForm({ mode = "create", eventId, initialData, onSuc
     window.localStorage.setItem(storageKey, JSON.stringify(formData))
   }, [formData, storageKey])
 
-  async function fetchEvent() {
-    if (!eventId) return
-    try {
-      const response = await fetch(`/api/admin/events/${eventId}`)
-      const json = await response.json()
-      if (json.success) {
-        setFormData(normalizeEvent(json.data))
-      } else {
-        toast.error(json.error || "Failed to load event")
-      }
-    } catch (error) {
-      console.error(error)
-      toast.error("An error occurred while loading the event")
-    }
-  }
-
-  useEffect(() => {
-    if (eventId && !initialData) {
-      fetchEvent()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId, initialData])
-
-  function updateField<K extends keyof EventDraft>(key: K, value: EventDraft[K]) {
+  function updateField<K extends keyof Event>(key: K, value: Event[K]) {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }
 
-  function updateText(field: "title" | "location" | "description", lang: keyof BilingualText, value: string) {
+  function updateText(field: "title" | "location" | "description", lang: 'en' | 'bn', value: string) {
     setFormData((prev) => ({
       ...prev,
       [field]: {
@@ -202,31 +155,28 @@ export default function EventForm({ mode = "create", eventId, initialData, onSuc
     try {
       if (!formData.id || !formData.title.en || !formData.title.bn || !formData.location.en || !formData.location.bn || !formData.description.en || !formData.description.bn || !formData.date || !formData.displayImage) {
         toast.error("Please fill all required fields")
+        setLoading(false)
         return
       }
 
-      const url = eventId ? `/api/admin/events/${eventId}` : "/api/admin/events"
-      const method = eventId ? "PUT" : "POST"
-      const payload = {
+      const payload: Event = {
         ...formData,
         date: new Date(formData.date).toISOString(),
+        updatedAt: new Date().toISOString(),
+        createdAt: mode === 'create' ? new Date().toISOString() : formData.createdAt,
       }
 
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      })
-
-      const result = await response.json()
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || `Failed to ${eventId ? "update" : "create"} event`)
+      if (mode === 'edit' && eventId) {
+        await updateEvent(payload)
+        toast.success("Event updated successfully")
+      } else {
+        await createEvent(payload)
+        toast.success("Event created successfully")
       }
 
       if (typeof window !== "undefined") {
         window.localStorage.removeItem(storageKey)
       }
-      toast.success(eventId ? "Event updated successfully" : "Event created successfully")
       onSuccess?.()
       if (!onSuccess) router.push("/admin/events")
     } catch (error) {
@@ -307,13 +257,12 @@ export default function EventForm({ mode = "create", eventId, initialData, onSuc
             <SectionLabel>Event Type *</SectionLabel>
             <select
               value={formData.type}
-              onChange={(e) => updateField("type", e.target.value as EventType)}
+              onChange={(e) => updateField("type", e.target.value as Event["type"])}
               className="h-10 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm text-slate-950 shadow-sm outline-none transition focus:border-emerald-500"
             >
-              <option value="launch">launch</option>
-              <option value="investor-meet">investor-meet</option>
-              <option value="community">community</option>
               <option value="announcement">announcement</option>
+              <option value="event">event</option>
+              <option value="milestone">milestone</option>
             </select>
           </div>
           <div className="space-y-2 md:col-span-2">

@@ -3,7 +3,7 @@
     "id": "khilgaon-residency-a",
     "slug": "khilgaon-residency-a",
     "name": {
-      "en": "Sabit Khilgaon Residency — Block Aaaa",
+      "en": "Sabit Khilgaon Residency — Block A",
       "bn": "সাবিত খিলগাঁও রেসিডেন্সি — ব্লক এ"
     },
     "location": {
@@ -36,6 +36,7 @@
       "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=900"
     ],
     "completionDate": "2023-06",
+    "progressPercent": 0,
     "flats": 12,
     "floors": 6,
     "specifications": {
@@ -208,8 +209,7 @@
         },
         "distance": "1.5 km"
       }
-    ],
-    "progressPercent": 0
+    ]
   },
   {
     "id": "jodhivita-green-homes",

@@ -1,24 +1,24 @@
 [
   {
-    "id": "Aut quis et lorem co",
+    "id": "e-1",
     "title": {
-      "en": "Perferendis qui dese",
-      "bn": "Voluptatem Omnis id"
+      "en": "Enim placeat in eum",
+      "bn": "Nihil commodo quod o"
     },
-    "date": "2002-08-18T07:28:00.000Z",
+    "date": "2013-06-30T23:18:00.000Z",
     "location": {
-      "en": "Exercitationem ab im",
-      "bn": "Do odit quod volupta"
+      "en": "Dolor est voluptatem",
+      "bn": "Odit laboris quis al"
     },
     "description": {
-      "en": "Corporis quo reicien",
-      "bn": "Asperiores ipsum ob"
+      "en": "Optio accusamus ips",
+      "bn": "Excepteur et anim ab"
     },
-    "type": "announcement",
-    "displayImage": "https://res.cloudinary.com/dgj01f9zt/image/upload/v1778780172/real-estate/fdqf2ajuofz46ch6dhyc.png",
-    "registrationLink": "Nostrum in suscipit ",
+    "type": "event",
+    "displayImage": "https://res.cloudinary.com/dgj01f9zt/image/upload/v1778822975/real-estate/bcbcykjypilrjwaikbec.png",
+    "registrationLink": "Libero impedit repu",
     "isUpcoming": true,
-    "createdAt": "2026-05-14T17:36:17.364Z",
-    "updatedAt": "2026-05-14T17:36:17.364Z"
+    "createdAt": "2026-05-15T05:29:42.170Z",
+    "updatedAt": "2026-05-15T05:30:25.634Z"
   }
 ]

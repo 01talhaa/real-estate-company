@@ -16,25 +16,20 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import type { Amenity, BilingualText, NearbyPlace, RealEstateProject } from "@/types"
+import { Project } from "@/types/project"
+import { createProject, updateProject } from "@/app/admin/projects/actions"
 
 interface ProjectFormProps {
   mode?: "create" | "edit"
   projectId?: string
-  initialData?: Partial<RealEstateProject>
+  initialData?: Partial<Project>
   onSuccess?: () => void
   onCancel?: () => void
 }
 
-const emptyBilingual = (): BilingualText => ({ en: "", bn: "" })
-const emptyAmenity = (): Amenity => ({ en: "", bn: "" })
-const emptyNearbyPlace = (): NearbyPlace => ({
-  category: "hospital",
-  name: emptyBilingual(),
-  distance: "",
-})
+const emptyBilingual = () => ({ en: "", bn: "" });
 
-const defaultProject = (): RealEstateProject => ({
+const defaultProject = (): Project => ({
   id: "",
   slug: "",
   name: emptyBilingual(),
@@ -69,51 +64,26 @@ const defaultProject = (): RealEstateProject => ({
     expectedROI: 0,
   },
   nearbyPlaces: [],
-})
+});
 
-function normalizeBilingual(value?: Partial<BilingualText> | null): BilingualText {
-  return {
-    en: value?.en ?? "",
-    bn: value?.bn ?? "",
-  }
-}
-
-function normalizeProject(project?: Partial<RealEstateProject> | null): RealEstateProject {
-  const safeProject = project ?? {}
-
+function normalizeProject(project?: Partial<Project> | null): Project {
+  const safeProject = project ?? {};
+  
   return {
     ...defaultProject(),
     ...safeProject,
-    name: normalizeBilingual(safeProject.name),
-    location: normalizeBilingual(safeProject.location),
-    address: normalizeBilingual(safeProject.address),
-    description: normalizeBilingual(safeProject.description),
-    longDescription: normalizeBilingual(safeProject.longDescription),
-    coordinates: {
-      lat: safeProject.coordinates?.lat ?? 0,
-      lng: safeProject.coordinates?.lng ?? 0,
-    },
+    name: { en: safeProject.name?.en ?? "", bn: safeProject.name?.bn ?? "" },
+    location: { en: safeProject.location?.en ?? "", bn: safeProject.location?.bn ?? "" },
+    address: { en: safeProject.address?.en ?? "", bn: safeProject.address?.bn ?? "" },
+    description: { en: safeProject.description?.en ?? "", bn: safeProject.description?.bn ?? "" },
+    longDescription: { en: safeProject.longDescription?.en ?? "", bn: safeProject.longDescription?.bn ?? "" },
+    coordinates: { lat: safeProject.coordinates?.lat ?? 0, lng: safeProject.coordinates?.lng ?? 0 },
     gallery: safeProject.gallery ?? [],
-    specifications: {
-      totalAreaSqft: safeProject.specifications?.totalAreaSqft ?? 0,
-      bedrooms: safeProject.specifications?.bedrooms ?? 0,
-      bathrooms: safeProject.specifications?.bathrooms ?? 0,
-      parkingSpaces: safeProject.specifications?.parkingSpaces ?? 0,
-      yearBuilt: safeProject.specifications?.yearBuilt ?? 0,
-    },
-    amenities: {
-      interior: safeProject.amenities?.interior ?? [],
-      exterior: safeProject.amenities?.exterior ?? [],
-      building: safeProject.amenities?.building ?? [],
-    },
-    financials: {
-      sharePrice: safeProject.financials?.sharePrice ?? 0,
-      pricePerSqft: safeProject.financials?.pricePerSqft ?? 0,
-      currency: safeProject.financials?.currency ?? "BDT",
-      expectedROI: safeProject.financials?.expectedROI ?? 0,
-    },
+    specifications: { ...defaultProject().specifications, ...safeProject.specifications },
+    amenities: { ...defaultProject().amenities, ...safeProject.amenities },
+    financials: { ...defaultProject().financials, ...safeProject.financials },
     nearbyPlaces: safeProject.nearbyPlaces ?? [],
-  }
+  };
 }
 
 function SectionCard({
@@ -162,7 +132,7 @@ function ArrayRow({
 export default function ProjectForm({ mode = "create", projectId, initialData, onSuccess, onCancel }: ProjectFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState<RealEstateProject>(() => normalizeProject(initialData))
+  const [formData, setFormData] = useState<Project>(() => normalizeProject(initialData))
   const storageKey = mode === "edit" ? `admin-project-draft:${projectId || "unknown"}` : "admin-project-draft:new"
   const heroPreviewUrl = formData.image.trim()
   const galleryPreview = formData.gallery || []
@@ -186,40 +156,20 @@ export default function ProjectForm({ mode = "create", projectId, initialData, o
       }
     }
 
-    if (projectId && !initialData) {
-      fetchProject()
-      return
-    }
-
     setFormData(normalizeProject(initialData))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectId, initialData, storageKey])
+  }, [initialData, storageKey])
 
   useEffect(() => {
     if (typeof window === "undefined") return
     window.localStorage.setItem(storageKey, JSON.stringify(formData))
   }, [formData, storageKey])
 
-  async function fetchProject() {
-    try {
-      const response = await fetch(`/api/admin/projects/${projectId}`)
-      const json = await response.json()
-      if (json.success) {
-        setFormData(normalizeProject(json.data))
-      } else {
-        toast.error(json.error || "Failed to load project")
-      }
-    } catch (error) {
-      console.error(error)
-      toast.error("An error occurred while loading the project")
-    }
-  }
-
-  function updateField<K extends keyof RealEstateProject>(key: K, value: RealEstateProject[K]) {
+  function updateField<K extends keyof Project>(key: K, value: Project[K]) {
     setFormData((prev) => ({ ...prev, [key]: value }))
   }
 
-  function updateBilingual(field: "name" | "location" | "address" | "description" | "longDescription", lang: keyof BilingualText, value: string) {
+  function updateBilingual(field: "name" | "location" | "address" | "description" | "longDescription", lang: 'en' | 'bn', value: string) {
     setFormData((prev) => ({
       ...prev,
       [field]: {
@@ -229,7 +179,7 @@ export default function ProjectForm({ mode = "create", projectId, initialData, o
     }))
   }
 
-  function updateCoordinates(key: keyof RealEstateProject["coordinates"], value: number) {
+  function updateCoordinates(key: keyof Project["coordinates"], value: number) {
     setFormData((prev) => ({
       ...prev,
       coordinates: {
@@ -239,90 +189,86 @@ export default function ProjectForm({ mode = "create", projectId, initialData, o
     }))
   }
 
-  function updateSpecifications(key: keyof NonNullable<RealEstateProject["specifications"]>, value: number) {
+  function updateSpecifications(key: keyof Project["specifications"], value: number) {
     setFormData((prev) => ({
       ...prev,
       specifications: {
-        ...(prev.specifications || {}),
+        ...prev.specifications,
         [key]: value,
       },
     }))
   }
 
-  function updateFinancials(key: keyof NonNullable<RealEstateProject["financials"]>, value: string | number) {
+  function updateFinancials(key: keyof Project["financials"], value: string | number) {
     setFormData((prev) => ({
       ...prev,
       financials: {
-        ...(prev.financials || { currency: "BDT" }),
+        ...prev.financials,
         [key]: value,
       },
     }))
   }
 
-  function updateAmenityList(section: keyof NonNullable<RealEstateProject["amenities"]>, index: number, key: keyof Amenity, value: string) {
+  function updateAmenityList(section: keyof Project["amenities"], index: number, key: 'en' | 'bn', value: string) {
     setFormData((prev) => {
-      const nextSection = [...(prev.amenities?.[section] || [])]
+      const nextSection = [...(prev.amenities[section] || [])]
       nextSection[index] = {
-        ...(nextSection[index] || emptyAmenity()),
+        ...(nextSection[index] || emptyBilingual()),
         [key]: value,
       }
       return {
         ...prev,
         amenities: {
-          ...(prev.amenities || { interior: [], exterior: [], building: [] }),
+          ...prev.amenities,
           [section]: nextSection,
         },
       }
     })
   }
 
-  function addAmenity(section: keyof NonNullable<RealEstateProject["amenities"]>) {
+  function addAmenity(section: keyof Project["amenities"]) {
     setFormData((prev) => ({
       ...prev,
       amenities: {
-        ...(prev.amenities || { interior: [], exterior: [], building: [] }),
-        [section]: [...(prev.amenities?.[section] || []), emptyAmenity()],
+        ...prev.amenities,
+        [section]: [...(prev.amenities[section] || []), emptyBilingual()],
       },
     }))
   }
 
-  function removeAmenity(section: keyof NonNullable<RealEstateProject["amenities"]>, index: number) {
+  function removeAmenity(section: keyof Project["amenities"], index: number) {
     setFormData((prev) => ({
       ...prev,
       amenities: {
-        ...(prev.amenities || { interior: [], exterior: [], building: [] }),
-        [section]: (prev.amenities?.[section] || []).filter((_, itemIndex) => itemIndex !== index),
+        ...prev.amenities,
+        [section]: (prev.amenities[section] || []).filter((_, itemIndex) => itemIndex !== index),
       },
     }))
   }
 
-  function updateNearbyPlace(index: number, key: keyof NearbyPlace, value: string) {
+  function updateNearbyPlace(index: number, key: keyof Project['nearbyPlaces'][0], value: any) {
     setFormData((prev) => {
       const nextNearby = [...(prev.nearbyPlaces || [])]
-      const current = nextNearby[index] || emptyNearbyPlace()
-
-      if (key === "category") {
-        nextNearby[index] = { ...current, category: value as NearbyPlace["category"] }
-      } else if (key === "distance") {
-        nextNearby[index] = { ...current, distance: value }
-      } else if (key === "name") {
-        nextNearby[index] = { ...current, name: normalizeBilingual({ en: value, bn: current.name.bn }) }
+      const current = nextNearby[index]
+      if (current) {
+        nextNearby[index] = { ...current, [key]: value };
       }
-
       return { ...prev, nearbyPlaces: nextNearby }
     })
   }
 
-  function updateNearbyPlaceText(index: number, lang: keyof BilingualText, value: string) {
+  function updateNearbyPlaceText(index: number, lang: 'en' | 'bn', value: string) {
     setFormData((prev) => {
       const nextNearby = [...(prev.nearbyPlaces || [])]
-      const current = nextNearby[index] || emptyNearbyPlace()
-      nextNearby[index] = {
-        ...current,
-        name: {
-          ...current.name,
-          [lang]: value,
-        },
+      const current = nextNearby[index]
+      if (current) {
+        nextNearby[index] = {
+          ...current,
+          name: {
+            ...current.name,
+            [lang]: value,
+          },
+        }
       }
       return { ...prev, nearbyPlaces: nextNearby }
     })
@@ -331,7 +277,7 @@ export default function ProjectForm({ mode = "create", projectId, initialData, o
   function addNearbyPlace() {
     setFormData((prev) => ({
       ...prev,
-      nearbyPlaces: [...(prev.nearbyPlaces || []), emptyNearbyPlace()],
+      nearbyPlaces: [...(prev.nearbyPlaces || []), { name: { en: '', bn: '' }, distance: '', category: 'hospital' }],
     }))
   }
 
@@ -412,24 +358,18 @@ export default function ProjectForm({ mode = "create", projectId, initialData, o
 
       if (!payload.id || !payload.slug || !payload.name.en || !payload.name.bn) {
         toast.error("Please fill all required fields")
+        setLoading(false)
         return
       }
 
-      const url = projectId ? `/api/admin/projects/${projectId}` : "/api/admin/projects"
-      const method = projectId ? "PUT" : "POST"
-
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      })
-
-      const result = await response.json()
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || `Failed to ${projectId ? "update" : "create"} project`)
+      if (mode === 'edit' && projectId) {
+        await updateProject(payload);
+        toast.success("Project updated successfully");
+      } else {
+        await createProject(payload);
+        toast.success("Project created successfully");
       }
 
-      toast.success(projectId ? "Project updated successfully" : "Project created successfully")
       if (typeof window !== "undefined") {
         window.localStorage.removeItem(storageKey)
       }
@@ -511,7 +451,7 @@ export default function ProjectForm({ mode = "create", projectId, initialData, o
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-2">
             <SectionLabel>Status *</SectionLabel>
-            <Select value={formData.status} onValueChange={(value) => updateField("status", value as RealEstateProject["status"]) }>
+            <Select value={formData.status} onValueChange={(value) => updateField("status", value as Project["status"]) }>
               <SelectTrigger>
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
