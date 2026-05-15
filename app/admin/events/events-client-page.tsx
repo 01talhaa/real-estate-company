@@ -147,7 +147,7 @@ export default function EventsClientPage({ events }: { events: Event[] }) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete event?</AlertDialogTitle>
-            <AlertDialogDescription>This will remove the event from the GitHub JSON file.</AlertDialogDescription>
+            <AlertDialogDescription>This will remove the event from the database.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

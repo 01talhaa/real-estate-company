@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Linkedin } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
-import type { ManagementMember } from "@/src/lib/github/management-operations"
+import type { ManagementMember } from "@/types/management"
 
 export function ManagementTeamSection() {
   const { t } = useLanguage()

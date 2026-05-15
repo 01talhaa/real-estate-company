@@ -91,6 +91,17 @@ function getAmenityIcon(text: string) {
   return amenityIconMap.default
 }
 
+function getImageSrc(value: string | null | undefined) {
+  const trimmed = typeof value === "string" ? value.trim() : ""
+  if (!trimmed) return "/placeholder.svg"
+  if (trimmed.startsWith("/")) return trimmed
+  try {
+    return new URL(trimmed).toString()
+  } catch {
+    return "/placeholder.svg"
+  }
+}
+
 export default function ProjectDetailPage() {
   const params = useParams<{ id: string }>()
   const slug = params?.id
@@ -169,7 +180,7 @@ export default function ProjectDetailPage() {
         <div className="container mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center px-6 text-center">
           <h1 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Project not found</h1>
           <p className="mt-4 max-w-xl text-lg leading-8 text-slate-600">
-            The requested project does not exist in the current JSON dataset.
+            The requested project does not exist in the current database.
           </p>
           <Link href="/projects" className="mt-8 inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800">
             Back to Projects
@@ -226,7 +237,7 @@ export default function ProjectDetailPage() {
 
           <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-2xl shadow-black/20 backdrop-blur-xl">
             <div className="relative aspect-[4/5] w-full">
-              <Image src={project.image} alt={t(project.name)} fill className="object-cover" priority sizes="(min-width: 1024px) 40vw, 100vw" />
+              <Image src={getImageSrc(project.image)} alt={t(project.name)} fill className="object-cover" priority sizes="(min-width: 1024px) 40vw, 100vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
             </div>
             <div className="grid grid-cols-2 gap-px bg-white/10 text-white">
@@ -326,7 +337,7 @@ export default function ProjectDetailPage() {
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {project.gallery.map((image, index) => (
                 <div key={image + index} className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-slate-100">
-                  <Image src={image} alt={`${t(project.name)} ${index + 1}`} fill className="object-cover transition-transform duration-700 hover:scale-105" sizes="(min-width: 1280px) 33vw, 50vw" />
+                  <Image src={getImageSrc(image)} alt={`${t(project.name)} ${index + 1}`} fill className="object-cover transition-transform duration-700 hover:scale-105" sizes="(min-width: 1280px) 33vw, 50vw" />
                 </div>
               ))}
             </div>
@@ -403,7 +414,7 @@ export default function ProjectDetailPage() {
             </div>
             <h2 className="text-3xl font-black tracking-tight">Want a project like this?</h2>
             <p className="text-white/70">
-              Reach out for scope, budget, and delivery details. The JSON CMS can be edited from the admin panel.
+              Reach out for scope, budget, and delivery details. The database can be edited from the admin panel.
             </p>
           </div>
           <div className="mt-6 flex flex-wrap gap-3">

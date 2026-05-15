@@ -1,31 +1,18 @@
+import type { BilingualText } from "@/types";
+
 export interface Project {
   id: string;
   slug: string;
-  name: {
-    en: string;
-    bn: string;
-  };
-  location: {
-    en: string;
-    bn: string;
-  };
-  address: {
-    en: string;
-    bn: string;
-  };
+  name: BilingualText;
+  location: BilingualText;
+  address: BilingualText;
   coordinates: {
     lat: number;
     lng: number;
   };
-  status: 'handover' | 'ongoing' | 'upcoming';
-  description: {
-    en: string;
-    bn: string;
-  };
-  longDescription: {
-    en: string;
-    bn: string;
-  };
+  status: "handover" | "ongoing" | "upcoming";
+  description: BilingualText;
+  longDescription: BilingualText;
   image: string;
   gallery: string[];
   completionDate: string;
@@ -40,9 +27,9 @@ export interface Project {
     yearBuilt: number;
   };
   amenities: {
-    interior: string[];
-    exterior: string[];
-    building: string[];
+    interior: BilingualText[];
+    exterior: BilingualText[];
+    building: BilingualText[];
   };
   financials: {
     sharePrice: number;
@@ -51,7 +38,8 @@ export interface Project {
     expectedROI: number;
   };
   nearbyPlaces: {
-    name: string;
+    category: "hospital" | "school" | "college" | "university" | "mall" | "park" | "mosque" | "transport";
+    name: BilingualText;
     distance: string;
   }[];
 }

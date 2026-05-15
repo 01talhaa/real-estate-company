@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getProjects, saveProject } from "@/src/lib/projects-store"
-import type { RealEstateProject } from "@/types"
+import { createProject, getProjectsCached } from "@/lib/projects"
+import type { Project } from "@/types/project"
 
 // GET /api/projects - List all projects
 export async function GET(request: NextRequest) {
@@ -9,13 +9,15 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status')
     const limit = searchParams.get('limit')
     const page = searchParams.get('page') || '1'
-    const projects = await getProjects()
+    const projects = await getProjectsCached()
     const filtered = status ? projects.filter((project) => project.status === status) : projects
     const sliced = limit
       ? filtered.slice((parseInt(page) - 1) * parseInt(limit), (parseInt(page) - 1) * parseInt(limit) + parseInt(limit))
       : filtered
 
-    return NextResponse.json({ success: true, data: sliced })
+    const response = NextResponse.json({ success: true, data: sliced })
+    response.headers.set("Cache-Control", "s-maxage=60, stale-while-revalidate=300")
+    return response
   } catch (error) {
     console.error('Error fetching projects:', error)
     return NextResponse.json(
@@ -29,8 +31,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const result = await saveProject(body as RealEstateProject)
-    return NextResponse.json(result, { status: result.success ? 201 : 400 })
+    const created = await createProject(body as Project)
+    const response = NextResponse.json({ success: true, data: created }, { status: 201 })
+    response.headers.set("Cache-Control", "no-store")
+    return response
   } catch (error) {
     console.error('Error creating project:', error)
     return NextResponse.json(

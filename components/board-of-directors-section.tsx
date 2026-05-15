@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Linkedin, Mail } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
-import type { ManagementMember } from "@/src/lib/github/management-operations"
+import type { ManagementMember } from "@/types/management"
 
 interface Director {
   name: { en: string; bn: string }

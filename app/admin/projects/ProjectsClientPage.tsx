@@ -96,7 +96,7 @@ export default function ProjectsClientPage({ projects: initialProjects }: { proj
             <div>
               <h1 className="text-4xl font-black tracking-tight sm:text-5xl">Projects</h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70 sm:text-base">
-                Manage real-estate projects stored in GitHub.
+                Manage real-estate projects stored in MongoDB.
               </p>
             </div>
           </div>
@@ -242,7 +242,7 @@ export default function ProjectsClientPage({ projects: initialProjects }: { proj
           <AlertDialogHeader>
             <AlertDialogTitle>Delete project?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will remove the project from GitHub. This action cannot be undone.
+              This will remove the project from the database. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

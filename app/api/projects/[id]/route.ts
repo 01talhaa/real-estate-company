@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getProjectById, saveProject, deleteProject } from "@/src/lib/projects-store"
-import type { RealEstateProject } from "@/types"
+import { deleteProject, getProjectByIdCached, updateProject } from "@/lib/projects"
+import type { Project } from "@/types/project"
 
 // GET /api/projects/[id] - Get a single project
 export async function GET(
@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params
-    const project = await getProjectById(id)
+    const project = await getProjectByIdCached(id)
 
     if (!project) {
       return NextResponse.json(
@@ -18,7 +18,9 @@ export async function GET(
       )
     }
 
-    return NextResponse.json({ success: true, data: project })
+    const response = NextResponse.json({ success: true, data: project })
+    response.headers.set("Cache-Control", "s-maxage=60, stale-while-revalidate=300")
+    return response
   } catch (error) {
     console.error('Error fetching project:', error)
     return NextResponse.json(
@@ -36,8 +38,10 @@ export async function PUT(
   try {
     const { id } = await params
     const body = await request.json()
-    const result = await saveProject({ ...(body as RealEstateProject), id } as RealEstateProject)
-    return NextResponse.json(result, { status: result.success ? 200 : 400 })
+    const updated = await updateProject({ ...(body as Project), id } as Project)
+    const response = NextResponse.json({ success: true, data: updated }, { status: 200 })
+    response.headers.set("Cache-Control", "no-store")
+    return response
   } catch (error) {
     console.error('Error updating project:', error)
     return NextResponse.json(
@@ -55,7 +59,9 @@ export async function DELETE(
   try {
     const { id } = await params
     const result = await deleteProject(id)
-    return NextResponse.json(result, { status: result.success ? 200 : 400 })
+    const response = NextResponse.json(result, { status: 200 })
+    response.headers.set("Cache-Control", "no-store")
+    return response
   } catch (error) {
     console.error('Error deleting project:', error)
     return NextResponse.json(

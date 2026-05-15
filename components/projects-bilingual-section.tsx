@@ -23,6 +23,17 @@ const statusStyles: Record<string, string> = {
   upcoming: "bg-sky-100 text-sky-700 border-sky-200",
 }
 
+function getImageSrc(value: string | null | undefined) {
+  const trimmed = typeof value === "string" ? value.trim() : ""
+  if (!trimmed) return "/placeholder.svg"
+  if (trimmed.startsWith("/")) return trimmed
+  try {
+    return new URL(trimmed).toString()
+  } catch {
+    return "/placeholder.svg"
+  }
+}
+
 export function ProjectsBilingualSection({ preview = false }: { preview?: boolean }) {
   const { t } = useLanguage()
   const [projects, setProjects] = useState<RealEstateProject[]>([])
@@ -126,7 +137,7 @@ export function ProjectsBilingualSection({ preview = false }: { preview?: boolea
               <article key={project.id} className="group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-lg shadow-slate-200/60 transition-all hover:-translate-y-1 hover:shadow-2xl">
                 <Link href={`/projects/${project.slug}`} className="block">
                   <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-                    <Image src={project.image} alt={t(project.name)} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" />
+                    <Image src={getImageSrc(project.image)} alt={t(project.name)} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-transparent" />
                     <div className="absolute left-4 top-4 flex flex-wrap gap-2">
                       <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-950 backdrop-blur">

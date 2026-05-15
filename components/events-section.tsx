@@ -4,22 +4,20 @@ import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { Calendar, MapPin, ArrowRight, ExternalLink } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
-import { type SabitEvent } from "@/types"
+import { type Event } from "@/types/event"
 
 type FilterTab = "all" | "upcoming" | "past"
 
-const typeColors: Record<SabitEvent["type"], string> = {
-  launch: "bg-emerald-100 text-emerald-700",
-  "investor-meet": "bg-blue-100 text-blue-700",
-  community: "bg-amber-100 text-amber-700",
+const typeColors: Record<Event["type"], string> = {
   announcement: "bg-purple-100 text-purple-700",
+  event: "bg-emerald-100 text-emerald-700",
+  milestone: "bg-blue-100 text-blue-700",
 }
 
-const typeLabel: Record<SabitEvent["type"], { en: string; bn: string }> = {
-  launch: { en: "Launch", bn: "উদ্বোধন" },
-  "investor-meet": { en: "Investor Meet", bn: "বিনিয়োগকারী সভা" },
-  community: { en: "Community", bn: "কমিউনিটি" },
+const typeLabel: Record<Event["type"], { en: string; bn: string }> = {
   announcement: { en: "Announcement", bn: "ঘোষণা" },
+  event: { en: "Event", bn: "ইভেন্ট" },
+  milestone: { en: "Milestone", bn: "মাইলস্টোন" },
 }
 
 function formatDate(iso: string, lang: "en" | "bn") {
@@ -37,7 +35,7 @@ interface Props {
 export function EventsSection({ preview = false }: Props) {
   const { t, lang } = useLanguage()
   const [filter, setFilter] = useState<FilterTab>("all")
-  const [events, setEvents] = useState<SabitEvent[]>([])
+  const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

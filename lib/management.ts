@@ -1,58 +1,91 @@
-import { getGithubFile, updateGithubFile } from "./github"
-import { ManagementMember, ManagementMemberSchema } from "@/types/management"
-import { z } from "zod"
+import dbConnect from "./mongoose"
+import ManagementModel from "./models/ManagementModel"
+import { apiCache, CacheTTL, withCache } from "./cache"
+import { revalidateTag, unstable_cache } from "next/cache"
+import { ManagementMember } from "@/types/management"
 
-const MANAGEMENT_FILE_PATH = "data/management-team.json"
+const MANAGEMENT_CACHE_KEY = "management:all"
 
-const ManagementTeamSchema = z.array(ManagementMemberSchema)
+function serializeMember(doc: any): ManagementMember {
+  const obj = doc?.toObject ? doc.toObject() : doc
+  if (obj?._id) delete obj._id
+  if (obj?.__v !== undefined) delete obj.__v
+  return obj as ManagementMember
+}
 
 export async function getManagementTeam(): Promise<ManagementMember[]> {
-  const file = await getGithubFile(MANAGEMENT_FILE_PATH)
-  if (!file) {
-    console.log("Management file not found, returning empty array")
-    return []
-  }
-  const team = JSON.parse(file.content)
-  // Sort by order
-  team.sort((a: ManagementMember, b: ManagementMember) => (a.order || 0) - (b.order || 0));
-  return ManagementTeamSchema.parse(team)
+  await dbConnect()
+  return withCache(
+    MANAGEMENT_CACHE_KEY,
+    async () => {
+      const members = await ManagementModel.find().sort({ order: 1, createdAt: 1 }).lean()
+      return members.map(serializeMember)
+    },
+    CacheTTL.MEDIUM
+  )
 }
 
-export async function createManagementMember(member: ManagementMember): Promise<void> {
-  const team = await getManagementTeam()
-  
-  const memberWithTimestamps = {
+export const getManagementTeamCached = unstable_cache(
+  async () => getManagementTeam(),
+  ["management:all"],
+  { revalidate: 60, tags: ["management"] }
+)
+
+export async function getManagementMemberById(id: string): Promise<ManagementMember | null> {
+  await dbConnect()
+  const cacheKey = `management:${id}`
+  return withCache(
+    cacheKey,
+    async () => {
+      const member = await ManagementModel.findOne({ id }).lean()
+      return member ? serializeMember(member) : null
+    },
+    CacheTTL.MEDIUM
+  )
+}
+
+export async function getManagementMemberByIdCached(id: string): Promise<ManagementMember | null> {
+  return unstable_cache(
+    async () => getManagementMemberById(id),
+    ["management", id],
+    { revalidate: 60, tags: ["management"] }
+  )()
+}
+
+export async function createManagementMember(member: ManagementMember): Promise<ManagementMember> {
+  await dbConnect()
+  const now = new Date().toISOString()
+  const payload = {
     ...member,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: member.createdAt ?? now,
+    updatedAt: member.updatedAt ?? now,
   }
-
-  const newTeam = [...team, memberWithTimestamps]
-  const content = JSON.stringify(newTeam, null, 2)
-  const file = await getGithubFile(MANAGEMENT_FILE_PATH)
-  await updateGithubFile(MANAGEMENT_FILE_PATH, content, file?.sha)
+  const created = await ManagementModel.create(payload)
+  apiCache.delete(MANAGEMENT_CACHE_KEY)
+  apiCache.delete(`management:${member.id}`)
+  revalidateTag("management")
+  return serializeMember(created)
 }
 
-export async function updateManagementMember(updatedMember: ManagementMember): Promise<void> {
-  const team = await getManagementTeam()
-  
-  const memberWithTimestamps = {
+export async function updateManagementMember(updatedMember: ManagementMember): Promise<ManagementMember> {
+  await dbConnect()
+  const payload = {
     ...updatedMember,
     updatedAt: new Date().toISOString(),
   }
-
-  const newTeam = team.map((member) => (member.id === updatedMember.id ? memberWithTimestamps : member))
-  const content = JSON.stringify(newTeam, null, 2)
-  const file = await getGithubFile(MANAGEMENT_FILE_PATH)
-  if (!file) throw new Error("Management data file not found on GitHub.")
-  await updateGithubFile(MANAGEMENT_FILE_PATH, content, file.sha)
+  const updated = await ManagementModel.findOneAndUpdate({ id: updatedMember.id }, payload, { new: true })
+  if (!updated) throw new Error("Management member not found")
+  apiCache.delete(MANAGEMENT_CACHE_KEY)
+  apiCache.delete(`management:${updatedMember.id}`)
+  revalidateTag("management")
+  return serializeMember(updated)
 }
 
-export async function deleteManagementMember(id: string): Promise<void> {
-  const team = await getManagementTeam()
-  const newTeam = team.filter((member) => member.id !== id)
-  const content = JSON.stringify(newTeam, null, 2)
-  const file = await getGithubFile(MANAGEMENT_FILE_PATH)
-  if (!file) throw new Error("Management data file not found on GitHub.")
-  await updateGithubFile(MANAGEMENT_FILE_PATH, content, file.sha)
+export async function deleteManagementMember(id: string): Promise<{ success: boolean }> {
+  await dbConnect()
+  await ManagementModel.findOneAndDelete({ id })
+  apiCache.delete(MANAGEMENT_CACHE_KEY)
+  apiCache.delete(`management:${id}`)
+  revalidateTag("management")
+  return { success: true }
 }

@@ -13,7 +13,7 @@ export async function getProjects() {
   return await apiGetProjects();
 }
 
-export async function createProject(project: Omit<Project, 'id'>) {
+export async function createProject(project: Project) {
   const newProject = await apiCreateProject(project);
   revalidatePath('/admin/projects');
   return newProject;

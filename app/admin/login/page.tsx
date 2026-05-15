@@ -37,19 +37,19 @@ export default function AdminLoginPage() {
           <div className="relative">
             <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-200">
               <Building2 className="h-4 w-4" />
-              GitHub-powered CMS
+              MongoDB-powered CMS
             </div>
             <h1 className="mt-8 max-w-xl text-5xl font-semibold tracking-tight">
-              Real estate content management without a database.
+              Real estate content management with a fast database.
             </h1>
             <p className="mt-5 max-w-lg text-base leading-7 text-slate-300">
-              Manage projects, events, and future content directly from JSON files in GitHub with
-              validation, image uploads, and automatic redeploys.
+              Manage projects, events, and future content with a MongoDB backend, validation, and
+              seamless image uploads.
             </p>
           </div>
           <div className="relative grid grid-cols-3 gap-4 text-sm text-slate-300">
             {[
-              ["GitHub", "source of truth"],
+              ["MongoDB", "source of truth"],
               ["Zod", "validated forms"],
               ["Vercel", "redeploy on save"],
             ].map(([title, subtitle]) => (

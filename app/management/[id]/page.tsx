@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header"
 import { AppverseFooter } from "@/components/appverse-footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getManagementMemberById, getManagementTeam } from "@/src/lib/github/management-operations"
+import { getManagementMemberById, getManagementTeam } from "@/lib/management"
 
 export const dynamic = "force-static"
 export const revalidate = 60

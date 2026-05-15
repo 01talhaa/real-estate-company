@@ -23,7 +23,7 @@ export default function AdminDashboardPage() {
   const cards = [
     { label: "Projects", value: loading ? "..." : projectCount, icon: Building2, href: "/admin/projects" },
     { label: "Events", value: loading ? "..." : eventCount, icon: CalendarDays, href: "/admin/events" },
-    { label: "Content status", value: "GitHub", icon: Sparkles, href: "/admin/projects" },
+    { label: "Content status", value: "MongoDB", icon: Sparkles, href: "/admin/projects" },
   ]
 
   return (
@@ -31,10 +31,10 @@ export default function AdminDashboardPage() {
       <section className="rounded-[2rem] border border-slate-200 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-900 p-8 text-white shadow-2xl">
         <p className="text-xs uppercase tracking-[0.3em] text-slate-300">Admin dashboard</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-          GitHub-powered content control.
+          MongoDB-powered content control.
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
-          Manage projects and events from a clean SaaS-style dashboard built for lightweight, low-frequency updates.
+          Manage projects and events from a clean SaaS-style dashboard backed by a fast database.
         </p>
       </section>
 
@@ -83,9 +83,9 @@ export default function AdminDashboardPage() {
             <CardTitle className="text-slate-900">What’s next</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-slate-600">
-            <p>Connect the GitHub Contents API routes to replace the legacy data sources.</p>
-            <p>Wire the project and event forms to the JSON storage endpoints.</p>
-            <p>Add Cloudinary upload controls for gallery images.</p>
+            <p>Monitor index health and query performance for consistent low-latency responses.</p>
+            <p>Seed new environments with the MongoDB data migration script.</p>
+            <p>Keep media assets optimized with Cloudinary presets.</p>
           </CardContent>
         </Card>
       </section>
