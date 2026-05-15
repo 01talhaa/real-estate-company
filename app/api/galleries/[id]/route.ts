@@ -4,6 +4,8 @@ import { ObjectId } from 'mongodb'
 
 const GALLERIES_COLLECTION = 'galleries'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/galleries/[id] - Get single gallery
 export async function GET(
   request: NextRequest,
