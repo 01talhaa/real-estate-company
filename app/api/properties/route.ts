@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/mongodb'
 import { PROPERTIES_COLLECTION } from '@/lib/models/Property'
 import { withCache, CacheTTL, apiCache } from '@/lib/cache'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/properties - List properties with filters
 export async function GET(request: NextRequest) {
   try {
