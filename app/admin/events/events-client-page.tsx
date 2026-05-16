@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Plus, Pencil, Trash2, Search, Sparkles, CalendarDays } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -30,10 +30,37 @@ function safeText(value: unknown) {
   return typeof value === "string" ? value : ""
 }
 
-export default function EventsClientPage({ events }: { events: Event[] }) {
+export default function EventsClientPage({ events: initialEvents }: { events: Event[] }) {
   const router = useRouter()
+  const [events, setEvents] = useState<Event[]>(initialEvents)
+  const [isLoading, setIsLoading] = useState(initialEvents.length === 0)
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [deleteId, setDeleteId] = useState<string | null>(null)
+
+  const fetchEvents = useCallback(async (showLoader = false) => {
+    if (showLoader) {
+      setIsLoading(true)
+    } else {
+      setIsRefreshing(true)
+    }
+
+    try {
+      const response = await fetch("/api/events", { cache: "no-store" })
+      const json = await response.json()
+      const nextEvents = Array.isArray(json.data) ? json.data : []
+      setEvents(nextEvents)
+    } catch (error) {
+      toast.error("Failed to load events")
+    } finally {
+      setIsLoading(false)
+      setIsRefreshing(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchEvents(initialEvents.length === 0)
+  }, [fetchEvents, initialEvents.length])
 
   const filtered = useMemo(() => {
     const query = searchTerm.trim().toLowerCase()
@@ -50,10 +77,13 @@ export default function EventsClientPage({ events }: { events: Event[] }) {
   const handleDelete = async () => {
     if (!deleteId) return
     try {
+      setEvents((current) => current.filter((event) => event.id !== deleteId))
       await deleteEvent(deleteId)
       toast.success("Event deleted")
       setDeleteId(null)
+      fetchEvents()
     } catch (error) {
+      await fetchEvents()
       toast.error("Failed to delete event")
     }
   }
@@ -76,10 +106,15 @@ export default function EventsClientPage({ events }: { events: Event[] }) {
               </p>
             </div>
           </div>
-          <Button onClick={() => router.push("/admin/events/new")} className="h-12 rounded-full bg-white px-6 font-semibold text-slate-950 hover:bg-slate-100">
-            <Plus className="mr-2 h-4 w-4" />
-            New Event
-          </Button>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="outline" className="h-12 rounded-full border-white/40 bg-white/10 px-6 text-white hover:bg-white/20" onClick={() => fetchEvents()} disabled={isRefreshing}>
+              {isRefreshing ? "Refreshing..." : "Refresh"}
+            </Button>
+            <Button onClick={() => router.push("/admin/events/new")} className="h-12 rounded-full bg-white px-6 font-semibold text-slate-950 hover:bg-slate-100">
+              <Plus className="mr-2 h-4 w-4" />
+              New Event
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -100,7 +135,11 @@ export default function EventsClientPage({ events }: { events: Event[] }) {
       </div>
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {filtered.length === 0 ? (
+        {isLoading ? (
+          <div className="col-span-full rounded-3xl border border-dashed border-slate-200 bg-white p-12 text-center text-slate-500">
+            Loading events...
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="col-span-full rounded-3xl border border-dashed border-slate-200 bg-white p-12 text-center text-slate-500">
             No events found.
           </div>

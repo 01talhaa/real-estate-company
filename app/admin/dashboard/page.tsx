@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Link from "next/link"
 import { ArrowRight, BarChart3, CalendarDays, Building2, Sparkles } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,21 +9,43 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true)
   const [projectCount, setProjectCount] = useState(0)
   const [eventCount, setEventCount] = useState(0)
+  const [teamCount, setTeamCount] = useState(0)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  const loadCounts = useCallback(async () => {
+    setLoading(true)
+    try {
+      const [projectsRes, eventsRes, teamRes] = await Promise.all([
+        fetch("/api/projects", { cache: "no-store" }),
+        fetch("/api/events", { cache: "no-store" }),
+        fetch("/api/management", { cache: "no-store" }),
+      ])
+
+      const [projectsJson, eventsJson, teamJson] = await Promise.all([
+        projectsRes.json(),
+        eventsRes.json(),
+        teamRes.json(),
+      ])
+
+      setProjectCount(Array.isArray(projectsJson?.data) ? projectsJson.data.length : 0)
+      setEventCount(Array.isArray(eventsJson?.data) ? eventsJson.data.length : 0)
+      setTeamCount(Array.isArray(teamJson?.data) ? teamJson.data.length : 0)
+    } catch (error) {
       setProjectCount(0)
       setEventCount(0)
+      setTeamCount(0)
+    } finally {
       setLoading(false)
-    }, 200)
-
-    return () => clearTimeout(timer)
+    }
   }, [])
+
+  useEffect(() => {
+    loadCounts()
+  }, [loadCounts])
 
   const cards = [
     { label: "Projects", value: loading ? "..." : projectCount, icon: Building2, href: "/admin/projects" },
     { label: "Events", value: loading ? "..." : eventCount, icon: CalendarDays, href: "/admin/events" },
-    { label: "Content status", value: "MongoDB", icon: Sparkles, href: "/admin/projects" },
+    { label: "Management", value: loading ? "..." : teamCount, icon: Sparkles, href: "/admin/management" },
   ]
 
   return (
@@ -31,10 +53,10 @@ export default function AdminDashboardPage() {
       <section className="rounded-[2rem] border border-slate-200 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-900 p-8 text-white shadow-2xl">
         <p className="text-xs uppercase tracking-[0.3em] text-slate-300">Admin dashboard</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-          MongoDB-powered content control.
+          Content overview and publishing control.
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
-          Manage projects and events from a clean SaaS-style dashboard backed by a fast database.
+          Track key content areas, respond to updates fast, and keep listings current.
         </p>
       </section>
 

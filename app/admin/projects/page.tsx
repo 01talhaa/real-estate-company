@@ -1,4 +1,4 @@
-import { getProjects } from "@/lib/projects";
+import { getProjectsCached } from "@/lib/projects";
 import ProjectsClientPage from "./ProjectsClientPage";
 import { Suspense } from "react";
 
@@ -42,7 +42,7 @@ function normalizeProject(project: any) {
 }
 
 export default async function AdminProjectsPage() {
-  const projectsData = await getProjects();
+  const projectsData = await getProjectsCached();
   const projects = projectsData.map(normalizeProject);
 
   return (

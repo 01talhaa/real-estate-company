@@ -1,8 +1,8 @@
-import { getEvents } from "./actions"
+import { getEventsCached } from "@/lib/events"
 import EventsClientPage from "./events-client-page"
 
 export default async function AdminEventsPage() {
-  const events = await getEvents()
+  const events = await getEventsCached()
 
   return <EventsClientPage events={events} />
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useCallback, useEffect, useState, useTransition } from "react"
 import Link from "next/link"
 import { Plus, Edit, Trash2, Users, GripVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -21,19 +21,48 @@ import {
 
 export default function ManagementClientPage({ members: initialMembers }: { members: ManagementMember[] }) {
   const [members, setMembers] = useState(initialMembers)
+  const [isLoading, setIsLoading] = useState(initialMembers.length === 0)
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [memberToDelete, setMemberToDelete] = useState<ManagementMember | null>(null)
+
+  const fetchMembers = useCallback(async (showLoader = false) => {
+    if (showLoader) {
+      setIsLoading(true)
+    } else {
+      setIsRefreshing(true)
+    }
+
+    try {
+      const response = await fetch("/api/management", { cache: "no-store" })
+      const json = await response.json()
+      if (json?.success && Array.isArray(json.data)) {
+        setMembers(json.data)
+      }
+    } catch (error) {
+      toast.error("Failed to load team")
+    } finally {
+      setIsLoading(false)
+      setIsRefreshing(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchMembers(initialMembers.length === 0)
+  }, [fetchMembers, initialMembers.length])
 
   const handleDelete = async () => {
     if (!memberToDelete) return
 
     startTransition(async () => {
       try {
-        await deleteManagementMemberAction(memberToDelete.id)
         setMembers((current) => current.filter((member) => member.id !== memberToDelete.id))
+        await deleteManagementMemberAction(memberToDelete.id)
         toast.success("Management member deleted successfully")
         setMemberToDelete(null)
+        fetchMembers()
       } catch (error) {
+        await fetchMembers()
         toast.error(error instanceof Error ? error.message : "Failed to delete member")
       }
     })
@@ -44,14 +73,19 @@ export default function ManagementClientPage({ members: initialMembers }: { memb
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-black text-slate-950">Management</h1>
-          <p className="mt-2 text-sm text-slate-500">Manage the leadership and operations team with Cloudinary images.</p>
+          <p className="mt-2 text-sm text-slate-500">Manage leadership profiles and keep the team directory up to date.</p>
         </div>
-        <Button asChild className="rounded-full bg-slate-950 px-5 hover:bg-slate-800">
-          <Link href="/admin/management/new">
-            <Plus className="mr-2 h-4 w-4" />
-            Add Member
-          </Link>
-        </Button>
+        <div className="flex flex-wrap gap-3">
+          <Button variant="outline" className="rounded-full border-slate-200 px-5" onClick={() => fetchMembers()} disabled={isRefreshing}>
+            {isRefreshing ? "Refreshing..." : "Refresh"}
+          </Button>
+          <Button asChild className="rounded-full bg-slate-950 px-5 hover:bg-slate-800">
+            <Link href="/admin/management/new">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Member
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <Card className="rounded-[1.75rem] border-slate-200 bg-white shadow-sm">
@@ -62,7 +96,11 @@ export default function ManagementClientPage({ members: initialMembers }: { memb
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          {members.length === 0 ? (
+          {isLoading ? (
+            <div className="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-12 text-center text-slate-500">
+              Loading team...
+            </div>
+          ) : members.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-12 text-center text-slate-500">
               No management members found.
             </div>

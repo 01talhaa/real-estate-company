@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { Plus, Pencil, Trash2, Search, Sparkles, MapPin } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -37,9 +37,36 @@ function safeText(value: unknown, fallback = "") {
 export default function ProjectsClientPage({ projects: initialProjects }: { projects: Project[] }) {
   const router = useRouter()
   const [projects, setProjects] = useState<Project[]>(initialProjects)
+  const [isLoading, setIsLoading] = useState(initialProjects.length === 0)
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [deleteId, setDeleteId] = useState<string | null>(null)
+
+  const fetchProjects = useCallback(async (showLoader = false) => {
+    if (showLoader) {
+      setIsLoading(true)
+    } else {
+      setIsRefreshing(true)
+    }
+
+    try {
+      const response = await fetch("/api/projects", { cache: "no-store" })
+      const data = await response.json()
+      if (data?.success && Array.isArray(data.data)) {
+        setProjects(data.data)
+      }
+    } catch (error) {
+      toast.error("Failed to load projects")
+    } finally {
+      setIsLoading(false)
+      setIsRefreshing(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchProjects(initialProjects.length === 0)
+  }, [fetchProjects, initialProjects.length])
 
   const filteredProjects = useMemo(() => {
     const query = searchTerm.trim().toLowerCase()
@@ -73,11 +100,13 @@ export default function ProjectsClientPage({ projects: initialProjects }: { proj
   const handleDelete = async () => {
     if (!deleteId) return
     try {
+      setProjects((current) => current.filter((project) => project.id !== deleteId))
       await deleteProject(deleteId)
-      setProjects(projects.filter(p => p.id !== deleteId));
       toast.success("Project deleted")
       setDeleteId(null)
+      fetchProjects()
     } catch (error) {
+      await fetchProjects()
       toast.error("Failed to delete project")
     }
   }
@@ -96,14 +125,19 @@ export default function ProjectsClientPage({ projects: initialProjects }: { proj
             <div>
               <h1 className="text-4xl font-black tracking-tight sm:text-5xl">Projects</h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70 sm:text-base">
-                Manage real-estate projects stored in MongoDB.
+                Manage real-estate projects with real-time updates and publishing controls.
               </p>
             </div>
           </div>
-          <Button onClick={openCreate} className="h-12 rounded-full bg-white px-6 font-semibold text-slate-950 hover:bg-slate-100">
-            <Plus className="mr-2 h-4 w-4" />
-            New Project
-          </Button>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="outline" className="h-12 rounded-full border-white/40 bg-white/10 px-6 text-white hover:bg-white/20" onClick={() => fetchProjects()} disabled={isRefreshing}>
+              {isRefreshing ? "Refreshing..." : "Refresh"}
+            </Button>
+            <Button onClick={openCreate} className="h-12 rounded-full bg-white px-6 font-semibold text-slate-950 hover:bg-slate-100">
+              <Plus className="mr-2 h-4 w-4" />
+              New Project
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -124,7 +158,11 @@ export default function ProjectsClientPage({ projects: initialProjects }: { proj
       </div>
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {filteredProjects.length === 0 ? (
+        {isLoading ? (
+          <div className="col-span-full rounded-3xl border border-dashed border-slate-200 bg-white p-12 text-center text-slate-500">
+            Loading projects...
+          </div>
+        ) : filteredProjects.length === 0 ? (
           <div className="col-span-full rounded-3xl border border-dashed border-slate-200 bg-white p-12 text-center text-slate-500">
             No projects found.
           </div>
